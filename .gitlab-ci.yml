@@ -22,7 +22,7 @@ get aem jar:
 #      - aemdesign-aem/dist
 #    expire_in: 1 year
   cache:
-    key: aem-dist
+    key: aemdesign-aem
     paths:
       - aemdesign-aem/dist
   script:
@@ -39,7 +39,7 @@ build docker image:
   services:
     - docker:dind
   cache:
-    key: aem-dist
+    key: aemdesign-aem
     paths:
       - aemdesign-aem/dist
     policy: pull
@@ -48,6 +48,9 @@ build docker image:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
 
   script:
+    - pwd
+    - ls -latr
+    - ls -latr aemdesign-aem/dist
     - docker build --pull -t "$CONTAINER_TEST_IMAGE" .
     - docker push "$CONTAINER_TEST_IMAGE"
 #
