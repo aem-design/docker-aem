@@ -16,6 +16,7 @@ variables:
 
 get aem jar:
   stage: pre-build
+  image: aemdesign/centos-java-buildpack:latest
 #  artifacts:
 #    paths:
 #      - aemdesign-aem/dist
@@ -25,9 +26,11 @@ get aem jar:
     paths:
       - aemdesign-aem/dist
   script:
+    - git lfs install
     - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/aem.design/aemdesign-aem.git
     - pwd
     - ls -latr
+    - tree aemdesign-aem
 
 build docker image:
   stage: build
