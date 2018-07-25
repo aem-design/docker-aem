@@ -25,7 +25,7 @@ get aem jar:
     paths:
       - aemdesign-aem/dist
   script:
-    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.instance/aem.design/aemdesign-aem.git
+    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/aem.design/aemdesign-aem.git
     - pwd
     - ls -latr
 
