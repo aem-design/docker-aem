@@ -25,6 +25,7 @@ get aem jar:
     key: aemdesign-aem
     paths:
       - aemdesign-aem/dist
+    policy: push
   script:
     - git lfs install
     - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/aem.design/aemdesign-aem.git
