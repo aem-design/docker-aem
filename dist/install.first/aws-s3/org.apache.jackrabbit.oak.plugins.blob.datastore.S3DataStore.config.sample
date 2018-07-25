@@ -1,0 +1,10 @@
+accessKey=
+secretKey=
+s3Bucket=
+s3Region=
+connectionTimeout=I"120000"
+socketTimeout=I"120000"
+maxConnections=I"40"
+writeThreads=I"30"
+maxErrorRetry=I"10"
+

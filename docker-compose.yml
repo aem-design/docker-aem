@@ -1,0 +1,13 @@
+aem:
+  build: .
+  labels:
+    aem.version: "6.1"
+    os.version: "centos 7"
+    java.version: "oracle 8"
+    container.description: "aem instance, will run as author unless specified otherwise"
+  container_name: "aem"
+  ports:
+   - "8080:8080"
+   - "58242:58242"
+  volumes:
+   - /var/author_home/aem/crx-quickstart:/aem/crx-quickstart
