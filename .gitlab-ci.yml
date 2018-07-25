@@ -28,9 +28,6 @@ get aem jar:
   script:
     - git lfs install
     - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/aem.design/aemdesign-aem.git
-    - pwd
-    - ls -latr
-    - ls -latr aemdesign-aem/dist
 
 build docker image:
   stage: build
@@ -48,9 +45,6 @@ build docker image:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
 
   script:
-    - pwd
-    - ls -latr
-    - ls -latr aemdesign-aem/dist
     - docker build --pull -t "$CONTAINER_TEST_IMAGE" .
     - docker push "$CONTAINER_TEST_IMAGE"
 #
