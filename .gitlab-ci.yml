@@ -30,7 +30,7 @@ get aem jar:
     - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/aem.design/aemdesign-aem.git
     - pwd
     - ls -latr
-    - tree aemdesign-aem
+    - ls -latr aemdesign-aem/dist
 
 build docker image:
   stage: build
