@@ -14,6 +14,16 @@ variables:
   JENKINS_USER: admin
   JENKINS_USER_PASSWORD: admin
 
+
+image:
+  name: docker:stable
+services:
+  - docker:dind
+
+before_script:
+  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+
+
 get aem jar:
   stage: pre-build
   image: aemdesign/centos-java-buildpack:latest
@@ -26,14 +36,6 @@ get aem jar:
     - git lfs install
     - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/aem.design/aemdesign-aem.git
 
-
-image:
-  name: docker:stable
-services:
-  - docker:dind
-
-before_script:
-  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
 
 build docker image:
   stage: build
