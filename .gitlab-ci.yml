@@ -61,6 +61,8 @@ release image master:
     - docker pull "$CONTAINER_TEST_IMAGE"
     - docker tag "$CONTAINER_TEST_IMAGE" "$CONTAINER_RELEASE_IMAGE:$CONTAINER_RELEASE_IMAGE_TAG"
     - docker push "$CONTAINER_RELEASE_IMAGE:$CONTAINER_RELEASE_IMAGE_TAG"
+    - docker tag "$CONTAINER_TEST_IMAGE" "$CONTAINER_RELEASE_IMAGE:latest"
+    - docker push "$CONTAINER_RELEASE_IMAGE:latest"
   only:
     - master
 
