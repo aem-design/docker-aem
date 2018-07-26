@@ -14,14 +14,9 @@ variables:
   JENKINS_USER: admin
   JENKINS_USER_PASSWORD: admin
 
-
 get aem jar:
   stage: pre-build
   image: aemdesign/centos-java-buildpack:latest
-#  artifacts:
-#    paths:
-#      - aemdesign-aem/dist
-#    expire_in: 1 year
   cache:
     key: aemdesign-aem
     paths:
@@ -31,46 +26,28 @@ get aem jar:
     - git lfs install
     - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/aem.design/aemdesign-aem.git
 
+
+image:
+  name: docker:stable
+services:
+  - docker:dind
+
+before_script:
+  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+
 build docker image:
   stage: build
-  image:
-    name: docker:stable
-  services:
-    - docker:dind
   cache:
     key: aemdesign-aem
     paths:
       - aemdesign-aem/dist
     policy: pull
-
-  before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-
   script:
     - docker build --pull -t "$CONTAINER_TEST_IMAGE" .
     - docker push "$CONTAINER_TEST_IMAGE"
-#
-#test1:
-#  stage: test
-#  script:
-#    - docker pull $CONTAINER_TEST_IMAGE
-#    - docker run $CONTAINER_TEST_IMAGE /script/to/run/tests
-#
-#test2:
-#  stage: test
-#  script:
-#    - docker pull $CONTAINER_TEST_IMAGE
-#    - docker run $CONTAINER_TEST_IMAGE /script/to/run/another/test
 
 release image master:
   stage: release
-  image: docker:stable
-  services:
-    - docker:dind
-
-  before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-
   script:
     - docker pull "$CONTAINER_TEST_IMAGE"
     - docker tag "$CONTAINER_TEST_IMAGE" "$CONTAINER_RELEASE_IMAGE"
@@ -80,23 +57,9 @@ release image master:
 
 release image tag:
   stage: release
-  image: docker:stable
-  services:
-    - docker:dind
-
-  before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-
   script:
     - docker pull "$CONTAINER_TEST_IMAGE"
     - docker tag "$CONTAINER_TEST_IMAGE" "$CONTAINER_RELEASE_IMAGE_TAG"
     - docker push "$CONTAINER_RELEASE_IMAGE_TAG"
   only:
     - tags
-#
-#deploy:
-#  stage: deploy
-#  script:
-#    - ./deploy.sh
-#  only:
-#    - master
