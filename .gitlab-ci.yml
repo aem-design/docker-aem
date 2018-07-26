@@ -3,6 +3,7 @@ stages:
   - build
   #- test
   - release
+  - release-tag
   #- deploy
 
 variables:
@@ -13,15 +14,6 @@ variables:
   CONTAINER_RELEASE_IMAGE_TAG: $CI_REGISTRY_IMAGE/aem:$CI_COMMIT_TAG
   JENKINS_USER: admin
   JENKINS_USER_PASSWORD: admin
-
-
-image:
-  name: docker:stable
-services:
-  - docker:dind
-
-before_script:
-  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
 
 
 get aem jar:
@@ -39,17 +31,32 @@ get aem jar:
 
 build docker image:
   stage: build
+  image:
+    name: docker:stable
+  services:
+    - docker:dind
   cache:
     key: aemdesign-aem
     paths:
       - aemdesign-aem/dist
     policy: pull
+
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+
   script:
     - docker build --pull -t "$CONTAINER_TEST_IMAGE" .
     - docker push "$CONTAINER_TEST_IMAGE"
 
 release image master:
   stage: release
+  image: docker:stable
+  services:
+    - docker:dind
+
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+
   script:
     - docker pull "$CONTAINER_TEST_IMAGE"
     - docker tag "$CONTAINER_TEST_IMAGE" "$CONTAINER_RELEASE_IMAGE"
@@ -58,7 +65,14 @@ release image master:
     - master
 
 release image tag:
-  stage: release
+  stage: release-tag
+  image: docker:stable
+  services:
+    - docker:dind
+
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+
   script:
     - docker pull "$CONTAINER_TEST_IMAGE"
     - docker tag "$CONTAINER_TEST_IMAGE" "$CONTAINER_RELEASE_IMAGE_TAG"
