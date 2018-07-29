@@ -1,4 +1,4 @@
-FROM aemdesign/aem-base
+FROM aemdesign/aem-base:latest
 
 MAINTAINER devops <devops@aem.design>
 
