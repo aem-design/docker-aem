@@ -48,7 +48,7 @@ test:
   stage: test
   image: docker:stable
   services:
-  - docker:dind
+    - docker:dind
   script:
     - docker run $CONTAINER_TEST_IMAGE ls -l
 
