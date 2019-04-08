@@ -28,6 +28,8 @@ RUN java -jar aem-quickstart.jar -unpack && \
 
 COPY "start.sh" "run.sh" "run-tini.sh" ./
 COPY dist/install.first/*.config ./crx-quickstart/install/
+COPY dist/install.first/logs/*.config ./crx-quickstart/install/
+COPY dist/install.first/conf/sling.properties ./crx-quickstart/conf/sling.properties
 
 #expose port
 EXPOSE 8080 58242 57345 57346
