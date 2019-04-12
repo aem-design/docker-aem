@@ -19,13 +19,13 @@ get aem jar:
   stage: pre-build
   image: aemdesign/centos-java-buildpack:latest
   cache:
-    key: aemdesign-aem
+    key: ${CI_COMMIT_REF_SLUG}
     paths:
       - aemdesign-aem/dist
     policy: push
   script:
     - git lfs install
-    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/aem.design/aemdesign-aem.git
+    - git clone --depth 1 --single-branch --branch ${CONTAINER_RELEASE_IMAGE_TAG} https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/aem.design/aemdesign-aem.git
 
 
 build-docker-image:
