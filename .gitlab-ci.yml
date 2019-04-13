@@ -25,7 +25,9 @@ get aem jar:
     policy: push
   script:
     - git lfs install
-    - git clone --bare --depth 1 --single-branch --branch ${CONTAINER_RELEASE_IMAGE_TAG} https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/aem.design/aemdesign-operations.git .
+    - mkdir -p aemdesign-aem/dist
+    - git clone --depth 1 --single-branch --branch ${CONTAINER_RELEASE_IMAGE_TAG} https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/aem.design/aemdesign-operations.git
+    - cp aemdesign-operations/aemdesign-aem/dist/*.* aemdesign-aem/dist/
 
 
 build-docker-image:
