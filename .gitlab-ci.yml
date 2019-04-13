@@ -49,7 +49,7 @@ build-docker-image:
     - docker tag "$CONTAINER_TEST_IMAGE" "$CONTAINER_RELEASE_IMAGE:$CONTAINER_RELEASE_IMAGE_TAG"
     - docker push "$CONTAINER_RELEASE_IMAGE:$CONTAINER_RELEASE_IMAGE_TAG"
     - docker tag "$CONTAINER_TEST_IMAGE" "$CONTAINER_RELEASE_IMAGE:latest"
-    - docker push "$CONTAINER_RELEASE_IMAGE:latest"#
+    - docker push "$CONTAINER_RELEASE_IMAGE:latest"
 #test:
 #  stage: test
 #  image: docker:stable
@@ -69,6 +69,7 @@ publish-docker-latest:
   script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - docker pull "$CONTAINER_TEST_IMAGE"
+    - docker run $CONTAINER_TEST_IMAGE ls /aem/crx-quickstart/app | grep ${CONTAINER_RELEASE_IMAGE_TAG} && exit 0 || exit 1
     - docker tag "$CONTAINER_TEST_IMAGE" "$CONTAINER_RELEASE_IMAGE:$CONTAINER_RELEASE_IMAGE_TAG"
     - docker push "$CONTAINER_RELEASE_IMAGE:$CONTAINER_RELEASE_IMAGE_TAG"
     - docker tag "$CONTAINER_TEST_IMAGE" "$CONTAINER_RELEASE_IMAGE:latest"
