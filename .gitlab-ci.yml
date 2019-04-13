@@ -19,7 +19,7 @@ get aem jar:
   stage: pre-build
   image: aemdesign/centos-java-buildpack:latest
   cache:
-    key: ${CI_COMMIT_REF_SLUG}
+    key: ${CONTAINER_RELEASE_IMAGE_TAG}
     paths:
       - aemdesign-aem/dist
     policy: push
@@ -37,7 +37,7 @@ build-docker-image:
   services:
     - docker:dind
   cache:
-    key: ${CI_COMMIT_REF_SLUG}
+    key: ${CONTAINER_RELEASE_IMAGE_TAG}
     paths:
       - aemdesign-aem/dist
     policy: pull
@@ -46,7 +46,10 @@ build-docker-image:
     - docker build --pull -t "$CONTAINER_TEST_IMAGE" .
     - docker run $CONTAINER_TEST_IMAGE ls /aem/crx-quickstart/app | grep ${CONTAINER_RELEASE_IMAGE_TAG} && exit 0 || exit 1
     - docker push "$CONTAINER_TEST_IMAGE"
-#
+    - docker tag "$CONTAINER_TEST_IMAGE" "$CONTAINER_RELEASE_IMAGE:$CONTAINER_RELEASE_IMAGE_TAG"
+    - docker push "$CONTAINER_RELEASE_IMAGE:$CONTAINER_RELEASE_IMAGE_TAG"
+    - docker tag "$CONTAINER_TEST_IMAGE" "$CONTAINER_RELEASE_IMAGE:latest"
+    - docker push "$CONTAINER_RELEASE_IMAGE:latest"#
 #test:
 #  stage: test
 #  image: docker:stable
