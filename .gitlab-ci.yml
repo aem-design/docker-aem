@@ -25,7 +25,7 @@ get aem jar:
     policy: push
   script:
     - git lfs install
-    - git clone --depth 1 --single-branch --branch --bare ${CONTAINER_RELEASE_IMAGE_TAG} https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/aem.design/aemdesign-operations.git .
+    - git clone --bare --depth 1 --single-branch --branch ${CONTAINER_RELEASE_IMAGE_TAG} https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/aem.design/aemdesign-operations.git .
 
 
 build-docker-image:
@@ -50,7 +50,7 @@ test:
   services:
     - docker:dind
   script:
-    - docker run $CONTAINER_TEST_IMAGE ls -l
+    - docker run $CONTAINER_TEST_IMAGE ls /aem/crx-quickstart/app | grep -q ${CONTAINER_RELEASE_IMAGE_TAG} && echo 1 || echo 2
 
 
 publish-docker-latest:
