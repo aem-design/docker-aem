@@ -2,8 +2,8 @@ stages:
   - pre-build
   - build
 #  - test
-#  - release
-#  - release-tag
+  - release
+  - release-tag
 
 variables:
   DOCKER_HOST: tcp://docker:2375
@@ -46,11 +46,7 @@ build-docker-image:
     - docker build --pull -t "$CONTAINER_TEST_IMAGE" .
     - docker run $CONTAINER_TEST_IMAGE ls /aem/crx-quickstart/app | grep ${CONTAINER_RELEASE_IMAGE_TAG} && exit 0 || exit 1
     - docker push "$CONTAINER_TEST_IMAGE"
-    - docker tag "$CONTAINER_TEST_IMAGE" "$CONTAINER_RELEASE_IMAGE:$CONTAINER_RELEASE_IMAGE_TAG"
-    - docker push "$CONTAINER_RELEASE_IMAGE:$CONTAINER_RELEASE_IMAGE_TAG"
-    - docker tag "$CONTAINER_TEST_IMAGE" "$CONTAINER_RELEASE_IMAGE:latest"
-    - docker push "$CONTAINER_RELEASE_IMAGE:latest"
-
+#
 #test:
 #  stage: test
 #  image: docker:stable
@@ -58,22 +54,22 @@ build-docker-image:
 #    - docker:dind
 #  script:
 #    - docker run $CONTAINER_TEST_IMAGE ls /aem/crx-quickstart/app | grep ${CONTAINER_RELEASE_IMAGE_TAG} && exit 0 || exit 1
-#
-#
-#publish-docker-latest:
-#  stage: release
-#  image: docker:stable
-#  services:
-#    - docker:dind
-#  only:
-#    - master
-#  script:
-#    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-#    - docker pull "$CONTAINER_TEST_IMAGE"
-#    - docker tag "$CONTAINER_TEST_IMAGE" "$CONTAINER_RELEASE_IMAGE:$CONTAINER_RELEASE_IMAGE_TAG"
-#    - docker push "$CONTAINER_RELEASE_IMAGE:$CONTAINER_RELEASE_IMAGE_TAG"
-#    - docker tag "$CONTAINER_TEST_IMAGE" "$CONTAINER_RELEASE_IMAGE:latest"
-#    - docker push "$CONTAINER_RELEASE_IMAGE:latest"
+
+
+publish-docker-latest:
+  stage: release
+  image: docker:stable
+  services:
+    - docker:dind
+  only:
+    - master
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker pull "$CONTAINER_TEST_IMAGE"
+    - docker tag "$CONTAINER_TEST_IMAGE" "$CONTAINER_RELEASE_IMAGE:$CONTAINER_RELEASE_IMAGE_TAG"
+    - docker push "$CONTAINER_RELEASE_IMAGE:$CONTAINER_RELEASE_IMAGE_TAG"
+    - docker tag "$CONTAINER_TEST_IMAGE" "$CONTAINER_RELEASE_IMAGE:latest"
+    - docker push "$CONTAINER_RELEASE_IMAGE:latest"
 
 #publish-docker-tag:
 #  stage: release-tag
