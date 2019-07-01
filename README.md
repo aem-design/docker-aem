@@ -18,7 +18,7 @@ Following environment variables are available
 
 | Name              | Default Value                 | Notes |
 | ---               | ---                           | ---   |
-| AEM_VERSION       | "6.5.0"   |  |
+| AEM_VERSION       | "6.5.0"   | only used during build  |
 | AEM_JVM_OPTS      | "-server -Xms1024m -Xmx1024m -XX:MaxDirectMemorySize=256M -XX:+CMSClassUnloadingEnabled -Djava.awt.headless=true -Dorg.apache.felix.http.host=0.0.0.0"   |  |
 | AEM_START_OPTS    | "start -c /aem/crx-quickstart -i launchpad -p 8080 -a 0.0.0.0 -Dsling.properties=conf/sling.properties" |  |
 | AEM_JARFILE       | "/aem/crx-quickstart/app/cq-quickstart-${AEM_VERSION}-standalone-quickstart.jar" |  |
