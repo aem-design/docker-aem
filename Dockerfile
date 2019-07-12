@@ -26,7 +26,7 @@ COPY aemdesign-aem/dist/cq-quickstart-6.jar ./aem-quickstart.jar
 RUN java -jar aem-quickstart.jar -unpack && \
     rm aem-quickstart.jar
 
-COPY "start.sh" "run.sh" "run-tini.sh" ./
+COPY scripts/*.sh /aem
 COPY dist/install.first/*.config ./crx-quickstart/install/
 COPY dist/install.first/logs/*.config ./crx-quickstart/install/
 COPY dist/install.first/conf/sling.properties ./crx-quickstart/conf/sling.properties
@@ -37,10 +37,7 @@ EXPOSE 8080 58242 57345 57346
 VOLUME ["/aem/crx-quickstart/repository", "/aem/crx-quickstart/logs", "/aem/backup"]
 
 #ensure script has exec permissions
-RUN chmod +x /aem/run-tini.sh
+RUN chmod +x /aem/*.sh
 
 #make java pid 1
 ENTRYPOINT ["/bin/tini", "--", "/aem/run-tini.sh"]
-
-#CMD exec java $AEM_JVM_OPTS $AEM_RUNMODE -jar $AEM_JARFILE $AEM_START_OPTS
-#ENTRYPOINT ["/aem/run.sh"]
