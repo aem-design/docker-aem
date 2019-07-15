@@ -1,16 +1,16 @@
 #!/bin/bash
 
-if [[ $# -ne 3 || $1 == "-h" ]]; then
-    echo "Usage: force-recompilation.sh <crx-quickstart-dir> <http://server:port> <user:password>"
+if [[ $1 == "-h" ]]; then
+    echo "Usage: force-recompilation.sh <user:password> <http://server:port>"
     echo
-    echo "Example arguments: admin:admin http://localhost:4502"
+    echo "Example arguments: admin:admin http://localhost:8080"
     echo
     echo "This will force a recompilation of all Sling scripts (jsps, java, sightly etc.)."
     exit
 fi
 
 AEM_DIR="/aem/crx-quickstart"
-AEM_URL="http://localhost:4502"
+AEM_URL="http://localhost:8080"
 AEM_CREDS="admin:admin"
 
 CREDS="${1:-$AEM_CREDS}"
