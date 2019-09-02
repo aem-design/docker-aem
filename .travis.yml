@@ -19,8 +19,8 @@ before_install:
   - echo TEST_COMMAND_VERIFY=$TEST_COMMAND_VERIFY
   - echo DOWNLOAD PACKAGES
   - if [[ ! -d "$HOME/packages" ]]; then mkdir $HOME/packages; fi
-  - ls -latr $PACKAGE_PATH
   - export PACKAGE_PATH="$HOME/packages"
+  - ls -latr $PACKAGE_PATH
   - echo DOWNLOAD PACKAGES INTO ${PACKAGE_PATH}
   - ./scripts/download.sh "$PACKAGE_PATH/01-" "$CREDS_ADOBE" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/servicepack/AEM-6.5.1.0/jcr%3acontent/package/file.res/AEM-6.5.1.0-6.5.1.zip"
   - ./scripts/download.sh "$PACKAGE_PATH/02-" "$CREDS_ADOBE" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/servicepack/fd/AEM-Forms-6.5.1.0-LX/jcr%3acontent/package/file.res/AEM-Forms-6.5.1.0-LX-6.0.88.zip"
