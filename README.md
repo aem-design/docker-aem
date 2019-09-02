@@ -1,6 +1,13 @@
 ## CentOS 7 with AEM
 
-[![pipeline status](https://gitlab.com/aem.design/aem/badges/master/pipeline.svg)](https://gitlab.com/aem.design/aem/commits/master)
+[![build_status](https://travis-ci.org/aem-design/aem.svg?branch=master)](https://travis-ci.org/aem-design/aem) 
+[![github license](https://img.shields.io/github/license/aem-design/aem)](https://github.com/aem-design/aem) 
+[![github issues](https://img.shields.io/github/issues/aem-design/aem)](https://github.com/aem-design/aem) 
+[![github last commit](https://img.shields.io/github/last-commit/aem-design/aem)](https://github.com/aem-design/aem) 
+[![github repo size](https://img.shields.io/github/repo-size/aem-design/aem)](https://github.com/aem-design/aem) 
+[![docker stars](https://img.shields.io/docker/stars/aemdesign/aem)](https://hub.docker.com/r/aemdesign/aem) 
+[![docker pulls](https://img.shields.io/docker/pulls/aemdesign/aem)](https://hub.docker.com/r/aemdesign/aem) 
+[![github release](https://img.shields.io/github/release/aem-design/aem)](https://github.com/aem-design/aem)
 
 This is docker image based on CentOS 7 with Tini
 One image that can be used for both Author and Publish nodes

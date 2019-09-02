@@ -1,0 +1,52 @@
+language: java
+
+services:
+  - 'docker'
+
+before_install:
+  - export IMAGE_NAME=$(grep imagename= Dockerfile | sed -e 's/.*imagename="\(.*\)".*/\1/')
+  - export TEST_COMMAND=$(grep test.command= Dockerfile | sed -e 's/.*test.command="\(.*\)".*/\1/')
+  - export TEST_COMMAND_VERIFY=$(grep test.command.verify= Dockerfile | sed -e 's/.*test.command.verify="\(.*\)".*/\1/')
+  - export IMAGE_VERSION=$(grep version= Dockerfile | sed -e 's/.*version="\(.*\)".*/\1/')
+  - export IMAGE="$ORGANISATION_NAME/$IMAGE_NAME"
+  - echo IMAGE_NAME=$IMAGE_NAME
+  - echo IMAGE_VERSION=$IMAGE_VERSION
+  - echo TEST_COMMAND=$TEST_COMMAND
+  - echo TEST_COMMAND_VERIFY=$TEST_COMMAND_VERIFY
+
+#build and test
+install:
+  - docker build --pull -t $IMAGE:$IMAGE_VERSION .
+  - docker tag $IMAGE:$IMAGE_VERSION $IMAGE:latest
+  - export CONTAINER_COMMAND="docker run $IMAGE $TEST_COMMAND"
+  - echo CONTAINER_COMMAND=$CONTAINER_COMMAND
+  - export CONTAINER_OUTPUT=$(eval $CONTAINER_COMMAND)
+  - echo CONTAINER_OUTPUT=$CONTAINER_OUTPUT
+  - if [[ ! ${CONTAINER_OUTPUT} =~ ${TEST_COMMAND_VERIFY} ]]; then travis_terminate 1; fi
+  - docker tag $IMAGE:$IMAGE_VERSION $IMAGE:$CONTAINER_OUTPUT
+  - docker images
+
+#test
+script:
+  - echo "LOGIN TO HUB.DOCKER"
+  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+  - echo "PUSH HUB.DOCKER"
+  - docker push $IMAGE:$IMAGE_VERSION && docker push $IMAGE:$CONTAINER_OUTPUT && if [[ $TRAVIS_BRANCH == "master" ]]; then docker push $IMAGE:latest; fi
+  - echo "UPDATE README IN HUB.DOCKER"
+  - if [[ $TRAVIS_BRANCH == "master" ]]; then ./dockerhub.sh "$DOCKER_USERNAME" "$DOCKER_PASSWORD" "$IMAGE" "README.md"; fi
+
+## Get the project version
+before_deploy:
+  - export CURRENT_VERSION=$(git describe --tag --always --long | sed -e 's/\(.*\)-\(.*\)-.*/\1.\2/')
+  - echo CURRENT_VERSION=$CURRENT_VERSION
+  - export TRAVIS_TAG=$CURRENT_VERSION
+  - if [[ $TRAVIS_BRANCH == "master" ]]; then git tag $TRAVIS_TAG; fi
+
+## Create release in GitHub
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  skip_cleanup: true
+  on:
+    branch: master
+  name: $CURRENT_VERSION
