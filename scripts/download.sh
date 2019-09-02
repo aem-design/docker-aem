@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 function help() {
 echo "Usage:"
@@ -20,7 +21,12 @@ function download() {
 
     local FILENAME=$(basename "$FILEURL")
 
-    curl -L "${FILEURL}" -o ${FILENAME_PREFIX}${FILENAME}
+    curl --connect-timeout 5 \
+    --max-time 10 \
+    --retry 5 \
+    --retry-delay 0 \
+    --retry-max-time 40 \
+    -L "${FILEURL}" -o ${FILENAME_PREFIX}${FILENAME}
 
 }
 
@@ -33,7 +39,12 @@ function downloadAuth() {
 
     local FILENAME=$(basename "$FILEURL")
 
-    curl -u "${BASICCREDS}" -L "${FILEURL}" -o ${FILENAME_PREFIX}${FILENAME}
+    curl --connect-timeout 5 \
+    --max-time 10 \
+    --retry 5 \
+    --retry-delay 0 \
+    --retry-max-time 40 \
+    -v -u "${BASICCREDS}" -L "${FILEURL}" -o ${FILENAME_PREFIX}${FILENAME}
 
 }
 
