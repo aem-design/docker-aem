@@ -47,7 +47,7 @@ function downloadAuth() {
 		--retry-delay 0 \
 		--retry-max-time 40 \
 		-A "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)" \
-		--insecure \
+		--insecure -k \
 		-u "${BASICCREDS}" -L "${FILEURL}" -o ${FILENAME_PREFIX}${FILENAME}
 	)
 
