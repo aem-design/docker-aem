@@ -22,11 +22,9 @@ function download() {
     local FILENAME=$(basename "$FILEURL")
 
     curl \
-    --connect-timeout 5 \
-    --max-time 10 \
-    --retry 5 \
-    --retry-delay 0 \
-    --retry-max-time 40 \
+    --connect-timeout 30 \
+    --retry 300 \
+    --retry-delay 5 \
     -L "${FILEURL}" -o ${FILENAME_PREFIX}${FILENAME}
 
 }
@@ -42,11 +40,9 @@ function downloadAuth() {
 
 	echo "DOWNLOADING $FILENAME"
     curl \
-		--connect-timeout 5 \
-		--max-time 10 \
-		--retry 5 \
-		--retry-delay 0 \
-		--retry-max-time 40 \
+		--connect-timeout 30 \
+		--retry 300 \
+		--retry-delay 5 \
 		-A "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)" \
 		-k -v \
 		-u "${BASICCREDS}" -L "${FILEURL}" -o ${FILENAME_PREFIX}${FILENAME}
