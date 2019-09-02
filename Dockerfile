@@ -38,7 +38,7 @@ COPY dist/install.first/*.config ./crx-quickstart/install/
 COPY dist/install.first/logs/*.config ./crx-quickstart/install/
 COPY dist/install.first/conf/sling.properties ./crx-quickstart/conf/sling.properties
 
-RUN ./scripts/download.sh \
+RUN ./download.sh \
 "$PACKAGE_PATH/01-" "$CREDS_ADOBE" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/servicepack/AEM-6.5.1.0/jcr%3acontent/package/file.res/AEM-6.5.1.0-6.5.1.zip" \
 "$PACKAGE_PATH/02-" "$CREDS_ADOBE" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/servicepack/fd/AEM-Forms-6.5.1.0-LX/jcr%3acontent/package/file.res/AEM-Forms-6.5.1.0-LX-6.0.88.zip" \
 "$PACKAGE_PATH/03-" "$CREDS_ADOBE" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/compatpack/aem-compat-cq65-to-cq64/jcr%3acontent/package/file.res/aem-compat-cq65-to-cq64-0.18.zip" \
