@@ -18,7 +18,7 @@ before_install:
   - echo TEST_COMMAND=$TEST_COMMAND
   - echo TEST_COMMAND_VERIFY=$TEST_COMMAND_VERIFY
   - echo DOWNLOAD PACKAGES
-  - mkdir $HOME/packages
+  - if [[ ! -d "$HOME/packages" ]]; then mkdir $HOME/packages; fi
   - ls -latr $PACKAGE_PATH
   - export PACKAGE_PATH="$HOME/packages"
   - echo DOWNLOAD PACKAGES INTO ${PACKAGE_PATH}
