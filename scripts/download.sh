@@ -22,6 +22,7 @@ function download() {
     local FILENAME=$(basename "$FILEURL")
 
     curl --connect-timeout 5 \
+    --max-time 10 \
     --retry 5 \
     --retry-delay 0 \
     --retry-max-time 40 \
@@ -38,12 +39,25 @@ function downloadAuth() {
 
     local FILENAME=$(basename "$FILEURL")
 
-    curl --connect-timeout 5 \
-    --retry 5 \
-    --retry-delay 0 \
-    --retry-max-time 40 \
-    -v -u "${BASICCREDS}" -L "${FILEURL}" -o ${FILENAME_PREFIX}${FILENAME}
+	echo "DOWNLOADING $FILENAME; PROGRESS OUTPUT: $FILENAME.txt"
+    RESPONSE=$(curl -s --write-out %{response_code} --output $FILENAME.txt \
+		--connect-timeout 5 \
+		--max-time 10 \
+		--retry 5 \
+		--retry-delay 0 \
+		--retry-max-time 40 \
+		-A "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)" \
+		--insecure \
+		-u "${BASICCREDS}" -L "${FILEURL}" -o ${FILENAME_PREFIX}${FILENAME}
+	)
 
+	if [[ ! ${RESPONSE} -eq 200 ]]; then
+		echo "DOWNLOAD: ${RESPONSE} ERROR"
+		cat $FILENAME.txt
+    	exit 1
+	else
+		echo "DOWNLOAD: ${RESPONSE} OK"
+    fi
 }
 
 
