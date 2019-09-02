@@ -16,7 +16,7 @@ before_install:
 
 #build and test
 install:
-  - docker build --pull -t $IMAGE:$IMAGE_VERSION .
+  - docker build --pull --build-arg CREDS_ADOBE=$CREDS_ADOBE --build-arg GOOGLE_DRIVEID=$GOOGLE_DRIVEID  -t $IMAGE:$IMAGE_VERSION .
   - docker tag $IMAGE:$IMAGE_VERSION $IMAGE:latest
   - export CONTAINER_COMMAND="docker run $IMAGE $TEST_COMMAND"
   - echo CONTAINER_COMMAND=$CONTAINER_COMMAND
