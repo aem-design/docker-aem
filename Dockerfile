@@ -37,7 +37,7 @@ COPY dist/install.first/*.config ./crx-quickstart/install/
 COPY dist/install.first/logs/*.config ./crx-quickstart/install/
 COPY dist/install.first/conf/sling.properties ./crx-quickstart/conf/sling.properties
 
-COPY tmp/ $PACKAGE_PATH/
+COPY packages/ $PACKAGE_PATH/
 
 #expose port
 EXPOSE 8080 58242 57345 57346
