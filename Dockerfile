@@ -27,8 +27,7 @@ ENV AEM_JVM_OPTS="${AEM_JVM_OPTS}" \
 WORKDIR /aem
 
 COPY scripts/*.sh /aem/
-
-RUN ./gdrive.sh "download" "$GOOGLE_DRIVEID" "./aem-quickstart.jar"
+COPY jar/aem-quickstart.jar ./aem-quickstart.jar
 
 #unpack the jar
 RUN java -jar aem-quickstart.jar -unpack && \
