@@ -4,9 +4,9 @@ services:
   - 'docker'
 
 env:
-	global:
-		- PACKAGE_PATH="$(pwd)/packages"
-		- JAR_PATH="$(pwd)/jar"
+    global:
+        - PACKAGE_PATH="$(pwd)/packages"
+        - JAR_PATH="$(pwd)/jar"
 
 before_install:
   - export IMAGE_NAME=$(grep imagename= Dockerfile | sed -e 's/.*imagename="\(.*\)".*/\1/')
@@ -44,9 +44,9 @@ before_install:
   - ls -latr $PACKAGE_PATH
 
 cache:
-	directories:
-		- $PACKAGE_PATH
-		- $JAR_PATH
+  directories:
+    - $PACKAGE_PATH
+    - $JAR_PATH
 
 
 #build and test
