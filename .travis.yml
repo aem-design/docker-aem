@@ -8,6 +8,12 @@ env:
         - PACKAGE_PATH="$(pwd)/packages"
         - JAR_PATH="$(pwd)/jar"
 
+cache:
+  directories:
+    - $PACKAGE_PATH
+    - $JAR_PATH
+
+
 before_install:
   - export IMAGE_NAME=$(grep imagename= Dockerfile | sed -e 's/.*imagename="\(.*\)".*/\1/')
   - export TEST_COMMAND=$(grep test.command= Dockerfile | sed -e 's/.*test.command="\(.*\)".*/\1/')
@@ -42,11 +48,6 @@ before_install:
   - ./scripts/download.sh "$PACKAGE_PATH/09-" "$CREDS_ADOBE" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq600/component/vanityurls-components/jcr%3acontent/package/file.res/vanityurls-components-1.0.2.zip"
   - ./scripts/download.sh "$PACKAGE_PATH/10-" "-" "https://github.com/aem-design/aemdesign-aem-core/releases/download/2.0.424/aemdesign-aem-core-deploy-2.0.424.zip"
   - ls -latr $PACKAGE_PATH
-
-cache:
-  directories:
-    - $PACKAGE_PATH
-    - $JAR_PATH
 
 
 #build and test
