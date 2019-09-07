@@ -59,12 +59,12 @@ Following bundles are added to container
 
 | File | Notes  |
 | ---  | ---    |
-| AEM-6.5.1.0-6.5.1.zip | sp 1 |
-| AEM-Forms-6.5.1.0-LX-6.0.88.zip | aem forms |
-| aem-compat-cq65-to-cq64-0.18.zip | aem forms backwards compatibility |
+| AEM-6.4.4.0-6.4.4.zip | sp 4 |
+| AEM-Forms-6.4.4.0-LX-5.1.58.zip | aem forms |
+| AEM-FORMS-6.4-COMPAT-1.0.18.zip | aem forms backwards compatibility |
 | com.adobe.acs.bundles.twitter4j-content-1.0.0.zip | acs twitter |
-| acs-aem-commons-content-4.3.0.zip | acs commons |
-| core.wcm.components.all-2.5.0.zip | adobe corecomponents |
+| acs-aem-commons-content-4.3.2.zip | acs commons |
+| core.wcm.components.all-2.6.0.zip | adobe corecomponents |
 | accesscontroltool-package-2.3.2.zip | netcentric acl tools |
 | accesscontroltool-oakindex-package-2.3.2.zip | netcentric acl tools |
 | vanityurls-components-1.0.2.zip | vanity url servlet |
