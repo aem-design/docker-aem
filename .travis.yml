@@ -34,15 +34,15 @@ before_install:
   - echo JAR CONTENTS $JAR_PATH
   - ls -latr $JAR_PATH
   - echo DOWNLOAD JAR INTO ${JAR_PATH}
-  - ./scripts/gdrive.sh "download" "$GOOGLE_DRIVEID" "$JAR_PATH/aem-quickstart.jar"
+  - ./scripts/gdrive.sh "download" "$GOOGLE_DRIVEID_AEM64" "$JAR_PATH/aem-quickstart.jar"
   - ls -latr $JAR_PATH
   - echo DOWNLOAD PACKAGES INTO ${PACKAGE_PATH}
-  - ./scripts/download.sh "$PACKAGE_PATH/01-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/servicepack/AEM-6.5.1.0/jcr%3acontent/package/file.res/AEM-6.5.1.0-6.5.1.zip"
-  - ./scripts/download.sh "$PACKAGE_PATH/02-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/servicepack/fd/AEM-Forms-6.5.1.0-LX/jcr%3acontent/package/file.res/AEM-Forms-6.5.1.0-LX-6.0.88.zip"
-  - ./scripts/download.sh "$PACKAGE_PATH/03-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/compatpack/aem-compat-cq65-to-cq64/jcr%3acontent/package/file.res/aem-compat-cq65-to-cq64-0.18.zip"
+  - ./scripts/download.sh "$PACKAGE_PATH/01-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq640/servicepack/AEM-6.4.4.0/jcr%3acontent/package/file.res/AEM-6.4.4.0-6.4.4.zip"
+  - ./scripts/download.sh "$PACKAGE_PATH/02-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq640/servicepack/fd/AEM-Forms-6.4.4.0-LX/jcr%3acontent/package/file.res/AEM-Forms-6.4.4.0-LX-5.1.58.zip"
+  - ./scripts/download.sh "$PACKAGE_PATH/03-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq640/fd/AEM-FORMS-6.4-COMPAT/jcr%3acontent/package/file.res/AEM-FORMS-6.4-COMPAT-1.0.18.zip"
   - ./scripts/download.sh "$PACKAGE_PATH/04-" "-" "-" "https://github.com/Adobe-Consulting-Services/com.adobe.acs.bundles.twitter4j/releases/download/com.adobe.acs.bundles.twitter4j-1.0.0/com.adobe.acs.bundles.twitter4j-content-1.0.0.zip"
-  - ./scripts/download.sh "$PACKAGE_PATH/05-" "-" "-" "https://github.com/Adobe-Consulting-Services/acs-aem-commons/releases/download/acs-aem-commons-4.3.0/acs-aem-commons-content-4.3.0.zip"
-  - ./scripts/download.sh "$PACKAGE_PATH/06-" "-" "-" "https://github.com/adobe/aem-core-wcm-components/releases/download/core.wcm.components.reactor-2.5.0/core.wcm.components.all-2.5.0.zip"
+  - ./scripts/download.sh "$PACKAGE_PATH/05-" "-" "-" "https://github.com/Adobe-Consulting-Services/acs-aem-commons/releases/download/acs-aem-commons-4.3.2/acs-aem-commons-content-4.3.2.zip"
+  - ./scripts/download.sh "$PACKAGE_PATH/06-" "-" "-" "https://github.com/adobe/aem-core-wcm-components/releases/download/core.wcm.components.reactor-2.6.0/core.wcm.components.all-2.6.0.zip"
   - ./scripts/download.sh "$PACKAGE_PATH/07-" "-" "-" "http://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-package/2.3.2/accesscontroltool-package-2.3.2.zip"
   - ./scripts/download.sh "$PACKAGE_PATH/08-" "-" "-" "http://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-oakindex-package/2.3.2/accesscontroltool-oakindex-package-2.3.2.zip"
   - ./scripts/download.sh "$PACKAGE_PATH/09-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq600/component/vanityurls-components/jcr%3acontent/package/file.res/vanityurls-components-1.0.2.zip"
@@ -53,14 +53,13 @@ before_install:
 
 #build and test
 install:
-  - docker build --pull  -t $IMAGE:$IMAGE_VERSION .
-  - docker tag $IMAGE:$IMAGE_VERSION $IMAGE:latest
+  - docker build --pull -t $IMAGE:$IMAGE_VERSION .
   - export CONTAINER_COMMAND="docker run $IMAGE $TEST_COMMAND"
   - echo CONTAINER_COMMAND=$CONTAINER_COMMAND
   - export CONTAINER_OUTPUT=$(eval $CONTAINER_COMMAND)
   - echo CONTAINER_OUTPUT=$CONTAINER_OUTPUT
   - if [[ ! ${CONTAINER_OUTPUT} =~ ${TEST_COMMAND_VERIFY} ]]; then travis_terminate 1; fi
-  - docker tag $IMAGE:$IMAGE_VERSION $IMAGE:$CONTAINER_OUTPUT
+  - docker tag $IMAGE:$IMAGE_VERSION
   - docker images
 
 #test
@@ -69,7 +68,7 @@ script:
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
   - echo "PUSH HUB.DOCKER"
   - docker push $IMAGE:$IMAGE_VERSION && docker push $IMAGE:$CONTAINER_OUTPUT
-  - if [[ $TRAVIS_BRANCH == "master" ]]; then docker push $IMAGE:latest; fi
+  - if [[ $TRAVIS_BRANCH == "master" ]]; then docker tag $IMAGE:latest && docker push $IMAGE:latest; fi
   - echo "UPDATE README IN HUB.DOCKER"
   - if [[ $TRAVIS_BRANCH == "master" ]]; then ./dockerhub.sh "$DOCKER_USERNAME" "$DOCKER_PASSWORD" "$IMAGE" "README.md"; fi
 
