@@ -47,7 +47,7 @@ before_install:
   - ./scripts/download.sh "$PACKAGE_PATH/08-" "-" "-" "http://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-oakindex-package/2.3.2/accesscontroltool-oakindex-package-2.3.2.zip"
   - ./scripts/download.sh "$PACKAGE_PATH/09-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq600/component/vanityurls-components/jcr%3acontent/package/file.res/vanityurls-components-1.0.2.zip"
   - ./scripts/download.sh "$PACKAGE_PATH/10-" "-" "githublatest:aemdesign-aem-core-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-core/releases/latest"
-  - ./scripts/download.sh "$PACKAGE_PATH/11-" "-" "githublatest:aemdesign-aem-support-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-core/releases/latest"
+  - ./scripts/download.sh "$PACKAGE_PATH/11-" "-" "githublatest:aemdesign-aem-support-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
   - ls -latr $PACKAGE_PATH
 
 
