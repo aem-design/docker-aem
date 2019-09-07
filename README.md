@@ -68,7 +68,8 @@ Following bundles are added to container
 | accesscontroltool-package-2.3.2.zip | netcentric acl tools |
 | accesscontroltool-oakindex-package-2.3.2.zip | netcentric acl tools |
 | vanityurls-components-1.0.2.zip | vanity url servlet |
-| aemdesign-aem-core-deploy-2.0.424.zip | aem design core |
+| aemdesign-aem-core-deploy-<LATEST>.zip | aem design core |
+| aemdesign-aem-support-deploy-<LATEST>.zip | aem design showcase content |
 
 
 ### Starting
