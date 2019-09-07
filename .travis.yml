@@ -59,7 +59,6 @@ install:
   - export CONTAINER_OUTPUT=$(eval $CONTAINER_COMMAND)
   - echo CONTAINER_OUTPUT=$CONTAINER_OUTPUT
   - if [[ ! ${CONTAINER_OUTPUT} =~ ${TEST_COMMAND_VERIFY} ]]; then travis_terminate 1; fi
-  - docker tag $IMAGE:$IMAGE_VERSION
   - docker images
 
 #test
@@ -68,7 +67,7 @@ script:
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
   - echo "PUSH HUB.DOCKER"
   - docker push $IMAGE:$IMAGE_VERSION && docker push $IMAGE:$CONTAINER_OUTPUT
-  - if [[ $TRAVIS_BRANCH == "master" ]]; then docker tag $IMAGE:latest && docker push $IMAGE:latest; fi
+  - if [[ $TRAVIS_BRANCH == "master" ]]; then docker tag $IMAGE:$IMAGE_VERSION $IMAGE:latest && docker push $IMAGE:latest; fi
   - echo "UPDATE README IN HUB.DOCKER"
   - if [[ $TRAVIS_BRANCH == "master" ]]; then ./dockerhub.sh "$DOCKER_USERNAME" "$DOCKER_PASSWORD" "$IMAGE" "README.md"; fi
 
