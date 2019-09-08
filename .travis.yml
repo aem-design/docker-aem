@@ -53,7 +53,7 @@ script:
   - echo "LOGIN TO HUB.DOCKER"
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
   - echo "PUSH HUB.DOCKER"
-  - docker push $IMAGE:$IMAGE_VERSION && docker push $IMAGE:$CONTAINER_OUTPUT
+  - docker push $IMAGE:$IMAGE_VERSION
   - if [[ $TRAVIS_BRANCH == "master" ]]; then docker tag $IMAGE:$IMAGE_VERSION $IMAGE:latest && docker push $IMAGE:latest; fi
   - echo "UPDATE README IN HUB.DOCKER"
   - if [[ $TRAVIS_BRANCH == "master" ]]; then ./dockerhub.sh "$DOCKER_USERNAME" "$DOCKER_PASSWORD" "$IMAGE" "README.md"; fi
