@@ -26,7 +26,9 @@ function download() {
     local FILENAME=$(basename "$FILEURL")
 
     if [[ "$MODULE" == *githublatest:* ]]; then
-        FILEURL=$(curl -s -L ${FILEURL} | awk -v GITHUB_LATEST_FILTER=aemdesign-aem-core-deploy -f scripts/githublatest.awk)
+        FILTER=$(echo $MODULE | sed -e 's/.*:\(.*\)/\1/')
+        echo "filter: $FILTER"
+        FILEURL=$(curl -s -L ${FILEURL} | awk -v GITHUB_LATEST_FILTER=${FILTER} -f scripts/githublatest.awk)
         if [[ "$FILEURL" == "" ]]; then
             echo "module: error, could not get url from module"
             exit 0
