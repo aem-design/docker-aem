@@ -25,7 +25,7 @@ Following environment variables are available
 
 | Name              | Default Value                 | Notes |
 | ---               | ---                           | ---   |
-| AEM_VERSION       | "6.5.0"   | only used during build  |
+| AEM_VERSION       | "6.4.0"   | only used during build  |
 | AEM_JVM_OPTS      | "-server -Xms1024m -Xmx1024m -XX:MaxDirectMemorySize=256M -XX:+CMSClassUnloadingEnabled -Djava.awt.headless=true -Dorg.apache.felix.http.host=0.0.0.0"   |  |
 | AEM_START_OPTS    | "start -c /aem/crx-quickstart -i launchpad -p 8080 -a 0.0.0.0 -Dsling.properties=conf/sling.properties" |  |
 | AEM_JARFILE       | "/aem/crx-quickstart/app/cq-quickstart-${AEM_VERSION}-standalone-quickstart.jar" |  |
@@ -53,15 +53,15 @@ Following Ports are exposed
 | 57345 | debug |
 | 57346 | debug |
 
-### Packages in Bundled Version `aemdesign/aem:6.5.0-bundle`
+### Packages in Bundled Version `aemdesign/aem:6.4.0-bundle`
 
 Following bundles are added to container
 
 | File | Notes  |
 | ---  | ---    |
-| AEM-6.5.1.0-6.5.1.zip | sp 1 |
-| AEM-Forms-6.5.1.0-LX-6.0.88.zip | aem forms |
-| aem-compat-cq65-to-cq64-0.18.zip | aem forms backwards compatibility |
+| AEM-6.4.4.0-6.4.4.zip | sp 4 |
+| AEM-Forms-6.4.4.0-LX-5.1.58.zip | aem forms |
+| AEM-FORMS-6.4-COMPAT-1.0.18.zip | aem forms backwards compatibility |
 | com.adobe.acs.bundles.twitter4j-content-1.0.0.zip | acs twitter |
 | acs-aem-commons-content-4.3.2.zip | acs commons |
 | core.wcm.components.all-2.6.0.zip | adobe corecomponents |
@@ -70,7 +70,6 @@ Following bundles are added to container
 | vanityurls-components-1.0.2.zip | vanity url servlet |
 | aemdesign-aem-core-deploy-<LATEST>.zip | aem design core |
 | aemdesign-aem-support-deploy-<LATEST>.zip | aem design showcase content |
-
 
 ### Packages in Bundled Version `aemdesign/aem:6.4.0-bundle`
 
