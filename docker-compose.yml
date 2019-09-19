@@ -1,7 +1,7 @@
 aem:
   build: .
   labels:
-    aem.version: "6.5"
+    aem.version: "6.4.0"
     os.version: "centos 7"
     java.version: "oracle 8"
     container.description: "aem instance, will run as author unless specified otherwise"
