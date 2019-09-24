@@ -52,6 +52,7 @@ before_install:
   - ./scripts/download.sh "$PACKAGE_PATH/13-" "-" "githublatest:aemdesign-aem-content" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
   - ./scripts/download.sh "$PACKAGE_PATH/14-" "-" "githublatest:aemdesign-aem-showcase" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
   - ./scripts/download.sh "$PACKAGE_PATH/15-" "-" "githublatest:aemdesign-aem-training" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
+  - ./scripts/download.sh "$PACKAGE_PATH/16-" "-" "-" "https://github.com/coresecure/Adobe-CQ5-Brightcove-Connector/releases/download/4.2.0/brightcove-all-4.2.0-SNAPSHOT.zip"
   - ls -latr $PACKAGE_PATH
 
 
