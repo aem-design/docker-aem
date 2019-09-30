@@ -28,21 +28,30 @@ function download() {
 
     local FILENAME=$(basename "$FILEURL")
 
-    if [[ "$MODULE" == *githublatest:* ]]; then
-        MODULE_SCRIPT="$(echo $MODULE | sed -e 's/\(.*\):.*/\1/')/githublatest.awk"
-        FILTER=$(echo $MODULE | sed -e 's/.*:\(.*\)/\1/')
+    if [[ ! "$MODULE" == "" ]]; then
+        MODULE_SCRIPT="${CURRENT_DIR}/$(echo $MODULE | sed -e 's/\(.*\):.*/\1/').awk"
         echo "script: ${MODULE_SCRIPT}"
+
+        if [[ ! -f "${MODULE_SCRIPT}" ]]; then
+            echo "module: error, could not find module script"
+            exit 0
+        fi
+
+        FILTER=$(echo $MODULE | sed -e 's/.*:\(.*\)/\1/')
         echo "filter: ${FILTER}"
         echo "url: ${FILEURL}"
-        curl -s -L ${FILEURL}
-        FILEURL=$(curl -s -L ${FILEURL} | awk -v GITHUB_LATEST_FILTER=${FILTER} -f ${CURRENT_DIR}/githublatest.awk)
-        if [[ "$FILEURL" == "" ]]; then
+        FILEURL_CONTENT=$(curl -s -L ${FILEURL})
+        echo "FILEURL_CONTENT:"
+        echo ${#FILEURL_CONTENT}
+        FILEURL_CONTENT_FILTER=$( echo ${FILEURL_CONTENT} | awk -v GITHUB_LATEST_FILTER=${FILTER} -f "${MODULE_SCRIPT}")
+        echo "FILEURL_CONTENT_FILTER:"
+        echo ${FILEURL_CONTENT_FILTER}
+        if [[ "${FILEURL_CONTENT_FILTER}" == "" ]]; then
             echo "module: error, could not get url from module"
             exit 0
         fi
-        FILENAME=$(basename "$FILEURL")
-    else
-        echo "module: not supported"
+        FILENAME=$(basename "$FILEURL_CONTENT_FILTER")
+        FILEURL=${FILEURL_CONTENT_FILTER}
     fi
 
     echo "DOWNLOADING $FILEURL to ${FILENAME_PREFIX}${FILENAME}"
