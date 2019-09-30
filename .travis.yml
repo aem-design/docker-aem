@@ -15,6 +15,7 @@ cache:
 
 
 before_install:
+  - pyenv global 3.6.3
   - pip3 install requests
   - export IMAGE_NAME=$(grep imagename= Dockerfile | sed -e 's/.*imagename="\(.*\)".*/\1/')
   - export TEST_COMMAND=$(grep test.command= Dockerfile | sed -e 's/.*test.command="\(.*\)".*/\1/')
