@@ -54,6 +54,9 @@ before_install:
   - ./scripts/download.sh "$PACKAGE_PATH/15-" "-" "githublatest:aemdesign-aem-training" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
   - ./scripts/download.sh "$PACKAGE_PATH/16-" "-" "-" "https://github.com/coresecure/Adobe-CQ5-Brightcove-Connector/releases/download/4.2.0/brightcove-all-4.2.0-SNAPSHOT.zip"
   - ls -latr $PACKAGE_PATH
+  - export PACKAGE_COUNT=16
+  - echo "CHECK IF WE GOT ALL OF THE PACKAGES"
+  - if [[ "$(ls $PACKAGE_PATH | wc -l | awk '{print $1}')" != "${PACKAGE_COUNT}" ]]; then travis_terminate 1; fi
 
 
 #build and test
@@ -74,7 +77,7 @@ script:
   - docker push $IMAGE:$IMAGE_VERSION
   - if [[ $TRAVIS_BRANCH == "master" ]]; then docker tag $IMAGE:$IMAGE_VERSION $IMAGE:latest && docker push $IMAGE:latest; fi
   - echo "UPDATE README IN HUB.DOCKER"
-  - if [[ $TRAVIS_BRANCH == "master" ]]; then ./dockerhub.sh "$DOCKER_USERNAME" "$DOCKER_PASSWORD" "$IMAGE" "README.md"; fi
+  - if [[ $TRAVIS_BRANCH == "master" ]]; then docker run --rm -v $(pwd):/data/ aemdesign/dockerhub-description "$DOCKER_USERNAME" "$DOCKER_PASSWORD" "$IMAGE"; fi
 
 ## Get the project version
 before_deploy:
