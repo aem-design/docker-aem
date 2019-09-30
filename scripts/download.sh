@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# get current script location
+CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 function help() {
 echo "Usage:"
 echo "  ./download.sh {[FILE NAME PREFIX] [AUTH] [MODULE] [URL]}..."
@@ -28,7 +31,7 @@ function download() {
     if [[ "$MODULE" == *githublatest:* ]]; then
         FILTER=$(echo $MODULE | sed -e 's/.*:\(.*\)/\1/')
         echo "filter: $FILTER"
-        FILEURL=$(curl -s -L ${FILEURL} | awk -v GITHUB_LATEST_FILTER=${FILTER} -f scripts/githublatest.awk)
+        FILEURL=$(curl -s -L ${FILEURL} | awk -v GITHUB_LATEST_FILTER=${FILTER} -f ${CURRENT_DIR}/githublatest.awk)
         if [[ "$FILEURL" == "" ]]; then
             echo "module: error, could not get url from module"
             exit 0
