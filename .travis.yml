@@ -58,8 +58,8 @@ before_install:
   - ./scripts/download.sh "$PACKAGE_PATH/14-" "-" "githublatest:aemdesign-aem-showcase" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
   - ./scripts/download.sh "$PACKAGE_PATH/15-" "-" "githublatest:aemdesign-aem-training" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
   - ./scripts/download.sh "$PACKAGE_PATH/16-" "-" "-" "https://github.com/coresecure/Adobe-CQ5-Brightcove-Connector/releases/download/4.2.0/brightcove-all-4.2.0-SNAPSHOT.zip"
-  - ls $PACKAGE_PATH
-  - export DOWNLOAD_COUNT=$(ls $PACKAGE_PATH | wc -l | awk '{print $1}')
+  - find $PACKAGE_PATH -type f
+  - export DOWNLOAD_COUNT=$(find $PACKAGE_PATH -type f | wc -l)
   - echo DOWNLOAD_COUNT=$DOWNLOAD_COUNT
   - export PACKAGE_COUNT=16
   - echo "CHECK IF WE GOT ALL OF THE PACKAGES"
