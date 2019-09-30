@@ -29,7 +29,7 @@ function download() {
     local FILENAME=$(basename "$FILEURL")
 
     if [[ ! "$MODULE" == "" ]]; then
-        MODULE_SCRIPT="${CURRENT_DIR}/$(echo $MODULE | sed -e 's/\(.*\):.*/\1/').awk"
+        MODULE_SCRIPT="${CURRENT_DIR}/$(echo $MODULE | sed -e 's/\(.*\):.*/\1/').py"
         echo "script: ${MODULE_SCRIPT}"
 
         if [[ ! -f "${MODULE_SCRIPT}" ]]; then
@@ -40,18 +40,15 @@ function download() {
         FILTER=$(echo $MODULE | sed -e 's/.*:\(.*\)/\1/')
         echo "filter: ${FILTER}"
         echo "url: ${FILEURL}"
-        FILEURL_CONTENT=$(curl -s -L ${FILEURL})
-        echo "FILEURL_CONTENT:"
-        echo ${#FILEURL_CONTENT}
-        FILEURL_CONTENT_FILTER=$( echo ${FILEURL_CONTENT} | awk -v GITHUB_LATEST_FILTER=${FILTER} -f "${MODULE_SCRIPT}")
-        echo "FILEURL_CONTENT_FILTER:"
-        echo ${FILEURL_CONTENT_FILTER}
-        if [[ "${FILEURL_CONTENT_FILTER}" == "" ]]; then
+        FILEURL_FILTER_URL=$(${MODULE_SCRIPT} ${FILTER} ${FILEURL})
+        echo "FILEURL_FILTER_URL:"
+        echo ${FILEURL_FILTER_URL}
+        if [[ "${FILEURL_FILTER_URL}" == "" ]]; then
             echo "module: error, could not get url from module"
             exit 0
         fi
-        FILENAME=$(basename "$FILEURL_CONTENT_FILTER")
-        FILEURL=${FILEURL_CONTENT_FILTER}
+        FILENAME=$(basename "${FILEURL_FILTER_URL}")
+        FILEURL=${FILEURL_FILTER_URL}
     fi
 
     echo "DOWNLOADING $FILEURL to ${FILENAME_PREFIX}${FILENAME}"
