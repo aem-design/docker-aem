@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
-import json
-import urllib.request
+import requests
 import argparse
 
 # set parameters for script
@@ -12,9 +11,8 @@ parser.add_argument('url', help='url of github api')
 args = parser.parse_args()
 
 # get url content
-with urllib.request.urlopen(args.url) as response:
-    json_data = response.read()
-parsed_json = (json.loads(json_data))
+response = requests.get(args.url)
+parsed_json = response.json()
 
 # find assets.browser_download_url that matches filter
 for asset in parsed_json['assets']:
