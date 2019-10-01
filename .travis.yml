@@ -10,7 +10,6 @@ env:
 
 cache:
   directories:
-    - $PACKAGE_PATH
     - $JAR_PATH
 
 
