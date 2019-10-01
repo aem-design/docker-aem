@@ -10,11 +10,15 @@ env:
 
 cache:
   directories:
-    - $PACKAGE_PATH
     - $JAR_PATH
 
 
 before_install:
+  - echo SWTICH TO PYTHON3
+  - pyenv global 3.6.3
+  - echo INSTALL PYTHON3 DEPENDENCIES
+  - pip3 install requests
+  - echo READ VARIABLES
   - export IMAGE_NAME=$(grep imagename= Dockerfile | sed -e 's/.*imagename="\(.*\)".*/\1/')
   - export TEST_COMMAND=$(grep test.command= Dockerfile | sed -e 's/.*test.command="\(.*\)".*/\1/')
   - export TEST_COMMAND_VERIFY=$(grep test.command.verify= Dockerfile | sed -e 's/.*test.command.verify="\(.*\)".*/\1/')
@@ -48,7 +52,12 @@ before_install:
   - ./scripts/download.sh "$PACKAGE_PATH/09-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq600/component/vanityurls-components/jcr%3acontent/package/file.res/vanityurls-components-1.0.2.zip"
   - ./scripts/download.sh "$PACKAGE_PATH/10-" "-" "githublatest:aemdesign-aem-core-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-core/releases/latest"
   - ./scripts/download.sh "$PACKAGE_PATH/11-" "-" "githublatest:aemdesign-aem-support-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
-  - ls -latr $PACKAGE_PATH
+  - find $PACKAGE_PATH -type f
+  - export DOWNLOAD_COUNT=$(find $PACKAGE_PATH -type f | wc -l)
+  - echo DOWNLOAD_COUNT=$DOWNLOAD_COUNT
+  - export PACKAGE_COUNT=11
+  - echo "CHECK IF WE GOT ALL OF THE PACKAGES"
+  - if [[ "${DOWNLOAD_COUNT}" != "${PACKAGE_COUNT}" ]]; then travis_terminate 1; fi
 
 
 #build and test
@@ -69,7 +78,7 @@ script:
   - docker push $IMAGE:$IMAGE_VERSION
   - if [[ $TRAVIS_BRANCH == "master" ]]; then docker tag $IMAGE:$IMAGE_VERSION $IMAGE:latest && docker push $IMAGE:latest; fi
   - echo "UPDATE README IN HUB.DOCKER"
-  - if [[ $TRAVIS_BRANCH == "master" ]]; then ./dockerhub.sh "$DOCKER_USERNAME" "$DOCKER_PASSWORD" "$IMAGE" "README.md"; fi
+  - if [[ $TRAVIS_BRANCH == "master" ]]; then docker run --rm -v $(pwd):/data/ aemdesign/dockerhub-description "$DOCKER_USERNAME" "$DOCKER_PASSWORD" "$IMAGE"; fi
 
 ## Get the project version
 before_deploy:
