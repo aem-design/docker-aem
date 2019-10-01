@@ -28,7 +28,7 @@ function download() {
 
     local FILENAME=$(basename "$FILEURL")
 
-    if [[ ! "$MODULE" == "" ]]; then
+    if [[ ! "$MODULE" == "" && ! "$MODULE" == "-" ]]; then
         MODULE_SCRIPT="${CURRENT_DIR}/$(echo $MODULE | sed -e 's/\(.*\):.*/\1/').py"
         echo "script: ${MODULE_SCRIPT}"
 
