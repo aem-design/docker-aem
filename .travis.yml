@@ -1,5 +1,7 @@
 language: java
 
+if: tag is blank
+
 services:
   - 'docker'
 
