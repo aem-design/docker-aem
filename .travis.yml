@@ -55,11 +55,11 @@ before_install:
   - export PACKAGE_COUNT=16
   - echo "CHECK IF WE GOT ALL OF THE PACKAGES"
   - if [[ "${DOWNLOAD_COUNT}" != "${PACKAGE_COUNT}" ]]; then travis_terminate 1; fi
-  
+
 #build and test
 install:
   - docker build --pull -t $IMAGE:$IMAGE_VERSION .
-  - "echo ""curl -s -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/aem-design/aemdesign-docker/master/scripts/travis/container_verify.sh?`date +%s`)"
+  - "echo curl -s -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/aem-design/aemdesign-docker/master/scripts/travis/container_verify.sh?`date +%s`)"
   - "source <(curl -s -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/aem-design/aemdesign-docker/master/scripts/travis/container_verify.sh?`date +%s`)"
   - docker images
 
