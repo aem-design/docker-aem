@@ -17,7 +17,7 @@ cache:
 
 
 before_install:
-  - source <(curl -s https://raw.githubusercontent.com/aem-design/aemdesign-docker/master/scripts/travis/get_config.sh)
+  - "source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/get_config.sh)"
   - echo DOWNLOAD PACKAGES
   - echo $PACKAGE_PATH
   - echo $JAR_PATH
@@ -30,7 +30,7 @@ before_install:
   - echo DOWNLOAD JAR INTO ${JAR_PATH}
   - ./scripts/gdrive.sh "download" "$GOOGLE_DRIVEID" "$JAR_PATH/aem-quickstart.jar"
   - ls -latr $JAR_PATH
-  - source <(curl -s https://raw.githubusercontent.com/aem-design/aemdesign-docker/master/scripts/travis/get_version.sh)
+  - "source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/get_version.sh)"
 
 #build and test
 install:
