@@ -28,8 +28,9 @@ COPY scripts/*.sh /aem/
 COPY jar/aem-quickstart.jar ./aem-quickstart.jar
 
 #unpack the jar
-RUN java -jar aem-quickstart.jar -unpack && \
-    rm aem-quickstart.jar
+RUN ls -al
+RUN java -jar aem-quickstart.jar -unpack
+RUN rm aem-quickstart.jar
 
 COPY dist/install.first/*.config ./crx-quickstart/install/
 COPY dist/install.first/logs/*.config ./crx-quickstart/install/
