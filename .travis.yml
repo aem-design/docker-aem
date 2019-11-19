@@ -34,7 +34,7 @@ before_install:
   - echo JAR CONTENTS $JAR_PATH
   - ls -latr $JAR_PATH
   - echo DOWNLOAD JAR INTO ${JAR_PATH}
-  - ./scripts/gdrive.sh "download" "$GOOGLE_DRIVEID_AEM64" "$JAR_PATH/aem-quickstart.jar"
+  - ./scripts/gdrive.sh "download" "$GOOGLE_DRIVEID_AEM63" "$JAR_PATH/aem-quickstart.jar"
   - ls -latr $JAR_PATH
 
 #build and test
