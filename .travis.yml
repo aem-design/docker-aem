@@ -15,6 +15,7 @@ cache:
 
 before_install:
   - echo SWTICH TO PYTHON3
+  - pyenv install 3.6.3
   - pyenv global 3.6.3
   - echo INSTALL PYTHON3 DEPENDENCIES
   - pip3 install requests
@@ -38,20 +39,22 @@ before_install:
   - echo JAR CONTENTS $JAR_PATH
   - ls -latr $JAR_PATH
   - echo DOWNLOAD JAR INTO ${JAR_PATH}
-  - ./scripts/gdrive.sh "download" "$GOOGLE_DRIVEID_AEM64" "$JAR_PATH/aem-quickstart.jar"
+  - ./scripts/gdrive.sh "download" "$GOOGLE_DRIVEID_AEM63" "$JAR_PATH/aem-quickstart.jar"
   - ls -latr $JAR_PATH
   - echo DOWNLOAD PACKAGES INTO ${PACKAGE_PATH}
-  - ./scripts/download.sh "$PACKAGE_PATH/01-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq640/servicepack/AEM-6.4.4.0/jcr%3acontent/package/file.res/AEM-6.4.4.0-6.4.4.zip"
-  - ./scripts/download.sh "$PACKAGE_PATH/02-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq640/servicepack/fd/AEM-Forms-6.4.4.0-LX/jcr%3acontent/package/file.res/AEM-Forms-6.4.4.0-LX-5.1.58.zip"
-  - ./scripts/download.sh "$PACKAGE_PATH/03-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq640/fd/AEM-FORMS-6.4-COMPAT/jcr%3acontent/package/file.res/AEM-FORMS-6.4-COMPAT-1.0.18.zip"
-  - ./scripts/download.sh "$PACKAGE_PATH/04-" "-" "-" "https://github.com/Adobe-Consulting-Services/com.adobe.acs.bundles.twitter4j/releases/download/com.adobe.acs.bundles.twitter4j-1.0.0/com.adobe.acs.bundles.twitter4j-content-1.0.0.zip"
-  - ./scripts/download.sh "$PACKAGE_PATH/05-" "-" "-" "https://github.com/Adobe-Consulting-Services/acs-aem-commons/releases/download/acs-aem-commons-4.3.2/acs-aem-commons-content-4.3.2.zip"
-  - ./scripts/download.sh "$PACKAGE_PATH/06-" "-" "-" "https://github.com/adobe/aem-core-wcm-components/releases/download/core.wcm.components.reactor-2.6.0/core.wcm.components.all-2.6.0.zip"
-  - ./scripts/download.sh "$PACKAGE_PATH/07-" "-" "-" "http://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-package/2.3.2/accesscontroltool-package-2.3.2.zip"
-  - ./scripts/download.sh "$PACKAGE_PATH/08-" "-" "-" "http://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-oakindex-package/2.3.2/accesscontroltool-oakindex-package-2.3.2.zip"
-  - ./scripts/download.sh "$PACKAGE_PATH/09-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq600/component/vanityurls-components/jcr%3acontent/package/file.res/vanityurls-components-1.0.2.zip"
-  - ./scripts/download.sh "$PACKAGE_PATH/10-" "-" "githublatest:aemdesign-aem-core-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-core/releases/latest"
-  - ./scripts/download.sh "$PACKAGE_PATH/11-" "-" "githublatest:aemdesign-aem-support-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
+  - ./scripts/download.sh "$PACKAGE_PATH/01-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq630/servicepack/AEM-6.3.3.0/jcr%3acontent/package/file.res/AEM-6.3.3.0-6.3.3.zip"
+  - ./scripts/download.sh "$PACKAGE_PATH/02-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq630/cumulativefixpack/AEM-CFP-6.3.3.6/jcr%3acontent/package/file.res/AEM-CFP-6.3.3.6-6.0.zip"
+  - ./scripts/download.sh "$PACKAGE_PATH/03-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq630/servicepack/fd/AEM-Forms-6.3.3.6-LX/jcr%3acontent/package/file.res/AEM-Forms-6.3.3.6-LX-4.1.124.zip"
+  - ./scripts/download.sh "$PACKAGE_PATH/05-" "-" "-" "https://github.com/Adobe-Consulting-Services/com.adobe.acs.bundles.twitter4j/releases/download/com.adobe.acs.bundles.twitter4j-1.0.0/com.adobe.acs.bundles.twitter4j-content-1.0.0.zip"
+  - ./scripts/download.sh "$PACKAGE_PATH/06-" "-" "-" "https://github.com/Adobe-Consulting-Services/acs-aem-commons/releases/download/acs-aem-commons-4.3.4/acs-aem-commons-ui.content-4.3.4-min.zip"
+  - ./scripts/download.sh "$PACKAGE_PATH/07-" "-" "-" "https://github.com/Adobe-Consulting-Services/acs-aem-commons/releases/download/acs-aem-commons-4.3.4/acs-aem-commons-ui.apps-4.3.4-min.zip"
+  - ./scripts/download.sh "$PACKAGE_PATH/08-" "-" "-" "https://github.com/Adobe-Consulting-Services/acs-aem-commons/releases/download/acs-aem-commons-4.3.4/acs-aem-commons-bundle-4.3.4.jar"
+  - ./scripts/download.sh "$PACKAGE_PATH/09-" "-" "-" "https://github.com/adobe/aem-core-wcm-components/releases/download/core.wcm.components.reactor-2.7.0/core.wcm.components.all-2.7.0.zip"
+  - ./scripts/download.sh "$PACKAGE_PATH/10-" "-" "-" "http://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-package/2.4.1/accesscontroltool-package-2.4.1.zip"
+  - ./scripts/download.sh "$PACKAGE_PATH/11-" "-" "-" "http://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-oakindex-package/2.4.1/accesscontroltool-oakindex-package-2.4.1.zip"
+  - ./scripts/download.sh "$PACKAGE_PATH/12-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq600/component/vanityurls-components/jcr%3acontent/package/file.res/vanityurls-components-1.0.2.zip"
+  - ./scripts/download.sh "$PACKAGE_PATH/13-" "-" "githublatest:aemdesign-aem-core-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-core/releases/latest"
+  - ./scripts/download.sh "$PACKAGE_PATH/14-" "-" "githublatest:aemdesign-aem-support-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
   - find $PACKAGE_PATH -type f
   - export DOWNLOAD_COUNT=$(find $PACKAGE_PATH -type f | wc -l)
   - echo DOWNLOAD_COUNT=$DOWNLOAD_COUNT
