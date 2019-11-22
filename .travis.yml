@@ -50,7 +50,7 @@ before_install:
   - find $PACKAGE_PATH -type f
   - export DOWNLOAD_COUNT=$(find $PACKAGE_PATH -type f | wc -l)
   - echo DOWNLOAD_COUNT=$DOWNLOAD_COUNT
-  - export PACKAGE_COUNT=16
+  - export PACKAGE_COUNT=14
   - echo "CHECK IF WE GOT ALL OF THE PACKAGES"
   - if [[ "${DOWNLOAD_COUNT}" != "${PACKAGE_COUNT}" ]]; then travis_terminate 1; fi
 
