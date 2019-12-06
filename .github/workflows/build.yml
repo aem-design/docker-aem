@@ -1,0 +1,73 @@
+name: build
+
+on: [push, repository_dispatch]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_REGISTRY: docker.io
+      ORGANISATION_NAME: aemdesign
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: set envirnment variables
+        id: config
+        run: |
+          echo GET PACKAGES
+          export PACKAGE_PATH=$(pwd)/packages
+          echo ::set-env name=PACKAGE_PATH::${PACKAGE_PATH}
+          source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_get_config.sh)
+          echo $PACKAGE_PATH
+          if [[ ! -d $PACKAGE_PATH ]]; then mkdir $PACKAGE_PATH; fi
+          echo PACKAGES CONTENTS $PACKAGE_PATH
+          ls -latr $PACKAGE_PATH
+          echo DOWNLOAD PACKAGES INTO ${PACKAGE_PATH}
+          ./scripts/download.sh "$PACKAGE_PATH/01-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/servicepack/AEM-6.5.1.0/jcr%3acontent/package/file.res/AEM-6.5.1.0-6.5.1.zip"
+          ./scripts/download.sh "$PACKAGE_PATH/02-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/servicepack/fd/AEM-Forms-6.5.1.0-LX/jcr%3acontent/package/file.res/AEM-Forms-6.5.1.0-LX-6.0.88.zip"
+          ./scripts/download.sh "$PACKAGE_PATH/03-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/compatpack/aem-compat-cq65-to-cq64/jcr%3acontent/package/file.res/aem-compat-cq65-to-cq64-0.18.zip"
+          ./scripts/download.sh "$PACKAGE_PATH/04-" "-" "-" "https://github.com/Adobe-Consulting-Services/com.adobe.acs.bundles.twitter4j/releases/download/com.adobe.acs.bundles.twitter4j-1.0.0/com.adobe.acs.bundles.twitter4j-content-1.0.0.zip"
+          ./scripts/download.sh "$PACKAGE_PATH/05-" "-" "-" "https://github.com/Adobe-Consulting-Services/acs-aem-commons/releases/download/acs-aem-commons-4.3.0/acs-aem-commons-content-4.3.0.zip"
+          ./scripts/download.sh "$PACKAGE_PATH/06-" "-" "-" "https://github.com/adobe/aem-core-wcm-components/releases/download/core.wcm.components.reactor-2.5.0/core.wcm.components.all-2.5.0.zip"
+          ./scripts/download.sh "$PACKAGE_PATH/07-" "-" "-" "http://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-package/2.3.2/accesscontroltool-package-2.3.2.zip"
+          ./scripts/download.sh "$PACKAGE_PATH/08-" "-" "-" "http://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-oakindex-package/2.3.2/accesscontroltool-oakindex-package-2.3.2.zip"
+          ./scripts/download.sh "$PACKAGE_PATH/09-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq600/component/vanityurls-components/jcr%3acontent/package/file.res/vanityurls-components-1.0.2.zip"
+          ./scripts/download.sh "$PACKAGE_PATH/10-" "-" "githublatest:aemdesign-aem-core-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-core/releases/latest"
+          ./scripts/download.sh "$PACKAGE_PATH/11-" "-" "githublatest:aemdesign-aem-support-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
+          ./scripts/download.sh "$PACKAGE_PATH/12-" "-" "-" "https://github.com/coresecure/Adobe-AEM-Brightcove-Connector/releases/download/5.5.0/brightcove_connector.ui.apps-5.5.0.zip"
+          ls -latr $PACKAGE_PATH
+          source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_get_version.sh)
+
+      - name: build and test docker image
+        run: |
+          docker build --pull -t $IMAGE:$IMAGE_VERSION .
+          source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/container_verify.sh)
+          (cd test && ./run_tests.sh "$IMAGE:$IMAGE_VERSION")
+          docker images
+          
+      - name: login to docker registry
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ${DOCKER_REGISTRY} -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: push image version
+        run: docker push $IMAGE:$IMAGE_VERSION
+
+      - name: push latest image on master
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker tag $IMAGE:$IMAGE_VERSION $IMAGE:latest
+          docker push $IMAGE:latest
+
+      - name: update registry description with readme on master
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker run --rm -v $(pwd):/data/ aemdesign/dockerhub-description "$DOCKER_USERNAME" "$DOCKER_PASSWORD" "$IMAGE"
+
+      - uses: meeDamian/github-release@1.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ env.GITHUB_TAG }}
+          name: ${{ env.GITHUB_TAG }}
+          body: ${{ env.GIT_RELEASE_NOTES }}
