@@ -16,8 +16,8 @@ jobs:
       GOOGLE_DRIVEID_AEM63: ${{ secrets.GOOGLE_DRIVEID_AEM63 }}
       GOOGLE_DRIVEID_AEM64: ${{ secrets.GOOGLE_DRIVEID_AEM64 }}
       CREDS_ADOBE: ${{ secrets.CREDS_ADOBE }}
-      PACKAGE_PATH: "$(pwd)/packages"
-      JAR_PATH: "$(pwd)/jar"
+      PACKAGE_PATH: "./packages"
+      JAR_PATH: "./jar"
       PYTHON_VERSION: 3.6
 
 
