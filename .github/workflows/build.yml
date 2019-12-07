@@ -8,12 +8,25 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DOCKER_REGISTRY: docker.io
+      DOCKER_REGISTRY_INDEX: index.docker.io/aemdesign
       ORGANISATION_NAME: aemdesign
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      GOOGLE_DRIVEID: ${{ secrets.GOOGLE_DRIVEID }}
+      GOOGLE_DRIVEID_AEM63: ${{ secrets.GOOGLE_DRIVEID_AEM63 }}
+      GOOGLE_DRIVEID_AEM64: ${{ secrets.GOOGLE_DRIVEID_AEM64 }}
+      CREDS_ADOBE: ${{ secrets.CREDS_ADOBE }}
+      PACKAGE_PATH: "$(pwd)/packages"
+      JAR_PATH: "$(pwd)/jar"
+      PYTHON_VERSION: 3.6
+
 
     steps:
       - uses: actions/checkout@v1
+      - name: set up python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
       - name: set envirnment variables
         id: config
         run: |
@@ -22,9 +35,13 @@ jobs:
           echo ::set-env name=PACKAGE_PATH::${PACKAGE_PATH}
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_get_config.sh)
           echo $PACKAGE_PATH
+          echo $JAR_PATH
           if [[ ! -d $PACKAGE_PATH ]]; then mkdir $PACKAGE_PATH; fi
+          if [[ ! -d $JAR_PATH ]]; then mkdir $JAR_PATH; fi
           echo PACKAGES CONTENTS $PACKAGE_PATH
           ls -latr $PACKAGE_PATH
+          echo DOWNLOAD JAR INTO ${JAR_PATH}
+          ./scripts/gdrive.sh "download" "$GOOGLE_DRIVEID" "$JAR_PATH/aem-quickstart.jar"
           echo DOWNLOAD PACKAGES INTO ${PACKAGE_PATH}
           ./scripts/download.sh "$PACKAGE_PATH/01-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/servicepack/AEM-6.5.1.0/jcr%3acontent/package/file.res/AEM-6.5.1.0-6.5.1.zip"
           ./scripts/download.sh "$PACKAGE_PATH/02-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/servicepack/fd/AEM-Forms-6.5.1.0-LX/jcr%3acontent/package/file.res/AEM-Forms-6.5.1.0-LX-6.0.88.zip"
