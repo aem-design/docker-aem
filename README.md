@@ -53,15 +53,13 @@ Following Ports are exposed
 | 57345 | debug |
 | 57346 | debug |
 
-### Packages in Bundled Version `aemdesign/aem:6.5.0-bundle`
+### Packages in Bundled Version `aemdesign/aem:6.5.2.0-bundle`
 
 Following bundles are added to container
 
 | File | Notes  |
 | ---  | ---    |
-| AEM-6.5.1.0-6.5.1.zip | sp 1 |
-| AEM-Forms-6.5.1.0-LX-6.0.88.zip | aem forms |
-| aem-compat-cq65-to-cq64-0.18.zip | aem forms backwards compatibility |
+| AEM-6.5.2.0-6.5.2.zip | sp 2 |
 | com.adobe.acs.bundles.twitter4j-content-1.0.0.zip | acs twitter |
 | acs-aem-commons-content-4.3.2.zip | acs commons |
 | core.wcm.components.all-2.6.0.zip | adobe corecomponents |

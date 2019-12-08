@@ -5,7 +5,7 @@ MAINTAINER devops <devops@aem.design>
 LABEL   os="centos 7" \
         java="oracle 8" \
         container.description="aem instance, will run as author unless specified otherwise" \
-        version="6.5.0-bundle" \
+        version="6.5.2.0-bundle" \
         imagename="aem" \
         test.command=" java -version 2>&1 | grep 'java version' | sed -e 's/.*java version "\(.*\)".*/\1/'" \
         test.command.verify="1.8"
@@ -20,7 +20,8 @@ ARG PACKAGE_PATH="./crx-quickstart/install"
 ENV AEM_JVM_OPTS="${AEM_JVM_OPTS}" \
     AEM_START_OPTS="${AEM_START_OPTS}"\
     AEM_JARFILE="${AEM_JARFILE}" \
-    AEM_RUNMODE="${AEM_RUNMODE}"
+    AEM_RUNMODE="${AEM_RUNMODE}" \
+    JAVA_HOME="/usr/java/default"
 
 WORKDIR /aem
 
