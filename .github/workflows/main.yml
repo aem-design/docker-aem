@@ -22,12 +22,13 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: prepare variables
         run: |
+          export PACKAGE_PATH2=$GITHUB_WORKSPACE/$PACKAGE_PATH
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/get_config.sh)
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/get_version.sh)
           if [[ ! -d $GITHUB_WORKSPACE/$PACKAGE_PATH ]]; then mkdir $GITHUB_WORKSPACE/$PACKAGE_PATH; fi
           if [[ ! -d $GITHUB_WORKSPACE/$JAR_PATH ]]; then mkdir $GITHUB_WORKSPACE/$JAR_PATH; fi
           ls $GITHUB_WORKSPACE/$PACKAGE_PATH
-          echo $IMAGE_VERSION
+          echo $PACKAGE_PATH2
       - name: view variable information
         run: |
           echo $GITHUB_WORKSPACE
