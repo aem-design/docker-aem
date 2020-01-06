@@ -15,6 +15,7 @@ jobs:
       CREDS_ADOBE: dd
       DOCKER_USERNAME: ss
       DOCKER_PASSWORD: dd
+      ORGANISATION_NAME: aemdesign
 
     steps:
       - uses: actions/checkout@v1
