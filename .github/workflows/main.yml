@@ -11,8 +11,8 @@ jobs:
       matrix:
         python-version: [3.6]
     env:
-      PACKAGE_PATH: $Env:GITHUB_WORKSPACE/package
-      JAR_PATH: $(echo GITHUB_WORKSPACE)
+      PACKAGE_PATH: package
+      JAR_PATH: jar
 
     steps:
       - uses: actions/checkout@v1
@@ -26,7 +26,4 @@ jobs:
         run: |
           echo $GITHUB_WORKSPACE
           echo ${JAR_PATH}
-          exit
-      - name: this will not be executed
-        run: |
-          echo "You should not see this"
+          echo $JAR_PATH
