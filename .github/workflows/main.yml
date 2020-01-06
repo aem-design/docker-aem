@@ -53,7 +53,7 @@ jobs:
 #          if [[ "${DOWNLOAD_COUNT}" != "${PACKAGE_COUNT}" ]]; then travis_terminate 1; fi
       - name: build image
         runs:
-          using: 'docker'
+          uses: 'docker'
           image: 'Dockerfile'
       - name: deploy image
         run: |
