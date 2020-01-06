@@ -11,8 +11,8 @@ jobs:
       matrix:
         python-version: [3.6]
     env:
-      PACKAGE_PATH: {env.GITHUB_WORKSPACE}/packages
-      JAR_PATH: {env.GITHUB_WORKSPACE}/jar
+      PACKAGE_PATH: ${{GITHUB_WORKSPACE}}
+      JAR_PATH: ${{GITHUB_WORKSPACE}}/jar
 
     steps:
       - uses: actions/checkout@v1
