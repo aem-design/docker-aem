@@ -31,6 +31,8 @@ jobs:
           if [[ ! -d $PACKAGE_PATH ]]; then mkdir $PACKAGE_PATH; fi
           if [[ ! -d $JAR_PATH ]]; then mkdir $JAR_PATH; fi
 
+          pip3 install requests
+
           ./scripts/gdrive.sh "download" "$GOOGLE_DRIVEID" "$JAR_PATH/aem-quickstart.jar"
           ./scripts/download.sh "$PACKAGE_PATH/01-" "${{secrets.CREDS_ADOBE}}" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq640/servicepack/AEM-6.4.2.0/jcr%3acontent/package/file.res/AEM-6.4.2.0-6.4.2.zip"
           ./scripts/download.sh "$PACKAGE_PATH/04-" "-" "-" "https://github.com/Adobe-Consulting-Services/com.adobe.acs.bundles.twitter4j/releases/download/com.adobe.acs.bundles.twitter4j-1.0.0/com.adobe.acs.bundles.twitter4j-content-1.0.0.zip"
