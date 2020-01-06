@@ -27,6 +27,7 @@ jobs:
           if [[ ! -d $GITHUB_WORKSPACE/$PACKAGE_PATH ]]; then mkdir $GITHUB_WORKSPACE/$PACKAGE_PATH; fi
           if [[ ! -d $GITHUB_WORKSPACE/$JAR_PATH ]]; then mkdir $GITHUB_WORKSPACE/$JAR_PATH; fi
           ls $GITHUB_WORKSPACE/$PACKAGE_PATH
+          echo $IMAGE_VERSION
       - name: view variable information
         run: |
           echo $GITHUB_WORKSPACE
