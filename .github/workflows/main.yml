@@ -11,26 +11,34 @@ jobs:
       matrix:
         python-version: [3.6]
     env:
-      PACKAGE_PATH: package
-      JAR_PATH: jar
-
+      GOOGLE_DRIVEID: 1tL-5NO5FLVh_vmcIbvmjsy-Sz69sfISK
     steps:
       - uses: actions/checkout@v1
       - name: set up python ${{ matrix.python-version }}
         uses: actions/setup-python@v1
         with:
           python-version: ${{ matrix.python-version }}
-      - name: prepare variables
+      - name: create image
         run: |
-          export PACKAGE_PATH2=$GITHUB_WORKSPACE/$PACKAGE_PATH
+          export PACKAGE_PATH=$GITHUB_WORKSPACE/$package
+          export JAR_PATH=$GITHUB_WORKSPACE/$package
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/get_config.sh)
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/get_version.sh)
-          if [[ ! -d $GITHUB_WORKSPACE/$PACKAGE_PATH ]]; then mkdir $GITHUB_WORKSPACE/$PACKAGE_PATH; fi
-          if [[ ! -d $GITHUB_WORKSPACE/$JAR_PATH ]]; then mkdir $GITHUB_WORKSPACE/$JAR_PATH; fi
-          ls $GITHUB_WORKSPACE/$PACKAGE_PATH
-          echo $PACKAGE_PATH2
-      - name: view variable information
-        run: |
-          echo $GITHUB_WORKSPACE
-          echo ${JAR_PATH}
-          echo $JAR_PATH
+          if [[ ! -d $PACKAGE_PATH ]]; then /$PACKAGE_PATH; fi
+          if [[ ! -d $JAR_PATH ]]; then mkdir $JAR_PATH; fi
+
+          ./scripts/gdrive.sh "download" "$GOOGLE_DRIVEID" "$JAR_PATH/aem-quickstart.jar"
+#          ./scripts/download.sh "$PACKAGE_PATH/01-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq640/servicepack/AEM-6.4.2.0/jcr%3acontent/package/file.res/AEM-6.4.2.0-6.4.2.zip"
+#          ./scripts/download.sh "$PACKAGE_PATH/04-" "-" "-" "https://github.com/Adobe-Consulting-Services/com.adobe.acs.bundles.twitter4j/releases/download/com.adobe.acs.bundles.twitter4j-1.0.0/com.adobe.acs.bundles.twitter4j-content-1.0.0.zip"
+#          ./scripts/download.sh "$PACKAGE_PATH/05-" "-" "-" "https://github.com/Adobe-Consulting-Services/acs-aem-commons/releases/download/acs-aem-commons-4.3.0/acs-aem-commons-content-4.3.0.zip"
+#          ./scripts/download.sh "$PACKAGE_PATH/06-" "-" "-" "https://github.com/adobe/aem-core-wcm-components/releases/download/core.wcm.components.reactor-2.5.0/core.wcm.components.all-2.5.0.zip"
+#          ./scripts/download.sh "$PACKAGE_PATH/07-" "-" "-" "http://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-package/2.3.2/accesscontroltool-package-2.3.2.zip"
+#          ./scripts/download.sh "$PACKAGE_PATH/08-" "-" "-" "http://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-oakindex-package/2.3.2/accesscontroltool-oakindex-package-2.3.2.zip"
+#          ./scripts/download.sh "$PACKAGE_PATH/09-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq600/component/vanityurls-components/jcr%3acontent/package/file.res/vanityurls-components-1.0.2.zip"
+#          ./scripts/download.sh "$PACKAGE_PATH/10-" "-" "githublatest:aemdesign-aem-core-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-core/releases/latest"
+#          ./scripts/download.sh "$PACKAGE_PATH/11-" "-" "githublatest:aemdesign-aem-compose" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
+#          ./scripts/download.sh "$PACKAGE_PATH/12-" "-" "githublatest:aemdesign-aem-config" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
+#          ./scripts/download.sh "$PACKAGE_PATH/13-" "-" "githublatest:aemdesign-aem-content" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
+#          ./scripts/download.sh "$PACKAGE_PATH/14-" "-" "githublatest:aemdesign-aem-showcase" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
+#          ./scripts/download.sh "$PACKAGE_PATH/15-" "-" "githublatest:aemdesign-aem-training" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
+#          ./scripts/download.sh "$PACKAGE_PATH/16-" "-" "-" "https://github.com/coresecure/Adobe-AEM-Brightcove-Connector/releases/download/5.5.0/brightcove_connector.ui.apps-5.5.0.zip"
