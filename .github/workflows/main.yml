@@ -24,7 +24,6 @@ jobs:
         run: ls -alrt $GITHUB_WORKSPACE
       - name: view variable information
         run: |
-          echo ${GITHUB_WORKSPACE}
           echo ${{GITHUB_WORKSPACE}}
           echo ${PACKAGE_PATH}
           echo ${JAR_PATH}
