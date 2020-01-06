@@ -33,6 +33,7 @@ jobs:
 
           ./scripts/gdrive.sh "download" "$GOOGLE_DRIVEID" "$JAR_PATH/aem-quickstart.jar"
           docker build --pull -t $IMAGE:$IMAGE_VERSION .
+
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/container_verify.sh)
       - name: deploy image
         run: |
