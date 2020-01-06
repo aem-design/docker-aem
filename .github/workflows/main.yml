@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: ${{ matrix.python-version }}
-      - name: create image
+      - name: download files
         run: |
           export PACKAGE_PATH=$GITHUB_WORKSPACE/$package
           export JAR_PATH=$GITHUB_WORKSPACE/$package
@@ -51,9 +51,10 @@ jobs:
 #          export PACKAGE_COUNT=14
 #          echo "CHECK IF WE GOT ALL OF THE PACKAGES"
 #          if [[ "${DOWNLOAD_COUNT}" != "${PACKAGE_COUNT}" ]]; then travis_terminate 1; fi
-
-          docker build --pull -t $IMAGE:$IMAGE_VERSION .
-          source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/container_verify.sh)
+      - name: build image
+        runs:
+          using: 'docker'
+          image: 'Dockerfile'
       - name: deploy image
         run: |
           echo $IMAGE:$IMAGE_VERSION
