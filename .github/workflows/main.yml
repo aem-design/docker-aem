@@ -11,7 +11,7 @@ jobs:
       matrix:
         python-version: [3.6]
     env:
-      PACKAGE_PATH: $(pwd)/package
+      PACKAGE_PATH: $Env:GITHUB_WORKSPACE/package
       JAR_PATH: $GITHUB_WORKSPACE
 
     steps:
