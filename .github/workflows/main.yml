@@ -12,7 +12,7 @@ jobs:
         python-version: [3.6]
     env:
       PACKAGE_PATH: $Env:GITHUB_WORKSPACE/package
-      JAR_PATH: $GITHUB_WORKSPACE
+      JAR_PATH: $(echo GITHUB_WORKSPACE)
 
     steps:
       - uses: actions/checkout@v1
