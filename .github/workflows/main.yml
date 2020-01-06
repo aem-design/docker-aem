@@ -20,6 +20,8 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: ${{ matrix.python-version }}
+      - name: List Files
+        run: ls -alrt $GITHUB_WORKSPACE
       - name: view variable information
         run: |
           echo $GITHUB_WORKSPACE
