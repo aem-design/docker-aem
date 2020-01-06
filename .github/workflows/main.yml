@@ -22,9 +22,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: view variable information
         run: |
-          - echo ${PACKAGE_PATH}
-          - echo ${JAR_PATH}
-          - exit
+          echo ${PACKAGE_PATH}
+          echo ${JAR_PATH}
+          exit
       - name: this will not be executed
         run: |
-          - echo "You should not see this"
+          echo "You should not see this"
