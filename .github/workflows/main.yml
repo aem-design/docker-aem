@@ -9,7 +9,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.6.3]
+        python-version: [3.6]
     env:
       PACKAGE_PATH: "${GITHUB_WORKSPACE}/packages"
       JAR_PATH: "${GITHUB_WORKSPACE}/jar"
