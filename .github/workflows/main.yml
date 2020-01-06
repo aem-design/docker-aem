@@ -29,7 +29,7 @@ jobs:
           export JAR_PATH=$GITHUB_WORKSPACE/$package
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/get_config.sh)
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/get_version.sh)
-          if [[ ! -d $PACKAGE_PATH ]]; then /$PACKAGE_PATH; fi
+          if [[ ! -d $PACKAGE_PATH ]]; then mkdir $PACKAGE_PATH; fi
           if [[ ! -d $JAR_PATH ]]; then mkdir $JAR_PATH; fi
 
           ./scripts/gdrive.sh "download" "$GOOGLE_DRIVEID" "$JAR_PATH/aem-quickstart.jar"
