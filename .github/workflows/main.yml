@@ -24,7 +24,7 @@ jobs:
         run: ls -alrt $GITHUB_WORKSPACE
       - name: view variable information
         run: |
-          echo ${PACKAGE_PATH}
+          echo $Env:GITHUB_WORKSPACE
           echo ${JAR_PATH}
           exit
       - name: this will not be executed
