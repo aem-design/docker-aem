@@ -20,8 +20,13 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: ${{ matrix.python-version }}
-      - name: List Files
-        run: ls -alrt $GITHUB_WORKSPACE
+      - name: prepare variables
+        run: |
+          source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/get_config.sh)
+          source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/get_version.sh)
+          if [[ ! -d $GITHUB_WORKSPACE/$PACKAGE_PATH ]]; then mkdir $GITHUB_WORKSPACE/$PACKAGE_PATH; fi
+          if [[ ! -d $GITHUB_WORKSPACE/$JAR_PATH ]]; then mkdir $GITHUB_WORKSPACE/$JAR_PATH; fi
+          ls $GITHUB_WORKSPACE/$PACKAGE_PATH
       - name: view variable information
         run: |
           echo $GITHUB_WORKSPACE
