@@ -32,8 +32,8 @@ jobs:
           if [[ ! -d $JAR_PATH ]]; then mkdir $JAR_PATH; fi
 
           ./scripts/gdrive.sh "download" "$GOOGLE_DRIVEID" "$JAR_PATH/aem-quickstart.jar"
-      - name: deploy image
-        run: |
+          docker build --pull -t $IMAGE:$IMAGE_VERSION .
+          source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/container_verify.sh)
           echo $IMAGE:$IMAGE_VERSION
           echo "LOGIN TO HUB.DOCKER"
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
