@@ -13,6 +13,8 @@ jobs:
     env:
       GOOGLE_DRIVEID: ${{secrets.GOOGLE_DRIVEID_AEM64}}
       ORGANISATION_NAME: aemdesign
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
     steps:
       - uses: actions/checkout@v1
@@ -56,9 +58,9 @@ jobs:
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/container_verify.sh)
           echo $IMAGE:$IMAGE_VERSION
           echo "LOGIN TO HUB.DOCKER"
-          docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
           echo "PUSH HUB.DOCKER"
           docker push $IMAGE:$IMAGE_VERSION
           if [[ ${GITHUB_REF##*/} == "master" ]]; then docker tag $IMAGE:$IMAGE_VERSION $IMAGE:latest && docker push $IMAGE:latest; fi
           echo "UPDATE README IN HUB.DOCKER"
-          if [[ ${GITHUB_REF##*/} == "master" ]]; then docker run --rm -v $(pwd):/data/ aemdesign/dockerhub-description "${{secrets.DOCKER_USERNAME}}" "${{secrets.DOCKER_PASSWORD}}" "$IMAGE"; fi
+          if [[ ${GITHUB_REF##*/} == "master" ]]; then docker run --rm -v $(pwd):/data/ aemdesign/dockerhub-description "$DOCKER_USERNAME" "$DOCKER_PASSWORD" "$IMAGE"; fi
