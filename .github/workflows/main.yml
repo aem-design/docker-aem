@@ -51,7 +51,7 @@ jobs:
           ./scripts/download.sh "$PACKAGE_PATH/15-" "-" "githublatest:aemdesign-aem-training" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
           export DOWNLOAD_COUNT=$(find $PACKAGE_PATH -type f | wc -l)
           echo DOWNLOAD_COUNT=$DOWNLOAD_COUNT
-          export PACKAGE_COUNT=14
+          export PACKAGE_COUNT=13
           echo "CHECK IF WE GOT ALL OF THE PACKAGES"
           if [[ "${DOWNLOAD_COUNT}" != "${PACKAGE_COUNT}" ]]; then travis_terminate 1; fi
           docker build --pull -t $IMAGE:$IMAGE_VERSION .
