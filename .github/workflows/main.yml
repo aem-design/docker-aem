@@ -15,21 +15,16 @@ jobs:
       ORGANISATION_NAME: aemdesign
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-
     steps:
       - uses: actions/checkout@v1
       - name: set up python ${{ matrix.python-version }}
         uses: actions/setup-python@v1
         with:
           python-version: ${{ matrix.python-version }}
-      - name: set environment variable
+      - name: initialize and download files
         run: |
           export PACKAGE_PATH=$GITHUB_WORKSPACE/packages
           export JAR_PATH=$GITHUB_WORKSPACE/jar
-          echo $PACKAGE_PATH
-      - name: initialize and download files
-        run: |
-          echo $PACKAGE_PATH
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/get_config.sh)
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/get_version.sh)
           if [[ ! -d $PACKAGE_PATH ]]; then mkdir $PACKAGE_PATH; fi
