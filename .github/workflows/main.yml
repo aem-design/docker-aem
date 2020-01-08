@@ -26,8 +26,10 @@ jobs:
         run: |
           export PACKAGE_PATH=$GITHUB_WORKSPACE/packages
           export JAR_PATH=$GITHUB_WORKSPACE/jar
+          echo $PACKAGE_PATH
       - name: initialize and download files
         run: |
+          echo $PACKAGE_PATH
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/get_config.sh)
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/get_version.sh)
           if [[ ! -d $PACKAGE_PATH ]]; then mkdir $PACKAGE_PATH; fi
