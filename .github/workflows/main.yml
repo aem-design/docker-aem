@@ -22,12 +22,12 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Branch name
-        run: echo running on branch ${GITHUB_REF##*/}
-      - name: download files
+      - name: set environment variable
         run: |
           export PACKAGE_PATH=$GITHUB_WORKSPACE/packages
           export JAR_PATH=$GITHUB_WORKSPACE/jar
+      - name: initialize and download files
+        run: |
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/get_config.sh)
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/get_version.sh)
           if [[ ! -d $PACKAGE_PATH ]]; then mkdir $PACKAGE_PATH; fi
@@ -53,7 +53,9 @@ jobs:
           echo DOWNLOAD_COUNT=$DOWNLOAD_COUNT
           export PACKAGE_COUNT=13
           echo "CHECK IF WE GOT ALL OF THE PACKAGES"
-          if [[ "${DOWNLOAD_COUNT}" != "${PACKAGE_COUNT}" ]]; then travis_terminate 1; fi
+          if [[ "${DOWNLOAD_COUNT}" != "${PACKAGE_COUNT}" ]]; then exit 1; fi
+      - name: build docker image and upload to docker hub
+        run: |
           docker build --pull -t $IMAGE:$IMAGE_VERSION .
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/container_verify.sh)
           echo $IMAGE:$IMAGE_VERSION
