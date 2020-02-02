@@ -104,7 +104,7 @@ test_docker_run_contains_packages() {
 
     printLine "Starting Container"
 
-    OUTPUT=$(docker run --rm ${IMAGE_NAME} bash -c "cd /aem/crx-quickstart/install && ls -l *.zip 2>/dev/null | wc -l")
+    OUTPUT=$(docker run --rm ${IMAGE_NAME} bash -c "cd /aem/crx-quickstart/install && ls -l *.zip | wc -l")
 
     if [[ "$OUTPUT" != *"$CHECK"* ]]; then
         printResult "error"
