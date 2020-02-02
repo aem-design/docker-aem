@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# get current script location
+CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 function help() {
 echo "Usage:"
 echo "  ./download.sh {[FILE NAME PREFIX] [AUTH] [MODULE] [URL]}..."
@@ -25,15 +28,27 @@ function download() {
 
     local FILENAME=$(basename "$FILEURL")
 
-    if [[ "$MODULE" == *githublatest:* ]]; then
-        FILEURL=$(curl -s -L ${FILEURL} | awk -v GITHUB_LATEST_FILTER=aemdesign-aem-core-deploy -f scripts/githublatest.awk)
-        if [[ "$FILEURL" == "" ]]; then
+    if [[ ! "$MODULE" == "" && ! "$MODULE" == "-" ]]; then
+        MODULE_SCRIPT="${CURRENT_DIR}/$(echo $MODULE | sed -e 's/\(.*\):.*/\1/').py"
+        echo "script: ${MODULE_SCRIPT}"
+
+        if [[ ! -f "${MODULE_SCRIPT}" ]]; then
+            echo "module: error, could not find module script"
+            exit 0
+        fi
+
+        FILTER=$(echo $MODULE | sed -e 's/.*:\(.*\)/\1/')
+        echo "filter: ${FILTER}"
+        echo "url: ${FILEURL}"
+        FILEURL_FILTER_URL=$(${MODULE_SCRIPT} ${FILTER} ${FILEURL})
+        echo "FILEURL_FILTER_URL:"
+        echo ${FILEURL_FILTER_URL}
+        if [[ "${FILEURL_FILTER_URL}" == "" ]]; then
             echo "module: error, could not get url from module"
             exit 0
         fi
-        FILENAME=$(basename "$FILEURL")
-    else
-        echo "module: not supported"
+        FILENAME=$(basename "${FILEURL_FILTER_URL}")
+        FILEURL=${FILEURL_FILTER_URL}
     fi
 
     echo "DOWNLOADING $FILEURL to ${FILENAME_PREFIX}${FILENAME}"
@@ -62,7 +77,7 @@ function downloadAuth() {
 		--retry 300 \
 		--retry-delay 5 \
 		-A "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)" \
-		-k -v \
+		-k \
 		-u "${BASICCREDS}" -L "${FILEURL}" -o ${FILENAME_PREFIX}${FILENAME}
 
 }

@@ -1,0 +1,47 @@
+name: ci
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.6]
+    env:
+      GOOGLE_DRIVEID: ${{secrets.GOOGLE_DRIVEID_AEM64}}
+      ORGANISATION_NAME: aemdesign
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v1
+      - name: set up python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: initialize and download files
+        run: |
+          export PACKAGE_PATH=$GITHUB_WORKSPACE/packages
+          export JAR_PATH=$GITHUB_WORKSPACE/jar
+          source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/get_config.sh)
+          source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/get_version.sh)
+          if [[ ! -d $PACKAGE_PATH ]]; then mkdir $PACKAGE_PATH; fi
+          if [[ ! -d $JAR_PATH ]]; then mkdir $JAR_PATH; fi
+
+          pip3 install requests
+
+          ./scripts/gdrive.sh "download" "$GOOGLE_DRIVEID" "$JAR_PATH/aem-quickstart.jar"
+
+          #### build docker image and upload to docker hub
+          docker build --pull -t $IMAGE:$IMAGE_VERSION .
+          source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/container_verify.sh)
+          echo $IMAGE:$IMAGE_VERSION
+          echo "LOGIN TO HUB.DOCKER"
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          echo "PUSH HUB.DOCKER"
+          docker push $IMAGE:$IMAGE_VERSION
+          if [[ ${GITHUB_REF##*/} == "master" ]]; then docker tag $IMAGE:$IMAGE_VERSION $IMAGE:latest && docker push $IMAGE:latest; fi
+          echo "UPDATE README IN HUB.DOCKER"
+          if [[ ${GITHUB_REF##*/} == "master" ]]; then docker run --rm -v $(pwd):/data/ aemdesign/dockerhub-description "$DOCKER_USERNAME" "$DOCKER_PASSWORD" "$IMAGE"; fi
