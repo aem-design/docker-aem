@@ -52,12 +52,14 @@ jobs:
           # ============================================
           export PACKAGE_CKECK_COUNT=1
           # --------------------------------------------
-          ./scripts/download.sh "$PACKAGE_PATH/01-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/servicepack/AEM-6.5.2.0/jcr%3acontent/package/file.res/AEM-6.5.2.0-6.5.2.zip"
+          ./scripts/download.sh "$PACKAGE_PATH/01-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/servicepack/AEM-6.5.3.0/jcr%3acontent/package/file.res/AEM-6.5.3.0-6.5.3.zip"
+#          ./scripts/download.sh "$PACKAGE_PATH/02-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/servicepack/fd/AEM-Forms-6.5.3.0-LX/jcr%3acontent/package/file.res/AEM-Forms-6.5.3.0-LX-6.0.122.zip"
+#          ./scripts/download.sh "$PACKAGE_PATH/03-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/compatpack/AEM-FORMS-6.5.3.0-COMPAT/jcr%3acontent/package/file.res/AEM-FORMS-6.5.3.0-COMPAT-2.0.26.zip"
 #          ./scripts/download.sh "$PACKAGE_PATH/04-" "-" "-" "https://github.com/Adobe-Consulting-Services/com.adobe.acs.bundles.twitter4j/releases/download/com.adobe.acs.bundles.twitter4j-1.0.0/com.adobe.acs.bundles.twitter4j-content-1.0.0.zip"
-#          ./scripts/download.sh "$PACKAGE_PATH/05-" "-" "-" "https://github.com/Adobe-Consulting-Services/acs-aem-commons/releases/download/acs-aem-commons-4.3.0/acs-aem-commons-content-4.3.0.zip"
-#          ./scripts/download.sh "$PACKAGE_PATH/06-" "-" "-" "https://github.com/adobe/aem-core-wcm-components/releases/download/core.wcm.components.reactor-2.5.0/core.wcm.components.all-2.5.0.zip"
-#          ./scripts/download.sh "$PACKAGE_PATH/07-" "-" "-" "http://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-package/2.3.2/accesscontroltool-package-2.3.2.zip"
-#          ./scripts/download.sh "$PACKAGE_PATH/08-" "-" "-" "http://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-oakindex-package/2.3.2/accesscontroltool-oakindex-package-2.3.2.zip"
+#          ./scripts/download.sh "$PACKAGE_PATH/05-" "-" "-" "https://github.com/Adobe-Consulting-Services/acs-aem-commons/releases/download/acs-aem-commons-4.4.0/acs-aem-commons-content-4.4.0.zip"
+#          ./scripts/download.sh "$PACKAGE_PATH/06-" "-" "-" "https://github.com/adobe/aem-core-wcm-components/releases/download/core.wcm.components.reactor-2.8.0/core.wcm.components.all-2.8.0.zip"
+#          ./scripts/download.sh "$PACKAGE_PATH/07-" "-" "-" "http://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-package/2.5.1/accesscontroltool-package-2.3.2.zip"
+#          ./scripts/download.sh "$PACKAGE_PATH/08-" "-" "-" "http://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-oakindex-package/2.5.1/accesscontroltool-oakindex-package-2.5.1.zip"
 #          ./scripts/download.sh "$PACKAGE_PATH/09-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq600/component/vanityurls-components/jcr%3acontent/package/file.res/vanityurls-components-1.0.2.zip"
 #          ./scripts/download.sh "$PACKAGE_PATH/10-" "-" "githublatest:aemdesign-aem-core-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-core/releases/latest"
 #          ./scripts/download.sh "$PACKAGE_PATH/11-" "-" "githublatest:aemdesign-aem-support-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
