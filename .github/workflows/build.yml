@@ -1,0 +1,85 @@
+name: build
+
+on: [push, repository_dispatch]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_REGISTRY: docker.io
+      DOCKER_REGISTRY_INDEX: index.docker.io/aemdesign
+      ORGANISATION_NAME: aemdesign
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      GOOGLE_DRIVEID: ${{ secrets.GOOGLE_DRIVEID }}
+      GOOGLE_DRIVEID_AEM63: ${{ secrets.GOOGLE_DRIVEID_AEM63 }}
+      GOOGLE_DRIVEID_AEM64: ${{ secrets.GOOGLE_DRIVEID_AEM64 }}
+      CREDS_ADOBE: ${{ secrets.CREDS_ADOBE }}
+      PACKAGE_PATH: "./packages"
+      JAR_PATH: "./jar"
+      PYTHON_VERSION: 3.6
+
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: set up python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: set envirnment variables
+        id: config
+        run: |
+          echo GET PACKAGES
+          export PACKAGE_PATH=$(pwd)/packages
+          echo ::set-env name=PACKAGE_PATH::${PACKAGE_PATH}
+          source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_get_config.sh)
+          echo $PACKAGE_PATH
+          echo $JAR_PATH
+          if [[ ! -d $PACKAGE_PATH ]]; then mkdir $PACKAGE_PATH; fi
+          if [[ ! -d $JAR_PATH ]]; then mkdir $JAR_PATH; fi
+          echo PACKAGES CONTENTS $PACKAGE_PATH
+          ls -latr $PACKAGE_PATH
+
+          echo DOWNLOAD JAR INTO ${JAR_PATH}
+          ./scripts/gdrive.sh "download" "$GOOGLE_DRIVEID_AEM63" "$JAR_PATH/aem-quickstart.jar"
+          echo "CHECK IF JAR HAS BEEN DOWNLOADED"
+          if [[ ! -f "$JAR_PATH/aem-quickstart.jar" ]]; then echo "JAR DID NOT DOWNLOAD" && exit 1; fi
+
+          source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_get_version.sh)
+
+      - name: build and test docker image
+        run: |
+          docker build --pull -t $IMAGE:$IMAGE_VERSION .
+          source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/container_verify.sh)
+          (cd test && ./run_tests.sh "$IMAGE:$IMAGE_VERSION")
+          docker images
+          
+      - name: login to docker registry
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ${DOCKER_REGISTRY} -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: push image version
+        run: docker push $IMAGE:$IMAGE_VERSION
+
+      - name: push latest image on master
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker tag $IMAGE:$IMAGE_VERSION $IMAGE:latest
+          docker push $IMAGE:latest
+
+      - name: update registry description with readme on master
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker run --rm -v $(pwd):/data/ aemdesign/dockerhub-description "$DOCKER_USERNAME" "$DOCKER_PASSWORD" "$IMAGE"
+
+      - uses: meeDamian/github-release@1.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ env.GITHUB_TAG }}
+          name: ${{ env.GITHUB_TAG }}
+          body: ${{ env.GIT_RELEASE_NOTES }}
+          allow_override: true
