@@ -63,7 +63,7 @@ jobs:
           ./scripts/download.sh "$PACKAGE_PATH/09-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq600/component/vanityurls-components/jcr%3acontent/package/file.res/vanityurls-components-1.0.2.zip"
           ./scripts/download.sh "$PACKAGE_PATH/10-" "-" "githublatest:aemdesign-aem-core-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-core/releases/latest"
           ./scripts/download.sh "$PACKAGE_PATH/11-" "-" "githublatest:aemdesign-aem-support-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
-          ./scripts/download.sh "$PACKAGE_PATH/12-" "-" "-" "https://github.com/coresecure/Adobe-AEM-Brightcove-Connector/releases/download/5.5.0/brightcove_connector.ui.apps-5.5.0.zip"
+          ./scripts/download.sh "$PACKAGE_PATH/12-" "-" "githublatest:brightcove_connector" "https://api.github.com/repos/aem-design/Adobe-AEM-Brightcove-Connector/releases/latest"
           # --------------------------------------------
           echo ::set-env name=PACKAGE_CKECK_COUNT::${PACKAGE_CKECK_COUNT}
           echo PACKAGE COUNT=$PACKAGE_CKECK_COUNT
