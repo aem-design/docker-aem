@@ -50,7 +50,7 @@ jobs:
           # ============================================
           # PACKAGE INSTALL
           # ============================================
-          export PACKAGE_CKECK_COUNT=10
+          export PACKAGE_CKECK_COUNT=12
           # --------------------------------------------
           ./scripts/download.sh "$PACKAGE_PATH/01-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/servicepack/AEM-6.5.1.0/jcr%3acontent/package/file.res/AEM-6.5.1.0-6.5.1.zip"
           ./scripts/download.sh "$PACKAGE_PATH/02-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/servicepack/fd/AEM-Forms-6.5.1.0-LX/jcr%3acontent/package/file.res/AEM-Forms-6.5.1.0-LX-6.0.88.zip"
@@ -73,7 +73,7 @@ jobs:
       - name: build and test docker image
         run: |
           docker build --pull -t $IMAGE:$IMAGE_VERSION .
-          source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/container_verify.sh)
+          source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_container_verify.sh)
           (cd test && ./run_tests.sh "$IMAGE:$IMAGE_VERSION")
           docker images
           
