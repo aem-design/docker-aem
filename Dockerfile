@@ -5,7 +5,7 @@ MAINTAINER devops <devops@aem.design>
 LABEL   os="centos 7" \
         java="oracle 8" \
         container.description="aem instance, will run as author unless specified otherwise" \
-        version="6.5.0-bundle" \
+        version="6.5.3.0-bundle" \
         imagename="aem" \
         test.command=" java -version 2>&1 | grep 'java version' | sed -e 's/.*java version "\(.*\)".*/\1/'" \
         test.command.verify="1.8"
