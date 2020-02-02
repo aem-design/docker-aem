@@ -54,7 +54,7 @@ jobs:
           # ============================================
           # PACKAGE INSTALL
           # ============================================
-          export PACKAGE_CKECK_COUNT=12
+          export PACKAGE_CKECK_COUNT=11
           # --------------------------------------------
           ./scripts/download.sh "$PACKAGE_PATH/01-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq640/servicepack/AEM-6.4.2.0/jcr%3acontent/package/file.res/AEM-6.4.2.0-6.4.2.zip"
           ./scripts/download.sh "$PACKAGE_PATH/04-" "-" "-" "https://github.com/Adobe-Consulting-Services/com.adobe.acs.bundles.twitter4j/releases/download/com.adobe.acs.bundles.twitter4j-1.0.0/com.adobe.acs.bundles.twitter4j-content-1.0.0.zip"
