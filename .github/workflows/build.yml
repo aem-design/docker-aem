@@ -100,3 +100,4 @@ jobs:
           tag: ${{ env.GITHUB_TAG }}
           name: ${{ env.GITHUB_TAG }}
           body: ${{ env.GIT_RELEASE_NOTES }}
+          allow_override: true
