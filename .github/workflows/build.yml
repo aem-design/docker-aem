@@ -54,7 +54,7 @@ jobs:
           # ============================================
           # PACKAGE INSTALL
           # ============================================
-          export PACKAGE_CKECK_COUNT=13
+          export PACKAGE_CKECK_COUNT=12
           # --------------------------------------------
           ./scripts/download.sh "$PACKAGE_PATH/01-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq630/servicepack/AEM-6.3.3.0/jcr%3acontent/package/file.res/AEM-6.3.3.0-6.3.3.zip"
           ./scripts/download.sh "$PACKAGE_PATH/02-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq630/cumulativefixpack/AEM-CFP-6.3.3.6/jcr%3acontent/package/file.res/AEM-CFP-6.3.3.6-6.0.zip"
