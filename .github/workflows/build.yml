@@ -73,7 +73,7 @@ jobs:
       - name: build and test docker image
         run: |
           docker build --pull -t $IMAGE:$IMAGE_VERSION .
-          source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/container_verify.sh)
+          source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_container_verify.sh)
           (cd test && ./run_tests.sh "$IMAGE:$IMAGE_VERSION")
           docker images
           
