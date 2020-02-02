@@ -54,7 +54,7 @@ jobs:
           # ============================================
           # PACKAGE INSTALL
           # ============================================
-          export PACKAGE_CKECK_COUNT=11
+          export PACKAGE_CKECK_COUNT=9
           # --------------------------------------------
           ./scripts/download.sh "$PACKAGE_PATH/01-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq640/servicepack/AEM-6.4.2.0/jcr%3acontent/package/file.res/AEM-6.4.2.0-6.4.2.zip"
           #./scripts/download.sh "$PACKAGE_PATH/02-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq640/servicepack/fd/AEM-Forms-6.4.4.0-LX/jcr%3acontent/package/file.res/AEM-Forms-6.4.4.0-LX-5.1.58.zip"
