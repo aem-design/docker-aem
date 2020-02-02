@@ -50,6 +50,29 @@ jobs:
           echo "CHECK IF JAR HAS BEEN DOWNLOADED"
           if [[ ! -f "$JAR_PATH/aem-quickstart.jar" ]]; then echo "JAR DID NOT DOWNLOAD" && exit 1; fi
 
+          echo DOWNLOAD PACKAGES INTO ${PACKAGE_PATH}
+          # ============================================
+          # PACKAGE INSTALL
+          # ============================================
+          export PACKAGE_CKECK_COUNT=0
+          # --------------------------------------------
+          #./scripts/download.sh "$PACKAGE_PATH/01-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq630/servicepack/AEM-6.3.3.0/jcr%3acontent/package/file.res/AEM-6.3.3.0-6.3.3.zip"
+          #./scripts/download.sh "$PACKAGE_PATH/02-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq630/cumulativefixpack/AEM-CFP-6.3.3.6/jcr%3acontent/package/file.res/AEM-CFP-6.3.3.6-6.0.zip"
+          #./scripts/download.sh "$PACKAGE_PATH/03-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq630/servicepack/fd/AEM-Forms-6.3.3.6-LX/jcr%3acontent/package/file.res/AEM-Forms-6.3.3.6-LX-4.1.124.zip"
+          #./scripts/download.sh "$PACKAGE_PATH/04-" "-" "-" "https://github.com/Adobe-Consulting-Services/com.adobe.acs.bundles.twitter4j/releases/download/com.adobe.acs.bundles.twitter4j-1.0.0/com.adobe.acs.bundles.twitter4j-content-1.0.0.zip"
+          #./scripts/download.sh "$PACKAGE_PATH/05-" "-" "-" "https://github.com/Adobe-Consulting-Services/acs-aem-commons/releases/download/acs-aem-commons-4.3.4/acs-aem-commons-ui.content-4.3.4-min.zip"
+          #./scripts/download.sh "$PACKAGE_PATH/06-" "-" "-" "https://github.com/Adobe-Consulting-Services/acs-aem-commons/releases/download/acs-aem-commons-4.3.4/acs-aem-commons-ui.apps-4.3.4-min.zip"
+          #./scripts/download.sh "$PACKAGE_PATH/07-" "-" "-" "https://github.com/Adobe-Consulting-Services/acs-aem-commons/releases/download/acs-aem-commons-4.3.4/acs-aem-commons-bundle-4.3.4.jar"
+          #./scripts/download.sh "$PACKAGE_PATH/08-" "-" "-" "https://github.com/adobe/aem-core-wcm-components/releases/download/core.wcm.components.reactor-2.7.0/core.wcm.components.all-2.7.0.zip"
+          #./scripts/download.sh "$PACKAGE_PATH/09-" "-" "-" "http://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-package/2.4.1/accesscontroltool-package-2.4.1.zip"
+          #./scripts/download.sh "$PACKAGE_PATH/10-" "-" "-" "http://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-oakindex-package/2.4.1/accesscontroltool-oakindex-package-2.4.1.zip"
+          #./scripts/download.sh "$PACKAGE_PATH/11-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq600/component/vanityurls-components/jcr%3acontent/package/file.res/vanityurls-components-1.0.2.zip"
+          #./scripts/download.sh "$PACKAGE_PATH/12-" "-" "githublatest:aemdesign-aem-core-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-core/releases/latest"
+          #./scripts/download.sh "$PACKAGE_PATH/13-" "-" "githublatest:aemdesign-aem-support-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
+          # --------------------------------------------
+          echo ::set-env name=PACKAGE_CKECK_COUNT::${PACKAGE_CKECK_COUNT}
+          echo PACKAGE COUNT=$PACKAGE_CKECK_COUNT
+          ls -latr $PACKAGE_PATH
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_get_version.sh)
 
       - name: build and test docker image
