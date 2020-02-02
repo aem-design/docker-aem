@@ -13,11 +13,51 @@ This is docker image based on CentOS 7 with Tini
 One image that can be used for both Author and Publish nodes
 No license is included, you will need to register when starting up
 
-### Included Packages
+### Container Version to Branch Mapping
 
-Following is the list of packages included
+Following is description of container contents based on branch names
 
-* aem                   - for all aem instance types
+* 6.5.0 - base aem version without any packages
+* 6.5.0-bundle - base aem version with typical packages
+* 6.5.1.0 - base aem version with Service Pack 1
+* 6.5.1.0-bundle - base aem version with Service Pack 1 and typical packages
+* 6.5.1.0-bundle-forms - base aem version with Service Pack 1, typical packages and forms 
+
+### Typical Packages
+
+These are typical packages that are included in bundled containers
+
+| File | Notes  |
+| ---  | ---    |
+| com.adobe.acs.bundles.twitter4j-content-1.0.0.zip | acs twitter |
+| acs-aem-commons-content-4.3.2.zip | acs commons |
+| core.wcm.components.all-2.6.0.zip | adobe corecomponents |
+| accesscontroltool-package-2.3.2.zip | netcentric acl tools |
+| accesscontroltool-oakindex-package-2.3.2.zip | netcentric acl tools |
+| vanityurls-components-1.0.2.zip | vanity url servlet |
+| aemdesign-aem-core-deploy-{LATEST}.zip | aem design core |
+| aemdesign-aem-support-deploy-{LATEST}.zip | aem design showcase content |
+| brightcove_connector-{LATEST}.zip | bright cove package |
+
+Packages that have `{LATEST}` mean that when the container is built it will pull the latest version available in git repository. 
+
+### Service Pack Packages
+
+This is a typical service pack that is added to container
+
+| File | Notes  |
+| ---  | ---    |
+| AEM-6.5.1.0-6.5.1.zip | sp 1 |
+
+### Forms Packages
+
+This is a typical form and forms service pack that is added to container
+
+| File | Notes  |
+| ---  | ---    |
+| aem-compat-cq65-to-cq64-0.18.zip | aem forms backwards compatibility |
+| com.adobe.acs.bundles.twitter4j-content-1.0.0.zip | acs twitter |
+
 
 ### Environment Variables
 
@@ -52,44 +92,6 @@ Following Ports are exposed
 | 58242 | debug |
 | 57345 | debug |
 | 57346 | debug |
-
-### Packages in Bundled Version `aemdesign/aem:6.5.0-bundle`
-
-Following bundles are added to container
-
-| File | Notes  |
-| ---  | ---    |
-| AEM-6.5.1.0-6.5.1.zip | sp 1 |
-| AEM-Forms-6.5.1.0-LX-6.0.88.zip | aem forms |
-| aem-compat-cq65-to-cq64-0.18.zip | aem forms backwards compatibility |
-| com.adobe.acs.bundles.twitter4j-content-1.0.0.zip | acs twitter |
-| acs-aem-commons-content-4.3.2.zip | acs commons |
-| core.wcm.components.all-2.6.0.zip | adobe corecomponents |
-| accesscontroltool-package-2.3.2.zip | netcentric acl tools |
-| accesscontroltool-oakindex-package-2.3.2.zip | netcentric acl tools |
-| vanityurls-components-1.0.2.zip | vanity url servlet |
-| aemdesign-aem-core-deploy-{LATEST}.zip | aem design core |
-| aemdesign-aem-support-deploy-{LATEST}.zip | aem design showcase content |
-
-Packages that have `{LATEST}` mean that when the container is built it will pull the latest version available in git repository. 
-
-### Packages in Bundled Version `aemdesign/aem:6.4.0-bundle`
-
-Following bundles are added to container
-
-| File | Notes  |
-| ---  | ---    |
-| AEM-6.4.4.0-6.4.4.zip | sp 4 |
-| AEM-Forms-6.4.4.0-LX-5.1.58.zip | aem forms |
-| AEM-FORMS-6.4-COMPAT-1.0.18.zip | aem forms backwards compatibility |
-| com.adobe.acs.bundles.twitter4j-content-1.0.0.zip | acs twitter |
-| acs-aem-commons-content-4.3.2.zip | acs commons |
-| core.wcm.components.all-2.6.0.zip | adobe corecomponents |
-| accesscontroltool-package-2.3.2.zip | netcentric acl tools |
-| accesscontroltool-oakindex-package-2.3.2.zip | netcentric acl tools |
-| vanityurls-components-1.0.2.zip | vanity url servlet |
-
-Packages that have `{LATEST}` mean that when the container is built it will pull the latest version available in git repository. 
 
 
 ### Starting
