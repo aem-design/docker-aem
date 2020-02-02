@@ -1,6 +1,6 @@
 ## CentOS 7 with AEM
 
-[![build_status](https://travis-ci.org/aem-design/aem.svg?branch=master)](https://travis-ci.org/aem-design/aem) 
+[![build_status](https://github.com/aem-design/docker-aem/workflows/build/badge.svg?branch=6.5.0)](https://github.com/aem-design/docker-aem/actions?query=workflow%3Abuild+branch%3A6.5.0)
 [![github license](https://img.shields.io/github/license/aem-design/aem)](https://github.com/aem-design/aem) 
 [![github issues](https://img.shields.io/github/issues/aem-design/aem)](https://github.com/aem-design/aem) 
 [![github last commit](https://img.shields.io/github/last-commit/aem-design/aem)](https://github.com/aem-design/aem) 
