@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+
+  tasks:
+    - name: test
+      debug:
+        msg: test
+
