@@ -50,7 +50,7 @@ jobs:
           # ============================================
           # PACKAGE INSTALL
           # ============================================
-          export PACKAGE_CKECK_COUNT=12
+          export PACKAGE_CKECK_COUNT=13
           # --------------------------------------------
           ./scripts/download.sh "$PACKAGE_PATH/01-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/servicepack/AEM-6.5.3.0/jcr%3acontent/package/file.res/AEM-6.5.3.0-6.5.3.zip"
           ./scripts/download.sh "$PACKAGE_PATH/02-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/servicepack/fd/AEM-Forms-6.5.3.0-LX/jcr%3acontent/package/file.res/AEM-Forms-6.5.3.0-LX-6.0.122.zip"
@@ -64,6 +64,7 @@ jobs:
           ./scripts/download.sh "$PACKAGE_PATH/10-" "-" "githublatest:aemdesign-aem-core-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-core/releases/latest"
           ./scripts/download.sh "$PACKAGE_PATH/11-" "-" "githublatest:aemdesign-aem-support-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
           ./scripts/download.sh "$PACKAGE_PATH/12-" "-" "githublatest:brightcove_connector" "https://api.github.com/repos/aem-design/Adobe-AEM-Brightcove-Connector/releases/latest"
+          ./scripts/download.sh "$PACKAGE_PATH/13-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/product/fmdita/com.adobe.fmdita-6.5/jcr%3acontent/package/file.res/com.adobe.fmdita-6.5-3.5.1.54.zip"
           # --------------------------------------------
           echo ::set-env name=PACKAGE_CKECK_COUNT::${PACKAGE_CKECK_COUNT}
           echo PACKAGE COUNT=$PACKAGE_CKECK_COUNT
