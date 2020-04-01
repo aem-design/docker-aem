@@ -54,7 +54,7 @@ jobs:
           # ============================================
           # PACKAGE INSTALL
           # ============================================
-          export PACKAGE_CKECK_COUNT=9
+          export PACKAGE_CKECK_COUNT=1
           # --------------------------------------------
           ./scripts/download.sh "$PACKAGE_PATH/01-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq640/servicepack/AEM-6.4.2.0/jcr%3acontent/package/file.res/AEM-6.4.2.0-6.4.2.zip"          # --------------------------------------------
           echo ::set-env name=PACKAGE_CKECK_COUNT::${PACKAGE_CKECK_COUNT}
