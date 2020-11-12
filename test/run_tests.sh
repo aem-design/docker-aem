@@ -7,19 +7,14 @@
 # The image has to be available before this script is executed.
 #
 IMAGE_NAME=${1:-aemdesign/aem}
-FLAG_DEBUG=${2:-true}
+PACKAGE_CKECK_COUNT=${2:-0}
+FLAG_DEBUG=${3:-true}
+
 IP=$(which ip)
 if [[ -z $IP ]]; then
     LOCAL_IP="localhost"
 else
     LOCAL_IP=$($IP route | awk '/default/ { print $3 }')
-fi
-
-# check if git variables are set
-if [[ ${PACKAGE_CKECK_COUNT} == "" ]]; then
-    echo PACKAGE_CKECK_COUNT="${PACKAGE_CKECK_COUNT}"
-    echo PLEASE SET PACKAGE_CKECK_COUNT
-    exit 1
 fi
 
 #debug(message,type[error,info,warning],newlinesiffix)
