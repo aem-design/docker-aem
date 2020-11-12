@@ -115,26 +115,5 @@ test_docker_run_contains_packages() {
     fi
 }
 
-test_docker_run_contains_version() {
-    printLine "Testing if container has the right version"
-    CHECK="ok"
-
-    printLine "Starting Container"
-
-    CURRENT_BRANCH=$(git branch --show-current)
-
-    OUTPUT=$(docker run --rm ${IMAGE_NAME} bash -c "curl --silent -u admin:admin http://localhost:8080/system/console/productinfo.html | grep ${CURRENT_BRANCH} && echo ok")
-
-    if [[ "$OUTPUT" != *"$CHECK"* ]]; then
-        printResult "error"
-        printDebug "Image '${IMAGE_NAME}' test FAILED could not find ${CHECK} in output" "${OUTPUT}"
-        exit 1
-    else
-        printResult "success"
-    fi
-}
-
-#test_docker_run_contains_packages
-
-test_docker_run_contains_version
+test_docker_run_contains_packages
 
