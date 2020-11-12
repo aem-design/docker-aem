@@ -37,7 +37,7 @@ jobs:
         run: |
           echo GET PACKAGES
           export PACKAGE_PATH=$(pwd)/packages
-          echo ::set-env name=PACKAGE_PATH::${PACKAGE_PATH}
+          echo "{PACKAGE_PATH}={PACKAGE_PATH}" >> $GITHUB_ENV
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_get_config.sh)
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/download-gdrive.sh)
           echo $PACKAGE_PATH
@@ -47,14 +47,14 @@ jobs:
           echo PACKAGES CONTENTS $PACKAGE_PATH
           ls -latr $PACKAGE_PATH
           echo DOWNLOAD JAR INTO ${JAR_PATH}
-          ./scripts/gdrive.sh "download" "$GOOGLE_DRIVEID" "$JAR_PATH/aem-quickstart.jar"
+          downloadGDrive "download" "$GOOGLE_DRIVEID" "$JAR_PATH/aem-quickstart.jar"
           echo DOWNLOAD PACKAGES INTO ${PACKAGE_PATH}
           # ============================================
           # PACKAGE INSTALL
           # ============================================
           export PACKAGE_CKECK_COUNT=1
           # --------------------------------------------
-          downloadGDrive downloadGDrive "download" "${GOOGLE_DRIVEID_AEM_SP}" "$PACKAGE_PATH/01-AEM-6.5.4.0-6.5.4.zip"
+          downloadGDrive "download" "${GOOGLE_DRIVEID_AEM_SP}" "$PACKAGE_PATH/01-AEM-6.5.4.0-6.5.4.zip"
           #./scripts/download.sh "$PACKAGE_PATH/01-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/servicepack/AEM-6.5.4.0/jcr%3acontent/package/file.res/AEM-6.5.4.0-6.5.4.zip"
           #./scripts/download.sh "$PACKAGE_PATH/02-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/servicepack/fd/AEM-Forms-6.5.3.0-LX/jcr%3acontent/package/file.res/AEM-Forms-6.5.3.0-LX-6.0.122.zip"
           #./scripts/download.sh "$PACKAGE_PATH/03-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/compatpack/AEM-FORMS-6.5.3.0-COMPAT/jcr%3acontent/package/file.res/AEM-FORMS-6.5.3.0-COMPAT-2.0.26.zip"
@@ -68,7 +68,7 @@ jobs:
           #./scripts/download.sh "$PACKAGE_PATH/11-" "-" "githublatest:aemdesign-aem-support-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
           #./scripts/download.sh "$PACKAGE_PATH/12-" "-" "githublatest:brightcove_connector" "https://api.github.com/repos/aem-design/Adobe-AEM-Brightcove-Connector/releases/latest"
           # --------------------------------------------
-          echo ::set-env name=PACKAGE_CKECK_COUNT::${PACKAGE_CKECK_COUNT}
+          echo "{PACKAGE_CKECK_COUNT}={PACKAGE_CKECK_COUNT}" >> $GITHUB_ENV
           echo PACKAGE COUNT=$PACKAGE_CKECK_COUNT
           ls -latr $PACKAGE_PATH
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_get_version.sh)
