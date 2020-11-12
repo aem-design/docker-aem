@@ -69,7 +69,6 @@ jobs:
           #./scripts/download.sh "$PACKAGE_PATH/12-" "-" "githublatest:brightcove_connector" "https://api.github.com/repos/aem-design/Adobe-AEM-Brightcove-Connector/releases/latest"
           # --------------------------------------------
           echo "{PACKAGE_CKECK_COUNT}={PACKAGE_CKECK_COUNT}" >> $GITHUB_ENV
-          export PACKAGE_CKECK_COUNT=$PACKAGE_CKECK_COUNT
           echo PACKAGE COUNT=$PACKAGE_CKECK_COUNT
           ls -latr $PACKAGE_PATH
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_get_version.sh)
@@ -80,6 +79,8 @@ jobs:
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_container_verify.sh)
           (cd test && ./run_tests.sh "$IMAGE:$IMAGE_VERSION")
           docker images
+        with:
+          PACKAGE_CKECK_COUNT: ${{ steps.config.outputs.PACKAGE_CKECK_COUNT }}
 
       - name: login to docker registry
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ${DOCKER_REGISTRY} -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
