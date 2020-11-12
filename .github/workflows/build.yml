@@ -77,7 +77,7 @@ jobs:
         run: |
           docker build --pull -t $IMAGE:$IMAGE_VERSION .
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_container_verify.sh)
-          (cd test && ./run_tests.sh "$IMAGE:$IMAGE_VERSION")
+          ./test/run_tests.sh "$IMAGE:$IMAGE_VERSION"
           docker images
         env:
           PACKAGE_CKECK_COUNT: ${{ steps.config.outputs.PACKAGE_CKECK_COUNT }}
