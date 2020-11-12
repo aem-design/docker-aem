@@ -23,7 +23,7 @@ jobs:
 
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: set up python ${{ env.PYTHON_VERSION }}
         uses: actions/setup-python@v1
         with:
@@ -97,10 +97,15 @@ jobs:
         run: |
           docker run --rm -v $(pwd):/data/ aemdesign/dockerhub-description "$DOCKER_USERNAME" "$DOCKER_PASSWORD" "$IMAGE"
 
-      - uses: meeDamian/github-release@1.0
+      - name: create release ${{ env.GITHUB_TAG }}
+        if: github.ref == 'refs/heads/master'
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ env.GITHUB_TAG }}
-          name: ${{ env.GITHUB_TAG }}
-          body: ${{ env.GIT_RELEASE_NOTES }}
-          allow_override: true
+          tag_name: ${{ env.GITHUB_TAG }}
+          release_name: ${{ env.GITHUB_TAG }}
+          body: ${{ steps.config.outputs.GIT_RELEASE_NOTES }}
+          draft: false
+          prerelease: false
