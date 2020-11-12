@@ -79,7 +79,7 @@ jobs:
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_container_verify.sh)
           (cd test && ./run_tests.sh "$IMAGE:$IMAGE_VERSION")
           docker images
-        with:
+        env:
           PACKAGE_CKECK_COUNT: ${{ steps.config.outputs.PACKAGE_CKECK_COUNT }}
 
       - name: login to docker registry
