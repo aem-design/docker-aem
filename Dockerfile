@@ -5,9 +5,9 @@ MAINTAINER devops <devops@aem.design>
 LABEL   os="centos 7" \
         java="oracle 8" \
         container.description="aem instance, will run as author unless specified otherwise" \
-        version="6.5.4.0" \
+        version="6.5.5.0" \
         imagename="aem" \
-        test.command=" curl --silent -u admin:admin http://localhost:8080/system/console/productinfo.html | grep 6.5.4.0 && echo ok " \
+        test.command=" curl --silent -u admin:admin http://localhost:8080/system/console/productinfo.html | grep 6.5.5.0 && echo ok " \
         test.command.verify="ok"
 
 ARG AEM_VERSION="6.5.0"
