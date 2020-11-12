@@ -69,6 +69,7 @@ jobs:
           #./scripts/download.sh "$PACKAGE_PATH/12-" "-" "githublatest:brightcove_connector" "https://api.github.com/repos/aem-design/Adobe-AEM-Brightcove-Connector/releases/latest"
           # --------------------------------------------
           echo "{PACKAGE_CKECK_COUNT}={PACKAGE_CKECK_COUNT}" >> $GITHUB_ENV
+          echo ::set-output name=PACKAGE_CKECK_COUNT::$PACKAGE_CKECK_COUNT
           echo PACKAGE COUNT=$PACKAGE_CKECK_COUNT
           ls -latr $PACKAGE_PATH
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_get_version.sh)

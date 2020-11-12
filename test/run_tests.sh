@@ -10,6 +10,10 @@ IMAGE_NAME=${1:-aemdesign/aem}
 PACKAGE_CKECK_COUNT=${2:-0}
 FLAG_DEBUG=${3:-true}
 
+echo IMAGE_NAME="$IMAGE_NAME"
+echo PACKAGE_CKECK_COUNT="$PACKAGE_CKECK_COUNT"
+echo FLAG_DEBUG="$FLAG_DEBUG"
+
 IP=$(which ip)
 if [[ -z $IP ]]; then
     LOCAL_IP="localhost"
