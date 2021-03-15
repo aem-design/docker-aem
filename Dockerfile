@@ -2,13 +2,13 @@ FROM aemdesign/aem-base:jdk11
 
 MAINTAINER devops <devops@aem.design>
 
-LABEL   os="centos 7" \
+LABEL   os="centos 8" \
         java="oracle 8" \
         container.description="aem instance, will run as author unless specified otherwise" \
-        version="6.5.5.0" \
+        version="2021.3.4997" \
         imagename="aem" \
-        test.command=" java -version 2>&1 | grep 'java version' | sed -e 's/.*java version "\(.*\)".*/\1/'" \
-        test.command.verify="1.8"
+        test.command="java --version" \
+        test.command.verify="11."
 
 ARG AEM_JVM_OPTS="-server -Xms1024m -Xmx1024m -XX:MaxDirectMemorySize=256M -XX:+CMSClassUnloadingEnabled -Djava.awt.headless=true -Dorg.apache.felix.http.host=0.0.0.0"
 ARG AEM_JVM_OPTS="${AEM_JVM_OPTS} -XX:+UseParallelGC --add-opens=java.desktop/com.sun.imageio.plugins.jpeg=ALL-UNNAMED --add-opens=java.base/sun.net.www.protocol.jrt=ALL-UNNAMED --add-opens=java.naming/javax.naming.spi=ALL-UNNAMED --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED -Dnashorn.args=--no-deprecation-warning"
