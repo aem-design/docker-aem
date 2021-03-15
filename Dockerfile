@@ -30,6 +30,8 @@ RUN java -jar aem-quickstart.jar -unpack && \
     rm aem-quickstart.jar && \
     export AEM_JARFILE=$(find /aem/crx-quickstart/app -name cq-quickstart-cloudready-*)
 
+ENV AEM_JARFILE="${AEM_JARFILE}"
+
 COPY dist/install.first/*.config ./crx-quickstart/install/
 COPY dist/install.first/logs/*.config ./crx-quickstart/install/
 COPY dist/install.first/conf/sling.properties ./crx-quickstart/conf/sling.properties
