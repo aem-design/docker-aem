@@ -1,6 +1,6 @@
 name: build
 
-on: [push, repository_dispatch]
+on: [push]
 
 jobs:
   build:
@@ -12,10 +12,8 @@ jobs:
       ORGANISATION_NAME: aemdesign
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      GOOGLE_DRIVEID: ${{ secrets.GOOGLE_DRIVEID }}
+      GOOGLE_DRIVEID_AEM: ${{ secrets.GOOGLE_DRIVEID }}
       GOOGLE_DRIVEID_AEM_SP: ${{ secrets.GOOGLE_DRIVEID_AEM655_SP }}
-      GOOGLE_DRIVEID_AEM63: ${{ secrets.GOOGLE_DRIVEID_AEM63 }}
-      GOOGLE_DRIVEID_AEM64: ${{ secrets.GOOGLE_DRIVEID_AEM64 }}
       CREDS_ADOBE: ${{ secrets.CREDS_ADOBE }}
       PACKAGE_PATH: "./packages"
       JAR_PATH: "./jar"
@@ -23,6 +21,20 @@ jobs:
 
 
     steps:
+      - name: Experimental Status
+        run: |
+          docker version -f '{{.Server.Experimental}}'
+      - name: Docker
+        run: |
+          docker version -f '{{.Server.Experimental}}'
+          export DOCKER_CLI_EXPERIMENTAL=enabled
+          docker version -f '{{.Server.Experimental}}'
+          sudo service docker restart
+          docker version -f '{{.Server.Experimental}}'
+          sudo rm /etc/docker/daemon.json
+          echo $'{\n    "experimental": true\n}' | sudo tee /etc/docker/daemon.json
+          sudo service docker restart
+          docker version -f '{{.Server.Experimental}}'
       - uses: actions/checkout@v2
       - name: set up python ${{ env.PYTHON_VERSION }}
         uses: actions/setup-python@v1
@@ -47,7 +59,7 @@ jobs:
           echo PACKAGES CONTENTS $PACKAGE_PATH
           ls -latr $PACKAGE_PATH
           echo DOWNLOAD JAR INTO ${JAR_PATH}
-          downloadGDrive "download" "$GOOGLE_DRIVEID" "$JAR_PATH/aem-quickstart.jar"
+          downloadGDrive "download" "$GOOGLE_DRIVEID_AEM" "$JAR_PATH/aem-quickstart.jar"
           echo DOWNLOAD PACKAGES INTO ${PACKAGE_PATH}
           # ============================================
           # PACKAGE INSTALL
@@ -76,9 +88,8 @@ jobs:
 
       - name: build and test docker image
         run: |
-          docker build --pull -t $IMAGE:$IMAGE_VERSION .
-          source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_container_verify.sh)
-          ./test/run_tests.sh "$IMAGE:$IMAGE_VERSION" "$PACKAGE_CKECK_COUNT"
+          docker build --pull --squash -t $IMAGE:$GIT_BRANCH .
+          (cd test && bash ./run_tests.sh "$IMAGE:$GIT_BRANCH" "$PACKAGE_CKECK_COUNT")
           docker images
         env:
           PACKAGE_CKECK_COUNT: ${{ steps.config.outputs.PACKAGE_CKECK_COUNT }}
@@ -87,12 +98,12 @@ jobs:
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ${DOCKER_REGISTRY} -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       - name: push image version
-        run: docker push $IMAGE:$IMAGE_VERSION
-
+        run: |
+          docker push $IMAGE:$GIT_BRANCH
       - name: push latest image on master
         if: github.ref == 'refs/heads/master'
         run: |
-          docker tag $IMAGE:$IMAGE_VERSION $IMAGE:latest
+          docker tag $IMAGE:$GIT_BRANCH $IMAGE:latest
           docker push $IMAGE:latest
 
       - name: update registry description with readme on master

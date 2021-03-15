@@ -1,4 +1,4 @@
-FROM aemdesign/aem-base:latest
+FROM aemdesign/aem-base:jdk11
 
 MAINTAINER devops <devops@aem.design>
 
