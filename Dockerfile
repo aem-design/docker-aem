@@ -2,13 +2,13 @@ FROM aemdesign/aem-base:jdk11
 
 MAINTAINER devops <devops@aem.design>
 
-LABEL   os="centos 7" \
-        java="oracle 8" \
+LABEL   os="centos 8" \
+        java="oracle 11" \
         container.description="aem instance, will run as author unless specified otherwise" \
-        version="6.5.5.0" \
+        version="6.5.8.0" \
         imagename="aem" \
-        test.command=" java -version 2>&1 | grep 'java version' | sed -e 's/.*java version "\(.*\)".*/\1/'" \
-        test.command.verify="1.8"
+        test.command=" java --version " \
+        test.command.verify="11."
 
 ARG AEM_VERSION="6.5.0"
 ARG AEM_JVM_OPTS="-server -Xms1024m -Xmx1024m -XX:MaxDirectMemorySize=256M -XX:+CMSClassUnloadingEnabled -Djava.awt.headless=true -Dorg.apache.felix.http.host=0.0.0.0"
