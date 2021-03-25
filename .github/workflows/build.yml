@@ -12,7 +12,10 @@ jobs:
       ORGANISATION_NAME: aemdesign
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      GOOGLE_DRIVEID_AEM: ${{ secrets.GOOGLE_DRIVEID_SDK_2021_3_4997 }}
+      GOOGLE_DRIVEID_AEM: ${{ secrets.GOOGLE_DRIVEID_SDK_2021_3_5087 }}
+      GOOGLE_DRIVEID_AEM_VERSION: "2021.3.5087.20210322T071003Z-210225"
+      GOOGLE_DRIVEID_AEM_FORMS: ${{ secrets.GOOGLE_DRIVEID_SDK_FORMS_2021_03_19_02 }}
+      GOOGLE_DRIVEID_AEM_CONTENTTRANSFER: ${{ secrets.GOOGLE_DRIVEID_SDK_CONTENTTRANSFER_1_3_4 }}
       CREDS_ADOBE: ${{ secrets.CREDS_ADOBE }}
       PACKAGE_PATH: "./packages"
       JAR_PATH: "./jar"
@@ -63,16 +66,18 @@ jobs:
           # ============================================
           # PACKAGE INSTALL
           # ============================================
-          export PACKAGE_CKECK_COUNT=8
+          export PACKAGE_CKECK_COUNT=10
           # --------------------------------------------
-          ./scripts/download.sh "$PACKAGE_PATH/01-" "-" "-" "https://github.com/adobe/aem-core-wcm-components/releases/download/core.wcm.components.reactor-2.15.2/core.wcm.components.all-2.15.2.zip"
-          ./scripts/download.sh "$PACKAGE_PATH/02-" "-" "-" "https://github.com/Adobe-Consulting-Services/com.adobe.acs.bundles.twitter4j/releases/download/com.adobe.acs.bundles.twitter4j-1.0.0/com.adobe.acs.bundles.twitter4j-content-1.0.0.zip"
-          ./scripts/download.sh "$PACKAGE_PATH/03-" "-" "-" "https://github.com/Adobe-Consulting-Services/acs-aem-commons/releases/download/acs-aem-commons-5.0.4/acs-aem-commons-content-5.0.4.zip"
-          ./scripts/download.sh "$PACKAGE_PATH/04-" "-" "-" "https://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-package/2.8.0/accesscontroltool-package-2.8.0-cloud.zip"
-          ./scripts/download.sh "$PACKAGE_PATH/05-" "-" "-" "https://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-oakindex-package/2.8.0/accesscontroltool-oakindex-package-2.8.0-cloud.zip"
-          ./scripts/download.sh "$PACKAGE_PATH/06-" "-" "githublatest:aemdesign-aem-core-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-core/releases/latest"
-          ./scripts/download.sh "$PACKAGE_PATH/07-" "-" "githublatest:aemdesign-aem-support-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
-          ./scripts/download.sh "$PACKAGE_PATH/08-" "-" "githublatest:brightcove_connector" "https://api.github.com/repos/aem-design/Adobe-AEM-Brightcove-Connector/releases/latest"
+          downloadGDrive "download" "${GOOGLE_DRIVEID_AEM_FORMS}" "$PACKAGE_PATH/01-aem-forms-addon-2021.03.19.02.far"
+          downloadGDrive "download" "${GOOGLE_DRIVEID_AEM_CONTENTTRANSFER}" "$PACKAGE_PATH/02-content-transfer.all-1.3.4.zip"
+          ./scripts/download.sh "$PACKAGE_PATH/03-" "-" "-" "https://github.com/adobe/aem-core-wcm-components/releases/download/core.wcm.components.reactor-2.15.2/core.wcm.components.all-2.15.2.zip"
+          ./scripts/download.sh "$PACKAGE_PATH/04-" "-" "-" "https://github.com/Adobe-Consulting-Services/com.adobe.acs.bundles.twitter4j/releases/download/com.adobe.acs.bundles.twitter4j-1.0.0/com.adobe.acs.bundles.twitter4j-content-1.0.0.zip"
+          ./scripts/download.sh "$PACKAGE_PATH/05-" "-" "-" "https://github.com/Adobe-Consulting-Services/acs-aem-commons/releases/download/acs-aem-commons-5.0.4/acs-aem-commons-content-5.0.4.zip"
+          ./scripts/download.sh "$PACKAGE_PATH/06-" "-" "-" "https://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-package/2.8.0/accesscontroltool-package-2.8.0-cloud.zip"
+          ./scripts/download.sh "$PACKAGE_PATH/07-" "-" "-" "https://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-oakindex-package/2.8.0/accesscontroltool-oakindex-package-2.8.0-cloud.zip"
+          ./scripts/download.sh "$PACKAGE_PATH/08-" "-" "githublatest:aemdesign-aem-core-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-core/releases/latest"
+          ./scripts/download.sh "$PACKAGE_PATH/09-" "-" "githublatest:aemdesign-aem-support-deploy" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
+          ./scripts/download.sh "$PACKAGE_PATH/10-" "-" "githublatest:brightcove_connector" "https://api.github.com/repos/aem-design/Adobe-AEM-Brightcove-Connector/releases/latest"
           # --------------------------------------------
           echo "{PACKAGE_CKECK_COUNT}={PACKAGE_CKECK_COUNT}" >> $GITHUB_ENV
           echo ::set-output name=PACKAGE_CKECK_COUNT::$PACKAGE_CKECK_COUNT
@@ -82,7 +87,7 @@ jobs:
 
       - name: build and test docker image
         run: |
-          docker build --pull --squash -t $IMAGE:$GIT_BRANCH .
+          docker build --build-arg AEM_VERSION="${GOOGLE_DRIVEID_AEM_VERSION}" --pull --squash -t $IMAGE:$GIT_BRANCH .
           (cd test && bash ./run_tests.sh "$IMAGE:$GIT_BRANCH" "$PACKAGE_CKECK_COUNT")
           docker images
         env:
