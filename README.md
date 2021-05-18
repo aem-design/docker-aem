@@ -1,6 +1,6 @@
 ## CentOS 7 with AEM
 
-[![build_status](https://github.com/aem-design/docker-aem/workflows/build/badge.svg?branch=6.4.8.4-bundle-forms)](https://github.com/aem-design/docker-aem/actions?query=workflow%3Abuild+branch%3A6.4.8.4-bundle-forms)
+[![build_status](https://github.com/aem-design/docker-aem/workflows/build/badge.svg?branch=6.4.8.4)](https://github.com/aem-design/docker-aem/actions?query=workflow%3Abuild+branch%3A6.4.8.4)
 [![github license](https://img.shields.io/github/license/aem-design/aem)](https://github.com/aem-design/aem) 
 [![github issues](https://img.shields.io/github/issues/aem-design/aem)](https://github.com/aem-design/aem) 
 [![github last commit](https://img.shields.io/github/last-commit/aem-design/aem)](https://github.com/aem-design/aem) 
@@ -54,7 +54,7 @@ Following Ports are exposed
 | 57346 | debug |
 
 
-### Packages in Bundled Version `aemdesign/aem:6.4.0-bundle`
+### Packages in Bundled Version `aemdesign/aem:6.4.8.4`
 
 See pipeline for all packages added into `install` folder.
 
