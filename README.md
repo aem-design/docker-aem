@@ -1,6 +1,6 @@
 ## CentOS 7 with AEM
 
-[![build_status](https://github.com/aem-design/docker-aem/workflows/build/badge.svg?branch=6.4.4.0-bundle)](https://github.com/aem-design/docker-aem/actions?query=workflow%3Abuild+branch%3A6.4.4.0-bundle)
+[![build_status](https://github.com/aem-design/docker-aem/workflows/build/badge.svg?branch=6.4.8.4-bundle-forms)](https://github.com/aem-design/docker-aem/actions?query=workflow%3Abuild+branch%3A6.4.8.4-bundle-forms)
 [![github license](https://img.shields.io/github/license/aem-design/aem)](https://github.com/aem-design/aem) 
 [![github issues](https://img.shields.io/github/issues/aem-design/aem)](https://github.com/aem-design/aem) 
 [![github last commit](https://img.shields.io/github/last-commit/aem-design/aem)](https://github.com/aem-design/aem) 
@@ -56,21 +56,7 @@ Following Ports are exposed
 
 ### Packages in Bundled Version `aemdesign/aem:6.4.0-bundle`
 
-Following bundles are added to container
-
-| File | Notes  |
-| ---  | ---    |
-| AEM-6.4.4.0-6.4.4.zip | sp 4 |
-| AEM-Forms-6.4.4.0-LX-5.1.58.zip | aem forms |
-| AEM-FORMS-6.4-COMPAT-1.0.18.zip | aem forms backwards compatibility |
-| com.adobe.acs.bundles.twitter4j-content-1.0.0.zip | acs twitter |
-| acs-aem-commons-content-4.3.2.zip | acs commons |
-| core.wcm.components.all-2.6.0.zip | adobe corecomponents |
-| accesscontroltool-package-2.3.2.zip | netcentric acl tools |
-| accesscontroltool-oakindex-package-2.3.2.zip | netcentric acl tools |
-| vanityurls-components-1.0.2.zip | vanity url servlet |
-| aemdesign-aem-core-deploy-<LATEST>.zip | aem design core |
-| aemdesign-aem-support-deploy-<LATEST>.zip | aem design showcase content |
+See pipeline for all packages added into `install` folder.
 
 
 ### Starting
@@ -78,11 +64,11 @@ Following bundles are added to container
 To start local demo AEM 6.4 instance on port 4512
 
 ```bash
-docker run --name author64 \
+docker run --name author648 \
 -e "AEM_RUNMODE=-Dsling.run.modes=author,crx3,crx3tar,dev" \
 -p4512:8080 -d \
 -p30313:58242 -d \
-aemdesign/aem:6.4.0
+aemdesign/aem:6.4.8.4
 ``` 
 
 
@@ -95,7 +81,7 @@ docker run --name author64bundle \
 -e "AEM_JVM_OPTS=-server -Xms248m -Xmx1524m -XX:MaxDirectMemorySize=256M -XX:+CMSClassUnloadingEnabled -Djava.awt.headless=true -Dorg.apache.felix.http.host=0.0.0.0 -Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=58242,suspend=n" \
 -p4564:8080 -d \
 -p30364:58242 -d \
-aemdesign/aem:6.4.0-bundle
+aemdesign/aem:6.4.8.4-bundle
 ``` 
 
 
