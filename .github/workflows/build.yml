@@ -13,8 +13,7 @@ jobs:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       GOOGLE_DRIVEID: ${{ secrets.GOOGLE_DRIVEID }}
-      GOOGLE_DRIVEID_AEM63: ${{ secrets.GOOGLE_DRIVEID_AEM63 }}
-      GOOGLE_DRIVEID_AEM64: ${{ secrets.GOOGLE_DRIVEID_AEM64 }}
+      GOOGLE_DRIVEID_AEM: ${{ secrets.GOOGLE_DRIVEID_AEM62 }}
       CREDS_ADOBE: ${{ secrets.CREDS_ADOBE }}
       PACKAGE_PATH: "./packages"
       JAR_PATH: "./jar"
@@ -46,7 +45,7 @@ jobs:
           ls -latr $PACKAGE_PATH
 
           echo DOWNLOAD JAR INTO ${JAR_PATH}
-          ./scripts/gdrive.sh "download" "$GOOGLE_DRIVEID_AEM63" "$JAR_PATH/aem-quickstart.jar"
+          ./scripts/gdrive.sh "download" "$GOOGLE_DRIVEID_AEM" "$JAR_PATH/aem-quickstart.jar"
           echo "CHECK IF JAR HAS BEEN DOWNLOADED"
           if [[ ! -f "$JAR_PATH/aem-quickstart.jar" ]]; then echo "JAR DID NOT DOWNLOAD" && exit 1; fi
 
