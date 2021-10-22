@@ -1,4 +1,4 @@
-FROM aemdesign/aem-base:jdk8
+FROM aemdesign/aem-base:latest
 
 LABEL   author="devops <devops@aem.design>" \
         os="centos 7" \
