@@ -1,7 +1,7 @@
 FROM aemdesign/aem-base:jdk11-arm
 
 LABEL   author="devops <devops@aem.design>" \
-        os="centos 8" \
+        os="debian" \
         java="oracle 11" \
         container.description="aem instance, will run as author unless specified otherwise" \
         version="6.5.10.0" \
