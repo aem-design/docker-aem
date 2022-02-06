@@ -100,7 +100,7 @@ printDebug() {
 
 test_usage_java() {
   printLine "Testing java"
-  CHECK="11."
+  CHECK="$(cat ../Dockerfile | grep -m1 java.version | sed -e 's/.*java.version="\(.*\)".*/\1/g')"
 
   printLine "Starting Container"
 
