@@ -2,7 +2,7 @@ aem:
   build: .
   labels:
     aem.version: "6.5"
-    os.version: "centos 7"
+    os.version: "debian"
     java.version: "oracle 8"
     container.description: "aem instance, will run as author unless specified otherwise"
   container_name: "aem"

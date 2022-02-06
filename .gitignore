@@ -11,4 +11,7 @@ maven-eclipse.xml
 *.iws
 .DS_Store
 tmp/
-
+packages/
+jar/
+target/
+logs/
