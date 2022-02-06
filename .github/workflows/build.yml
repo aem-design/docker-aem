@@ -38,7 +38,7 @@ jobs:
         run: |
           echo GET PACKAGES
           export PACKAGE_PATH=$(pwd)/packages
-          echo "{PACKAGE_PATH}={PACKAGE_PATH}" >> $GITHUB_ENV
+          echo "PACKAGE_PATH=${PACKAGE_PATH}" >> $GITHUB_ENV
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_get_config.sh)
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_get_version.sh)
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/download-gdrive.sh)
