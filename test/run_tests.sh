@@ -104,7 +104,7 @@ test_usage_java() {
 
   printLine "Starting Container"
 
-  OUTPUT=$(docker run --rm ${IMAGE_NAME} java --version)
+  OUTPUT=$(docker run --rm ${IMAGE_NAME} bash -c "java -version 2>&1 | grep 'java version' | sed -e 's/.*java version \"\(.*\)\".*/\1/'")
 
   if [[ "$OUTPUT" != *"$CHECK"* ]]; then
       printResult "error"
