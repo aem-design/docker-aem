@@ -53,87 +53,20 @@ Following Ports are exposed
 | 57345 | debug |
 | 57346 | debug |
 
-### Packages in Bundled Version `aemdesign/aem:6.5.2.0-bundle`
+### Packages Container
 
 Following bundles are added to container
 
-| File | Notes  |
-| ---  | ---    |
-| AEM-6.5.2.0-6.5.2.zip | sp 2 |
-| com.adobe.acs.bundles.twitter4j-content-1.0.0.zip | acs twitter |
-| acs-aem-commons-content-4.3.2.zip | acs commons |
-| core.wcm.components.all-2.6.0.zip | adobe corecomponents |
-| accesscontroltool-package-2.3.2.zip | netcentric acl tools |
-| accesscontroltool-oakindex-package-2.3.2.zip | netcentric acl tools |
-| vanityurls-components-1.0.2.zip | vanity url servlet |
-| aemdesign-aem-core-deploy-<LATEST>.zip | aem design core |
-| aemdesign-aem-support-deploy-<LATEST>.zip | aem design showcase content |
-
-
-### Packages in Bundled Version `aemdesign/aem:6.4.0-bundle`
-
-Following bundles are added to container
-
-| File | Notes  |
-| ---  | ---    |
-| AEM-6.4.4.0-6.4.4.zip | sp 4 |
-| AEM-Forms-6.4.4.0-LX-5.1.58.zip | aem forms |
-| AEM-FORMS-6.4-COMPAT-1.0.18.zip | aem forms backwards compatibility |
-| com.adobe.acs.bundles.twitter4j-content-1.0.0.zip | acs twitter |
-| acs-aem-commons-content-4.3.2.zip | acs commons |
-| core.wcm.components.all-2.6.0.zip | adobe corecomponents |
-| accesscontroltool-package-2.3.2.zip | netcentric acl tools |
-| accesscontroltool-oakindex-package-2.3.2.zip | netcentric acl tools |
-| vanityurls-components-1.0.2.zip | vanity url servlet |
-| aemdesign-aem-core-deploy-<LATEST>.zip | aem design core |
-| aemdesign-aem-support-deploy-<LATEST>.zip | aem design showcase content |
+| File                  | Notes |
+|-----------------------|-------|
+| AEM-6.4.2.0-6.4.2.zip | sp 2  |
 
 
 ### Starting
 
-To start local demo AEM 6.5 instance on port 4502
+To start local instance
 
 ```bash
-docker run --name author \
--e "AEM_RUNMODE=-Dsling.run.modes=author,crx3,crx3tar,dev" \
--p4502:8080 -d \
--p30303:58242 -d \
-aemdesign/aem
+docker run --name author642 -e "TZ=Australia/Sydney" -e "AEM_RUNMODE=-Dsling.run.modes=author,crx3,crx3tar,forms,localdev" -e "AEM_JVM_OPTS=-server -Xms248m -Xmx2524m -XX:MaxDirectMemorySize=256M -XX:+CMSClassUnloadingEnabled -Djava.awt.headless=true -Dorg.apache.felix.http.host=0.0.0.0 -Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=58242,suspend=n" -p4502:8080 -p30303:58242 --restart unless-stopped -d aemdesign/aem:6.4.2.0
 ``` 
-
-To start local demo AEM 6.4 instance on port 4512
-
-```bash
-docker run --name author64 \
--e "AEM_RUNMODE=-Dsling.run.modes=author,crx3,crx3tar,dev" \
--p4512:8080 -d \
--p30313:58242 -d \
-aemdesign/aem:6.4.0
-``` 
-
-To start local demo AEM 6.5 instance on port 4565 with Bundled Packages run the following
-
-```bash
-docker run --name author65bundle \
--e "TZ=Australia/Sydney" \
--e "AEM_RUNMODE=-Dsling.run.modes=author,crx3,crx3tar,dev" \
--e "AEM_JVM_OPTS=-server -Xms248m -Xmx1524m -XX:MaxDirectMemorySize=256M -XX:+CMSClassUnloadingEnabled -Djava.awt.headless=true -Dorg.apache.felix.http.host=0.0.0.0 -Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=58242,suspend=n" \
--p4565:8080 -d \
--p30364:58242 -d \
-aemdesign/aem:6.5.0-bundle
-``` 
-
-
-To start local demo AEM 6.4 instance on port 4564 with Bundled Packages run the following
-
-```bash
-docker run --name author64bundle \
--e "TZ=Australia/Sydney" \
--e "AEM_RUNMODE=-Dsling.run.modes=author,crx3,crx3tar,dev" \
--e "AEM_JVM_OPTS=-server -Xms248m -Xmx1524m -XX:MaxDirectMemorySize=256M -XX:+CMSClassUnloadingEnabled -Djava.awt.headless=true -Dorg.apache.felix.http.host=0.0.0.0 -Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=58242,suspend=n" \
--p4564:8080 -d \
--p30364:58242 -d \
-aemdesign/aem:6.4.0-bundle
-``` 
-
 

@@ -6,7 +6,7 @@
 # IMAGE_NAME specifies a name of the candidate image used for testing.
 # The image has to be available before this script is executed.
 #
-IMAGE_NAME=${1:-aemdesign/aem}
+IMAGE_NAME=${1:-aemdesign/6.4.8.0-arm}
 FLAG_DEBUG=${2:-true}
 IP=$(which ip)
 if [[ -z $IP ]]; then
@@ -98,6 +98,23 @@ printDebug() {
     debug "$(printf '*%.0s' {1..100})" "error"
 }
 
+test_usage_java() {
+  printLine "Testing java"
+  CHECK="11."
+
+  printLine "Starting Container"
+
+  OUTPUT=$(docker run --rm ${IMAGE_NAME} java --version)
+
+  if [[ "$OUTPUT" != *"$CHECK"* ]]; then
+      printResult "error"
+      printDebug "Image '${IMAGE_NAME}' test FAILED could not find ${CHECK} in output" "${OUTPUT}"
+      exit 1
+    else
+        printResult "success"
+  fi
+}
+
 test_docker_run_contains_packages() {
     printLine "Testing if image has packages"
     CHECK="${PACKAGE_CKECK_COUNT}"
@@ -115,6 +132,8 @@ test_docker_run_contains_packages() {
     fi
 }
 
+
+test_usage_java
 
 test_docker_run_contains_packages
 
