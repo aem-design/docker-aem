@@ -74,7 +74,6 @@ jobs:
           echo ::set-output name=PACKAGE_CKECK_COUNT::$PACKAGE_CKECK_COUNT
           echo PACKAGE COUNT=$PACKAGE_CKECK_COUNT
           ls -latr $PACKAGE_PATH
-          source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_get_version.sh)
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
