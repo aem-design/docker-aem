@@ -97,7 +97,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          platforms: linux/amd64
+          platforms: linux/arm64
           load: true
           build-args: |
             "JDK_DRIVEID=${{ env.JDK_DRIVEID }}"
@@ -114,7 +114,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          platforms: linux/amd64
+          platforms: linux/arm64
           push: true
           build-args: |
             "JDK_DRIVEID=${{ env.JDK_DRIVEID }}"
