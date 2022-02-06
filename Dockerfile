@@ -1,4 +1,4 @@
-FROM aemdesign/aem-base:jdk11
+FROM aemdesign/aem-base:jdk11-arm
 
 LABEL   author="devops <devops@aem.design>" \
         os="centos 8" \
