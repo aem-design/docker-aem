@@ -1,6 +1,6 @@
-## CentOS 7 with AEM
+## Debian with AEM
 
-[![build_status](https://github.com/aem-design/docker-aem/workflows/build/badge.svg?branch=6.4.2.0-bundle)](https://github.com/aem-design/docker-aem/actions?query=workflow%3Abuild+branch%3A6.4.2.0-bundle)
+[![build_status](https://github.com/aem-design/docker-aem/workflows/build/badge.svg?branch=6.4.2.0-arm)](https://github.com/aem-design/docker-aem/actions?query=workflow%3Abuild+branch%3A6.4.2.0-bundle-arm)
 [![github license](https://img.shields.io/github/license/aem-design/aem)](https://github.com/aem-design/aem) 
 [![github issues](https://img.shields.io/github/issues/aem-design/aem)](https://github.com/aem-design/aem) 
 [![github last commit](https://img.shields.io/github/last-commit/aem-design/aem)](https://github.com/aem-design/aem) 
@@ -9,7 +9,7 @@
 [![docker pulls](https://img.shields.io/docker/pulls/aemdesign/aem)](https://hub.docker.com/r/aemdesign/aem) 
 [![github release](https://img.shields.io/github/release/aem-design/aem)](https://github.com/aem-design/aem)
 
-This is docker image based on CentOS 7 with Tini
+This is docker image based on [Debian with Tini](https://github.com/aem-design/docker-tini/tree/debian-arm)
 One image that can be used for both Author and Publish nodes
 No license is included, you will need to register when starting up
 

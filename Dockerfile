@@ -1,9 +1,8 @@
-FROM aemdesign/aem-base:latest
+FROM aemdesign/aem-base:jdk8-arm
 
-MAINTAINER devops <devops@aem.design>
-
-LABEL   os="centos 7" \
+LABEL   os="debian" \
         java="oracle 8" \
+        maintainer="devops <devops@aem.design>" \
         container.description="aem instance, will run as author unless specified otherwise" \
         version="6.4.2.0" \
         imagename="aem" \
