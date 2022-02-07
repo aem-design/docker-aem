@@ -14,7 +14,7 @@ jobs:
       ORGANISATION_NAME: aemdesign
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      GOOGLE_DRIVEID_AEM: ${{ secrets.GOOGLE_DRIVEID }}
+      GOOGLE_DRIVEID_AEM: ${{ secrets.GOOGLE_DRIVEID_AEM64 }}
       GOOGLE_DRIVEID_AEM_SP: ${{ secrets.GOOGLE_DRIVEID_AEM648_SP }}
       CREDS_ADOBE: ${{ secrets.CREDS_ADOBE }}
       PACKAGE_PATH: "./packages"
