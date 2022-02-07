@@ -2,7 +2,6 @@ FROM aemdesign/aem-base:jdk8-arm
 
 LABEL   os="debian" \
         java="oracle 8" \
-        java.version="1.8" \
         maintainer="devops <devops@aem.design>" \
         container.description="aem instance, will run as author unless specified otherwise" \
         version="6.4.2.0" \
