@@ -15,7 +15,7 @@ jobs:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       GOOGLE_DRIVEID_AEM: ${{ secrets.GOOGLE_DRIVEID_AEM64 }}
-      GOOGLE_DRIVEID_AEM_SP: ${{ secrets.GOOGLE_DRIVEID_AEM648_SP }}
+      GOOGLE_DRIVEID_AEM_SP: ${{ secrets.GOOGLE_DRIVEID_AEM642_SP }}
       CREDS_ADOBE: ${{ secrets.CREDS_ADOBE }}
       PACKAGE_PATH: "./packages"
       JAR_PATH: "./jar"
