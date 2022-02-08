@@ -13,4 +13,5 @@ maven-eclipse.xml
 tmp/
 packages/
 jar/
-
+target/
+logs/
