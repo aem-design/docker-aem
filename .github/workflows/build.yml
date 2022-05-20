@@ -44,7 +44,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: set envirnment variables
+      - name: set envirnment variables and get packages
         id: config
         run: |
           echo GET PACKAGES
