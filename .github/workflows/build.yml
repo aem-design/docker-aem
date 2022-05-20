@@ -64,7 +64,7 @@ jobs:
           # ============================================
           # PACKAGE INSTALL
           # ============================================
-          export PACKAGE_CKECK_COUNT=1
+          export PACKAGE_CKECK_COUNT=0
           # --------------------------------------------
           #downloadGDrive "download" "${GOOGLE_DRIVEID_AEM_FORMS}" "$PACKAGE_PATH/01-aem-forms-addon-2021.03.19.02.far"
           # ./scripts/download.sh "$PACKAGE_PATH/02-" "-" "githublatest:.*core.wcm.components.all.*.zip" "https://api.github.com/repos/adobe/aem-core-wcm-components/releases/latest"
