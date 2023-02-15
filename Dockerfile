@@ -1,13 +1,12 @@
 FROM aemdesign/aem-base:jdk11-arm
 
-MAINTAINER devops <devops@aem.design>
-
-LABEL   os="centos 8" \
-        java="oracle 8" \
+LABEL   author="devops <devops@aem.design>" \
+        os="debian" \
+        java="oracle 11" \
         container.description="aem instance, will run as author unless specified otherwise" \
-        version="2021.3.4997" \
+        version="2022.4.7138" \
         imagename="aem" \
-        test.command="java --version" \
+        test.command=" java --version " \
         test.command.verify="11."
 
 ARG AEM_JVM_OPTS="-server -Xms1024m -Xmx1024m -XX:MaxDirectMemorySize=256M -XX:+CMSClassUnloadingEnabled -Djava.awt.headless=true -Dorg.apache.felix.http.host=0.0.0.0"

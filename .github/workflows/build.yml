@@ -49,7 +49,7 @@ jobs:
         run: |
           echo GET PACKAGES
           export PACKAGE_PATH=$(pwd)/packages
-          echo "{PACKAGE_PATH}={PACKAGE_PATH}" >> $GITHUB_ENV
+          echo "PACKAGE_PATH=${PACKAGE_PATH}" >> $GITHUB_ENV
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_get_config.sh)
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/download-gdrive.sh)
           echo $PACKAGE_PATH
@@ -74,46 +74,69 @@ jobs:
           # ./scripts/download.sh "$PACKAGE_PATH/06-" "-" "githublatest:.*aemdesign-aem-core-deploy.*.zip" "https://api.github.com/repos/aem-design/aemdesign-aem-core/releases/latest"
           # ./scripts/download.sh "$PACKAGE_PATH/07-" "-" "githublatest:.*aemdesign-aem-support-deploy.*.zip" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
           # --------------------------------------------
-          echo "{PACKAGE_CKECK_COUNT}={PACKAGE_CKECK_COUNT}" >> $GITHUB_ENV
+          echo "PACKAGE_CKECK_COUNT=${PACKAGE_CKECK_COUNT}" >> $GITHUB_ENV
           echo ::set-output name=PACKAGE_CKECK_COUNT::$PACKAGE_CKECK_COUNT
           echo PACKAGE COUNT=$PACKAGE_CKECK_COUNT
           ls -latr $PACKAGE_PATH
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_get_version.sh)
 
-      - name: build and test docker image
-        run: |
-          docker build --build-arg AEM_VERSION="${GOOGLE_DRIVEID_AEM_VERSION}" --pull --squash -t $IMAGE:$GIT_BRANCH .
-          (cd test && bash ./run_tests.sh "$IMAGE:$GIT_BRANCH" "$PACKAGE_CKECK_COUNT")
-          docker images
-        env:
-          PACKAGE_CKECK_COUNT: ${{ steps.config.outputs.PACKAGE_CKECK_COUNT }}
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-      - name: login to docker registry
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ${DOCKER_REGISTRY} -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-      - name: push image version
-        run: |
-          docker push $IMAGE:$GIT_BRANCH
-      - name: push latest image on master
-        if: github.ref == 'refs/heads/master'
-        run: |
-          docker tag $IMAGE:$GIT_BRANCH $IMAGE:latest
-          docker push $IMAGE:latest
-
-      - name: update registry description with readme on master
-        if: github.ref == 'refs/heads/master'
-        run: |
-          docker run --rm -v $(pwd):/data/ aemdesign/dockerhub-description "$DOCKER_USERNAME" "$DOCKER_PASSWORD" "$IMAGE"
-
-      - name: create release ${{ env.GITHUB_TAG }}
-        if: github.ref == 'refs/heads/master'
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
         with:
-          tag_name: ${{ env.GITHUB_TAG }}
-          release_name: ${{ env.GITHUB_TAG }}
-          body: ${{ steps.config.outputs.GIT_RELEASE_NOTES }}
-          draft: false
-          prerelease: false
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ env.DOCKER_PASSWORD }}
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and export to Docker
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          platforms: linux/arm64
+          load: true
+          build-args: |
+            "JDK_DRIVEID=${{ env.JDK_DRIVEID }}"
+          tags: |
+            ${{ env.IMAGE }}:${{ env.GIT_BRANCH }}
+            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE }}:${{ env.GIT_BRANCH }}
+
+
+      - name: test docker image
+        run: |
+          cd test && bash ./run_tests.sh "ghcr.io/$GITHUB_REPOSITORY_OWNER/$IMAGE:$GIT_BRANCH"
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          platforms: linux/arm64
+          push: true
+          build-args: |
+            "JDK_DRIVEID=${{ env.JDK_DRIVEID }}"
+          tags: |
+            ${{ env.IMAGE }}:${{ env.GIT_BRANCH }}
+            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE }}:${{ env.GIT_BRANCH }}
+
+      - name: Update Docker Hub Description
+        uses: peter-evans/dockerhub-description@v2
+        continue-on-error: true
+        with:
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ env.DOCKER_PASSWORD }}
+          repository: peterevans/dockerhub-description
+      - uses: meeDamian/github-release@1.0
+        if: github.ref == 'refs/heads/master'
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ env.GITHUB_TAG }}
+          name: ${{ env.GITHUB_TAG }}
+          body: ${{ env.GIT_RELEASE_NOTES }}

@@ -10,6 +10,8 @@ maven-eclipse.xml
 *.ipr
 *.iws
 .DS_Store
-
+tmp/
+packages/
+jar/
 target/
 logs/

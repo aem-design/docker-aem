@@ -1,4 +1,4 @@
-## CentOS 8 with AEM SDK
+## Debian with AEM
 
 [![build_status](https://github.com/aem-design/docker-aem/workflows/build/badge.svg?branch=sdk-2022.4.7138)](https://github.com/aem-design/docker-aem/actions?query=workflow%3Abuild+branch%3Asdk-2022.4.7138)
 [![github license](https://img.shields.io/github/license/aem-design/aem)](https://github.com/aem-design/aem) 
@@ -9,13 +9,13 @@
 [![docker pulls](https://img.shields.io/docker/pulls/aemdesign/aem)](https://hub.docker.com/r/aemdesign/aem) 
 [![github release](https://img.shields.io/github/release/aem-design/aem)](https://github.com/aem-design/aem)
 
-This is docker image based on CentOS 8 with Tini
+This is docker image based on [Debian with Tini](https://github.com/aem-design/docker-tini/tree/debian-arm)
 One image that can be used for both Author and Publish nodes
 No license is included, you will need to register when starting up
 
-### AEM Version
+### Included Packages
 
-Folling base version of AEM jar used for this image, additional packages installed in separate branches.
+Following is the list of packages included
 
 Version: SDK
 
