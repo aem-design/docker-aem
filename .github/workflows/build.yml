@@ -17,7 +17,7 @@ jobs:
       CREDS_ADOBE: ${{ secrets.CREDS_ADOBE }}
       PACKAGE_PATH: "./packages"
       JAR_PATH: "./jar"
-      PYTHON_VERSION: 3.6
+      PYTHON_VERSION: 3.10
 
 
     steps:
