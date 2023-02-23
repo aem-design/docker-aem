@@ -15,12 +15,7 @@ else
     LOCAL_IP=$($IP route | awk '/default/ { print $3 }')
 fi
 
-# check if git variables are set
-if [[ ${PACKAGE_CKECK_COUNT} == "" ]]; then
-    echo PACKAGE_CKECK_COUNT="${PACKAGE_CKECK_COUNT}"
-    echo PLEASE SET PACKAGE_CKECK_COUNT
-    exit 1
-fi
+
 
 #debug(message,type[error,info,warning],newlinesiffix)
 function debug {
@@ -98,23 +93,22 @@ printDebug() {
     debug "$(printf '*%.0s' {1..100})" "error"
 }
 
-test_docker_run_contains_packages() {
-    printLine "Testing if image has packages"
-    CHECK="${PACKAGE_CKECK_COUNT}"
+test_usage_java() {
+  printLine "Testing java"
+  CHECK="11."
 
-    printLine "Starting Container"
+  printLine "Starting Container"
 
-    OUTPUT=$(docker run --rm ${IMAGE_NAME} bash -c "cd /aem/crx-quickstart/install && ls -l *.zip 2>/dev/null | wc -l")
+  OUTPUT=$(docker run --rm ${IMAGE_NAME} java --version)
 
-    if [[ "$OUTPUT" != *"$CHECK"* ]]; then
-        printResult "error"
-        printDebug "Image '${IMAGE_NAME}' test FAILED could not find ${CHECK} in output" "${OUTPUT}"
-        exit 1
+  if [[ "$OUTPUT" != *"$CHECK"* ]]; then
+      printResult "error"
+      printDebug "Image '${IMAGE_NAME}' test FAILED could not find ${CHECK} in output" "${OUTPUT}"
+      exit 1
     else
         printResult "success"
-    fi
+  fi
 }
 
 
-test_docker_run_contains_packages
-
+test_usage_java

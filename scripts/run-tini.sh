@@ -2,7 +2,8 @@
 
 # if `docker run` first argument start with `--` the user is passing launcher arguments
 if [[ $# -lt 1 ]] || [[ "$1" == "--"* ]]; then
-
+    AEM_JARFILE=`find /aem/crx-quickstart/app/ -name "*quickstart*.jar" -print -quit`
+    echo $AEM_JARFILE
     exec java $AEM_JVM_OPTS $AEM_RUNMODE -jar $AEM_JARFILE $AEM_START_OPTS
 
 fi
