@@ -17,7 +17,7 @@ jobs:
       CREDS_ADOBE: ${{ secrets.CREDS_ADOBE }}
       PACKAGE_PATH: "./packages"
       JAR_PATH: "./jar"
-      PYTHON_VERSION: 3.10
+      PYTHON_VERSION: '3.10'
 
 
     steps:
@@ -37,7 +37,7 @@ jobs:
           docker version -f '{{.Server.Experimental}}'
       - uses: actions/checkout@v2
       - name: set up python ${{ env.PYTHON_VERSION }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: install dependencies
