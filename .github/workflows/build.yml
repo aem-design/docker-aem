@@ -12,8 +12,10 @@ jobs:
       ORGANISATION_NAME: aemdesign
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      GOOGLE_DRIVEID_AEM: ${{ secrets.GOOGLE_DRIVEID_SDK_2023_1_10912 }}
-      GOOGLE_DRIVEID_AEM_VERSION: "2023.1.10912.20230130T173736Z-230100"
+      GOOGLE_DRIVEID_AEM: ${{ secrets.GOOGLE_DRIVEID_SDK_2023_3_11382 }}
+      GOOGLE_DRIVEID_AEM_FORMS: ${{ secrets.GOOGLE_DRIVEID_AEM_FORMS_2023_3_11382 }}
+      GOOGLE_DRIVEID_AEM_VERSION: "2023.3.11382.20230315T073850Z-230100"
+      GOOGLE_FORMS_PACKAGE_NAME: "aem-forms-addon-2023.02.01.00-230100.far"
       CREDS_ADOBE: ${{ secrets.CREDS_ADOBE }}
       PACKAGE_PATH: "./packages"
       JAR_PATH: "./jar"
@@ -66,7 +68,7 @@ jobs:
           # ============================================
           export PACKAGE_CKECK_COUNT=0
           # --------------------------------------------
-          #downloadGDrive "download" "${GOOGLE_DRIVEID_AEM_FORMS}" "$PACKAGE_PATH/01-aem-forms-addon-2021.03.19.02.far"
+          #downloadGDrive "download" "${GOOGLE_DRIVEID_AEM_FORMS}" "$PACKAGE_PATH/01-${GOOGLE_FORMS_PACKAGE_NAME}"
           # ./scripts/download.sh "$PACKAGE_PATH/02-" "-" "githublatest:.*core.wcm.components.all.*.zip" "https://api.github.com/repos/adobe/aem-core-wcm-components/releases/latest"
           # ./scripts/download.sh "$PACKAGE_PATH/03-" "-" "githublatest:.*acs-aem-commons-content-[0-9\.]+.zip" "https://api.github.com/repos/Adobe-Consulting-Services/acs-aem-commons/releases/latest"
           # ./scripts/download.sh "$PACKAGE_PATH/04-" "-" "-" "https://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-package/3.0.2/accesscontroltool-package-3.0.2-cloud.zip"
