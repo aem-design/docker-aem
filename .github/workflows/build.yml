@@ -13,12 +13,12 @@ jobs:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       # these should be set in the repository secrets
-      GOOGLE_DRIVEID_AEM: ${{ secrets.GOOGLE_DRIVEID_SDK_2024_4_16145 }}
+      GOOGLE_DRIVEID_AEM: ${{ secrets.GOOGLE_DRIVEID_SDK_2024_5_16461 }}
       GOOGLE_DRIVEID_AEM_FORMS: ${{ secrets.GOOGLE_DRIVEID_AEM_FORMS_2024_05_04 }}
 
       # this will be used as a label for the docker image
-      DOCKER_IMAGE_VERSION: "2024.4.16145"
-      GOOGLE_DRIVEID_AEM_VERSION: "aem-sdk-quickstart-2024.4.16145.20240430T082417Z-240400"
+      DOCKER_IMAGE_VERSION: "2024.5.16461"
+      GOOGLE_DRIVEID_AEM_VERSION: "aem-sdk-quickstart-2024.5.16461.20240524T172309Z-240400"
       GOOGLE_FORMS_PACKAGE_NAME: "aem-forms-addon-2024.05.04.00-240400.far"
 
       CREDS_ADOBE: ${{ secrets.CREDS_ADOBE }}
