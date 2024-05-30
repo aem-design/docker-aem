@@ -1,4 +1,4 @@
-## Debian with AEM SDK 2023.1.10912
+## Debian with AEM SDK
 
 [![build_status](https://github.com/aem-design/docker-aem/workflows/build/badge.svg?branch=sdk-2023.1.10912)](https://github.com/aem-design/docker-aem/actions?query=workflow%3Abuild+branch%3Asdk-2023.1.10912)
 [![github license](https://img.shields.io/github/license/aem-design/aem)](https://github.com/aem-design/aem) 
