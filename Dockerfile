@@ -1,11 +1,13 @@
 FROM aemdesign/aem-base:jdk11
 
+ARG DOCKER_IMAGE_VERSION
+
 MAINTAINER devops <devops@aem.design>
 
 LABEL   os="debian" \
         java="oracle 11" \
         container.description="aem instance, will run as author unless specified otherwise" \
-        version="2023.1.10912" \
+        version="${DOCKER_IMAGE_VERSION}" \
         imagename="aem" \
         test.command="java --version" \
         test.command.verify="11."

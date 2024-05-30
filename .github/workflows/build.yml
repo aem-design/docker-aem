@@ -12,10 +12,15 @@ jobs:
       ORGANISATION_NAME: aemdesign
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      GOOGLE_DRIVEID_AEM: ${{ secrets.GOOGLE_DRIVEID_SDK_2023_11_14227 }}
-      GOOGLE_DRIVEID_AEM_FORMS: ${{ secrets.GOOGLE_DRIVEID_AEM_FORMS_2023_10_25 }}
-      GOOGLE_DRIVEID_AEM_VERSION: "aem-sdk-quickstart-2023.11.14227.20231108T162349Z-231000"
-      GOOGLE_FORMS_PACKAGE_NAME: "aem-forms-addon-2023.10.25.00-231000.far"
+      # these should be set in the repository secrets
+      GOOGLE_DRIVEID_AEM: ${{ secrets.GOOGLE_DRIVEID_SDK_2024_3_15575 }}
+      GOOGLE_DRIVEID_AEM_FORMS: ${{ secrets.GOOGLE_DRIVEID_AEM_FORMS_2024_04_04 }}
+
+      # this will be used as a label for the docker image
+      DOCKER_IMAGE_VERSION: "2024.3.15575"
+      GOOGLE_DRIVEID_AEM_VERSION: "aem-sdk-quickstart-2024.3.15575.20240318T214814Z-231200"
+      GOOGLE_FORMS_PACKAGE_NAME: "aem-forms-addon-2024.04.04.00-240400.far"
+
       CREDS_ADOBE: ${{ secrets.CREDS_ADOBE }}
       PACKAGE_PATH: "./packages"
       JAR_PATH: "./jar"
@@ -84,7 +89,7 @@ jobs:
 
       - name: build and test docker image
         run: |
-          docker build --build-arg AEM_VERSION="${GOOGLE_DRIVEID_AEM_VERSION}" --pull --squash -t $IMAGE:$GIT_BRANCH .
+          docker build --build-arg DOCKER_IMAGE_VERSION="${DOCKER_IMAGE_VERSION}" --pull --squash -t $IMAGE:$GIT_BRANCH .
           (cd test && bash ./run_tests.sh "$IMAGE:$GIT_BRANCH" "$PACKAGE_CKECK_COUNT")
           docker images
         env:
