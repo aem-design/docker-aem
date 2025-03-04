@@ -38,7 +38,8 @@ jobs:
           docker version -f '{{.Server.Experimental}}'
           sudo service docker restart
           docker version -f '{{.Server.Experimental}}'
-          sudo rm /etc/docker/daemon.json
+          # if /etc/docker/daemon.json exists, remove it
+          [ -f /etc/docker/daemon.json ] && sudo rm /etc/docker/daemon.json
           echo $'{\n    "experimental": true\n}' | sudo tee /etc/docker/daemon.json
           sudo service docker restart
           docker version -f '{{.Server.Experimental}}'
