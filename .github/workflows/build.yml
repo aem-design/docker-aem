@@ -1,9 +1,6 @@
 name: build
 
-on:
-  push:
-    branches:
-      - '*'
+on: [push]
 
 jobs:
   build:
@@ -11,36 +8,57 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DOCKER_REGISTRY: docker.io
+      DOCKER_REGISTRY_INDEX: index.docker.io/aemdesign
       ORGANISATION_NAME: aemdesign
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      GOOGLE_DRIVEID_AEM: ${{ secrets.GOOGLE_DRIVEID }}
-      GOOGLE_DRIVEID_AEM_SP: ${{ secrets.GOOGLE_DRIVEID_AEM6511_SP }}
+      # these should be set in the repository secrets
+      GOOGLE_DRIVEID_AEM: ${{ secrets.GOOGLE_DRIVEID_AEM660 }}
+      GOOGLE_DRIVEID_AEM_FORMS: ${{ secrets.GOOGLE_DRIVEID_AEM660_FORMS }}
+
+      # this will be used as a label for the docker image
+      DOCKER_IMAGE_VERSION: "6.6.0"
+      GOOGLE_DRIVEID_AEM_VERSION: "cq-quickstart-6.6.0"
+      GOOGLE_FORMS_PACKAGE_NAME: "adobe-aemfd-linux-pkg-6.1.152.zip"
+
       CREDS_ADOBE: ${{ secrets.CREDS_ADOBE }}
       PACKAGE_PATH: "./packages"
       JAR_PATH: "./jar"
-      PYTHON_VERSION: 3.6
+      PYTHON_VERSION: '3.10'
 
 
     steps:
-
+      - name: Experimental Status
+        run: |
+          docker version -f '{{.Server.Experimental}}'
+      - name: Docker
+        run: |
+          docker version -f '{{.Server.Experimental}}'
+          export DOCKER_CLI_EXPERIMENTAL=enabled
+          docker version -f '{{.Server.Experimental}}'
+          sudo service docker restart
+          docker version -f '{{.Server.Experimental}}'
+          # if /etc/docker/daemon.json exists, remove it
+          [ -f /etc/docker/daemon.json ] && sudo rm /etc/docker/daemon.json
+          echo $'{\n    "experimental": true\n}' | sudo tee /etc/docker/daemon.json
+          sudo service docker restart
+          docker version -f '{{.Server.Experimental}}'
       - uses: actions/checkout@v2
       - name: set up python ${{ env.PYTHON_VERSION }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: set envirnment variables
+      - name: set envirnment variables and get packages
         id: config
         run: |
           echo GET PACKAGES
           export PACKAGE_PATH=$(pwd)/packages
-          echo "${PACKAGE_PATH}={PACKAGE_PATH}" >> $GITHUB_ENV
+          echo "PACKAGE_PATH=${PACKAGE_PATH}" >> $GITHUB_ENV
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_get_config.sh)
-          source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_get_version.sh)
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/download-gdrive.sh)
           echo $PACKAGE_PATH
           echo $JAR_PATH
@@ -54,9 +72,15 @@ jobs:
           # ============================================
           # PACKAGE INSTALL
           # ============================================
-          export PACKAGE_CKECK_COUNT=1
+          export PACKAGE_CKECK_COUNT=0
           # --------------------------------------------
-          downloadGDrive "download" "${GOOGLE_DRIVEID_AEM_SP}" "$PACKAGE_PATH/01-aem-service-pkg-6.5.11.zip"
+          #downloadGDrive "download" "${GOOGLE_DRIVEID_AEM_FORMS}" "$PACKAGE_PATH/01-${GOOGLE_FORMS_PACKAGE_NAME}"
+          # ./scripts/download.sh "$PACKAGE_PATH/02-" "-" "githublatest:.*core.wcm.components.all.*.zip" "https://api.github.com/repos/adobe/aem-core-wcm-components/releases/latest"
+          # ./scripts/download.sh "$PACKAGE_PATH/03-" "-" "githublatest:.*acs-aem-commons-content-[0-9\.]+.zip" "https://api.github.com/repos/Adobe-Consulting-Services/acs-aem-commons/releases/latest"
+          # ./scripts/download.sh "$PACKAGE_PATH/04-" "-" "-" "https://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-package/3.0.2/accesscontroltool-package-3.0.2-cloud.zip"
+          # ./scripts/download.sh "$PACKAGE_PATH/05-" "-" "-" "https://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-oakindex-package/3.0.2/accesscontroltool-oakindex-package-3.0.2-cloud.zip"
+          # ./scripts/download.sh "$PACKAGE_PATH/06-" "-" "githublatest:.*aemdesign-aem-core-deploy.*.zip" "https://api.github.com/repos/aem-design/aemdesign-aem-core/releases/latest"
+          # ./scripts/download.sh "$PACKAGE_PATH/07-" "-" "githublatest:.*aemdesign-aem-support-deploy.*.zip" "https://api.github.com/repos/aem-design/aemdesign-aem-support/releases/latest"
           #./scripts/download.sh "$PACKAGE_PATH/01-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/servicepack/AEM-6.5.4.0/jcr%3acontent/package/file.res/AEM-6.5.4.0-6.5.4.zip"
           #./scripts/download.sh "$PACKAGE_PATH/02-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/servicepack/fd/AEM-Forms-6.5.3.0-LX/jcr%3acontent/package/file.res/AEM-Forms-6.5.3.0-LX-6.0.122.zip"
           #./scripts/download.sh "$PACKAGE_PATH/03-" "$CREDS_ADOBE" "-" "https://www.adobeaemcloud.com/content/companies/public/adobe/packages/cq650/compatpack/AEM-FORMS-6.5.3.0-COMPAT/jcr%3acontent/package/file.res/AEM-FORMS-6.5.3.0-COMPAT-2.0.26.zip"
@@ -76,63 +100,40 @@ jobs:
           ls -latr $PACKAGE_PATH
           source <(curl -sL https://github.com/aem-design/aemdesign-docker/releases/latest/download/github_get_version.sh)
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ env.DOCKER_USERNAME }}
-          password: ${{ env.DOCKER_PASSWORD }}
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and export to Docker
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          platforms: linux/amd64
-          load: true
-          build-args: |
-            "JDK_DRIVEID=${{ env.JDK_DRIVEID }}"
-          tags: |
-            ${{ env.IMAGE }}:${{ env.GIT_BRANCH }}
-            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE }}:${{ env.GIT_BRANCH }}
-
-
-      - name: test docker image
+      - name: build and test docker image
         run: |
-          cd test && bash ./run_tests.sh "ghcr.io/$GITHUB_REPOSITORY_OWNER/$IMAGE:$GIT_BRANCH"
+          docker build --build-arg DOCKER_IMAGE_VERSION="${DOCKER_IMAGE_VERSION}" --pull --squash -t $IMAGE:$GIT_BRANCH .
+          (cd test && bash ./run_tests.sh "$IMAGE:$GIT_BRANCH" "$PACKAGE_CKECK_COUNT")
+          docker images
+        env:
+          PACKAGE_CKECK_COUNT: ${{ steps.config.outputs.PACKAGE_CKECK_COUNT }}
 
-      - name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          platforms: linux/amd64
-          push: true
-          build-args: |
-            "JDK_DRIVEID=${{ env.JDK_DRIVEID }}"
-          tags: |
-            ${{ env.IMAGE }}:${{ env.GIT_BRANCH }}
-            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE }}:${{ env.GIT_BRANCH }}
+      - name: login to docker registry
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ${DOCKER_REGISTRY} -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      - name: Update Docker Hub Description
-        uses: peter-evans/dockerhub-description@v2
-        continue-on-error: true
-        with:
-          username: ${{ env.DOCKER_USERNAME }}
-          password: ${{ env.DOCKER_PASSWORD }}
-          repository: peterevans/dockerhub-description
-      - uses: meeDamian/github-release@1.0
+      - name: push image version
+        run: |
+          docker push $IMAGE:$GIT_BRANCH
+      - name: push latest image on master
         if: github.ref == 'refs/heads/master'
+        run: |
+          docker tag $IMAGE:$GIT_BRANCH $IMAGE:latest
+          docker push $IMAGE:latest
+
+      - name: update registry description with readme on master
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker run --rm -v $(pwd):/data/ aemdesign/dockerhub-description "$DOCKER_USERNAME" "$DOCKER_PASSWORD" "$IMAGE"
+
+      - name: create release ${{ env.GITHUB_TAG }}
+        if: github.ref == 'refs/heads/master'
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ env.GITHUB_TAG }}
-          name: ${{ env.GITHUB_TAG }}
-          body: ${{ env.GIT_RELEASE_NOTES }}
+          tag_name: ${{ env.GITHUB_TAG }}
+          release_name: ${{ env.GITHUB_TAG }}
+          body: ${{ steps.config.outputs.GIT_RELEASE_NOTES }}
+          draft: false
+          prerelease: false

@@ -119,7 +119,7 @@ if [ $AEM_FILE_SIZE_LIMIT ]; then
     fi
 fi
 
-AEM_JARFILE=`find /aem/crx-quickstart/app/ -name "*quickstart.jar" -print -quit`
+AEM_JARFILE=`find /aem/crx-quickstart/app/ -name "*quickstart*.jar" -print -quit`
 CURR_DIR="/aem/crx-quickstart"
 
 #BIN_PATH=$(dirname $0)
