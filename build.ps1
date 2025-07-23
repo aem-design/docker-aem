@@ -2,7 +2,7 @@ Param(
   [string]$LOG_PATH = "${PWD}\logs",
   [string]$LOG_PEFIX = "docker",
   [string]$LOG_SUFFIX = ".log",
-  [string]$TAG = "jdk11",
+  [string]$TAG = "jdk17",
   [string]$NAME = "aemsdk",
   [string]$FILE = "Dockerfile",
   [string]$GOOGLE_DRIVEID_AEM = "",
