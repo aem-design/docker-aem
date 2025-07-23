@@ -1,4 +1,4 @@
-FROM aemdesign/aem-base:jdk11
+FROM aemdesign/aem-base:jdk17
 
 ARG DOCKER_IMAGE_VERSION
 

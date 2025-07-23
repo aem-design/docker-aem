@@ -13,13 +13,15 @@ jobs:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       # these should be set in the repository secrets
-      GOOGLE_DRIVEID_AEM: ${{ secrets.GOOGLE_DRIVEID_SDK_2025_2_19687 }}
-      GOOGLE_DRIVEID_AEM_FORMS: ${{ secrets.GOOGLE_DRIVEID_AEM_FORMS_2025_01_22 }}
+      GOOGLE_DRIVEID_AEM: ${{ secrets.GOOGLE_DRIVEID_SDK_2025_7_21644 }}
+      GOOGLE_DRIVEID_AEM_FORMS: ${{ secrets.GOOGLE_DRIVEID_AEM_FORMS_2025_06_11 }}
 
       # this will be used as a label for the docker image
-      DOCKER_IMAGE_VERSION: "2025.2.19687"
-      GOOGLE_DRIVEID_AEM_VERSION: "aem-sdk-quickstart-2025.2.19687.20250225T164325Z-250100"
-      GOOGLE_FORMS_PACKAGE_NAME: "aem-forms-addon-2025.01.22.02-250100.far"
+      DOCKER_IMAGE_VERSION: "2025.7.21644.20250718T154700Z"
+      GOOGLE_DRIVEID_AEM_VERSION: "aem-sdk-quickstart-2025.7.21644.20250718T154700Z-250600"
+      GOOGLE_FORMS_PACKAGE_NAME: "aem-forms-addon-2025.06.11.02-250600.far"
+      GOOGLE_CIF_AUTHOR_PACKAGE_NAME: "cif-cloud-ready-feature-pkg-2025.07.22.00-cq-commerce-addon-authorfar.far"
+      GOOGLE_CIF_PUBLISH_PACKAGE_NAME: "cif-cloud-ready-feature-pkg-2025.07.22.00-cq-commerce-addon-publishfar.far"
 
       CREDS_ADOBE: ${{ secrets.CREDS_ADOBE }}
       PACKAGE_PATH: "./packages"
