@@ -13,3 +13,4 @@ maven-eclipse.xml
 
 target/
 logs/
+jar/
