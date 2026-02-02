@@ -83,7 +83,7 @@ jobs:
           # ============================================
           export PACKAGE_CKECK_COUNT=0
           # --------------------------------------------
-          #downloadGDrive "download" "${GOOGLE_DRIVEID_AEM_FORMS}" "$PACKAGE_PATH/01-${GOOGLE_FORMS_PACKAGE_NAME}"
+          downloadGDrive "download" "${GOOGLE_DRIVEID_AEM_FORMS}" "$PACKAGE_PATH/01-${GOOGLE_FORMS_PACKAGE_NAME}"
           # ./scripts/download.sh "$PACKAGE_PATH/02-" "-" "githublatest:.*core.wcm.components.all.*.zip" "https://api.github.com/repos/adobe/aem-core-wcm-components/releases/latest"
           # ./scripts/download.sh "$PACKAGE_PATH/03-" "-" "githublatest:.*acs-aem-commons-content-[0-9\.]+.zip" "https://api.github.com/repos/Adobe-Consulting-Services/acs-aem-commons/releases/latest"
           # ./scripts/download.sh "$PACKAGE_PATH/04-" "-" "-" "https://repo1.maven.org/maven2/biz/netcentric/cq/tools/accesscontroltool/accesscontroltool-package/3.0.2/accesscontroltool-package-3.0.2-cloud.zip"
