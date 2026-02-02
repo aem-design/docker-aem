@@ -1,6 +1,6 @@
 ## AEM SDK
 
-[![build_status](https://github.com/aem-design/docker-aem/workflows/build/badge.svg?branch=sdk-2025.7.21644)](https://github.com/aem-design/docker-aem/actions?query=workflow%3Abuild+branch%3Asdk-2025.7.21644)
+[![build_status](https://github.com/aem-design/docker-aem/workflows/build/badge.svg?branch=sdk-2026.1.23963)](https://github.com/aem-design/docker-aem/actions?query=workflow%3Abuild+branch%3Asdk-2026.1.23963)
 [![github license](https://img.shields.io/github/license/aem-design/aem)](https://github.com/aem-design/aem) 
 [![github issues](https://img.shields.io/github/issues/aem-design/aem)](https://github.com/aem-design/aem) 
 [![github last commit](https://img.shields.io/github/last-commit/aem-design/aem)](https://github.com/aem-design/aem) 
@@ -24,7 +24,7 @@ Images are available on both registries:
 ### Tags
 
 - `latest` - Latest build from master branch
-- `sdk-2025.7.21644` - Current SDK version branch
+- `sdk-2026.1.23963` - Current SDK version branch
 - Version tags (pushed when git tags are created)
 
 ### AEM Version
@@ -84,7 +84,7 @@ Following bundles are added to container
 To start author run the following:
 
 ```bash
-docker run --name author-sdk-2025-7-21644 -e "TZ=Australia/Sydney" -e "AEM_RUNMODE=-Dsling.run.modes=author,crx3,crx3tar,localdev" -e "AEM_JVM_OPTS=-server -Xms248m -Xmx1524m -XX:MaxDirectMemorySize=256M -XX:+CMSClassUnloadingEnabled -Djava.awt.headless=true -Dorg.apache.felix.http.host=0.0.0.0 -Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=58242,suspend=n -XX:+UseParallelGC --add-opens=java.desktop/com.sun.imageio.plugins.jpeg=ALL-UNNAMED --add-opens=java.base/sun.net.www.protocol.jrt=ALL-UNNAMED --add-opens=java.naming/javax.naming.spi=ALL-UNNAMED --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED -Dnashorn.args=--no-deprecation-warning" -p4502:8080 -p30303:58242 -d aemdesign/aem:sdk-2025.7.21644
+docker run --name author-sdk-2025-7-21644 -e "TZ=Australia/Sydney" -e "AEM_RUNMODE=-Dsling.run.modes=author,crx3,crx3tar,localdev" -e "AEM_JVM_OPTS=-server -Xms248m -Xmx1524m -XX:MaxDirectMemorySize=256M -XX:+CMSClassUnloadingEnabled -Djava.awt.headless=true -Dorg.apache.felix.http.host=0.0.0.0 -Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=58242,suspend=n -XX:+UseParallelGC --add-opens=java.desktop/com.sun.imageio.plugins.jpeg=ALL-UNNAMED --add-opens=java.base/sun.net.www.protocol.jrt=ALL-UNNAMED --add-opens=java.naming/javax.naming.spi=ALL-UNNAMED --add-opens=java.xml/com.sun.org.apache.xerces.internal.dom=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/jdk.internal.loader=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED -Dnashorn.args=--no-deprecation-warning" -p4502:8080 -p30303:58242 -d aemdesign/aem:sdk-2026.1.23963
 ```
 
 ## Development
@@ -170,8 +170,8 @@ See full documentation: `Get-Help .\get-action-logs.ps1 -Full`
 
 ```bash
 # Tag the commit
-git tag sdk-2025.7.21644-v1
-git push origin sdk-2025.7.21644-v1
+git tag sdk-2026.1.23963-v1
+git push origin sdk-2026.1.23963-v1
 ```
 
 This will automatically build and push versioned Docker images to both registries.
