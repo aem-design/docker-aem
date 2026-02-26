@@ -169,6 +169,7 @@ See full documentation: `Get-Help .\get-action-logs.ps1 -Full`
 ### Creating a New Release
 
 See [RELEASE.md](RELEASE.md) for the full release runbook.
+See [DEPENDENCY-CHAIN.md](DEPENDENCY-CHAIN.md) for cross-repository dependency and update order.
 
 Quick tag example:
 
@@ -182,5 +183,4 @@ Tag push automatically builds and publishes versioned Docker images to both regi
 ## License
 
 See [LICENSE](LICENSE) file for details.
-
 

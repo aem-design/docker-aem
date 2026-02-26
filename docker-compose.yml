@@ -5,8 +5,8 @@ services:
     build: .
     labels:
       aem.version: "sdk"
-      os.version: "centos 8"
-      java.version: "oracle 11"
+      os.version: "debian"
+      java.version: "oracle 21"
       container.description: "aem instance, will run as author unless specified otherwise"
     hostname: author
     container_name: "authorsdk"
